@@ -43,6 +43,10 @@ namespace gd {
                 )();
             }
 
+            virtual bool init() {
+                reinterpret_cast<bool(__thiscall*)()>(base + 0x1255d0)();
+            }
+
             void onSelectTab(cocos2d::CCObject* pSender) {
                 reinterpret_cast<void(__thiscall*)(
                     GJGarageLayer*, cocos2d::CCObject*
