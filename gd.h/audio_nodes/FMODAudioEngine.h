@@ -60,7 +60,7 @@ namespace gd {
 		bool isBackgroundMusicPlaying() {
 			return reinterpret_cast<bool(__thiscall*)(FMODAudioEngine*)>(base + 0xc4fc0)(this);
 		}
-		bool isBackgroundMusicPlaying(const std::string& path) {
+		bool isBackgroundMusicPlaying(std::string const& path) {
 			return reinterpret_cast<bool(__thiscall*)(FMODAudioEngine*, std::string)>(base + 0x24080)(this, path);
 		}
 		void playBackgroundMusic(std::string const& path, bool idk0, bool idk1) {

@@ -154,66 +154,46 @@ namespace gd {
 		PLAYER_ICON_FUNC(DeathEffect)
 		PLAYER_ICON_FUNC(Color)
 		PLAYER_ICON_FUNC(Color2)
+		void setPlayerFrame(int id) {m_playerFrame = id;}
+		void setPlayerShip(int id) {m_playerShip = id;}
+		void setPlayerBall(int id) {m_playerBall = id;}
+		void setPlayerBird(int id) {m_playerBird = id;}
+		void setPlayerDart(int id) {m_playerDart = id;}
+		void setPlayerRobot(int id) {m_playerRobot = id;}
+		void setPlayerSpider(int id) {m_playerSpider = id;}
+		void setPlayerStreak(int id) {m_playerStreak = id;}
+		void setPlayerDeathEffect(int id) {m_playerDeathEffect = id;}
+		void setPlayerColor(int id) {m_playerColor = id;}
+		void setPlayerColor2(int id) {m_playerColor2 = id;}
 		void setPlayerGlow(bool v) { m_bPlayerGlow = v; }
 		void setPlayerIconType(IconType v) { m_nPlayerIconType = v; }
 
 		#undef FUCK_THIS
-		
+
 		bool isColorUnlocked(int _id, bool _type) {
-			return reinterpret_cast<bool(__thiscall*)(
-				GameManager*, int, bool
-			)>(
-				base + 0xc53f0
-			)(
-				this, _id, _type
-			);
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, bool)>(base + 0xc53f0)(this, _id, _type);
 		}
-
 		bool isIconUnlocked(int _id, IconType _type) {
-			return reinterpret_cast<bool(__thiscall*)(
-				GameManager*, int, IconType
-			)>(
-				base + 0xc4fc0
-			)(
-				this, _id, _type
-			);
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, IconType)>(base + 0xc4fc0)(this, _id, _type);
 		}
-
 		cocos2d::ccColor3B colorForIdx(int _id) {
-			auto ret = reinterpret_cast<cocos2d::ccColor3B(__stdcall*)(
-				int
-			)>(base + 0xc8d10)(_id);
-
+			auto ret = reinterpret_cast<cocos2d::ccColor3B(__stdcall*)(int)>(base + 0xc8d10)(_id);
 			return ret;
 		}
-
 		static GameManager* sharedState() {
-			return reinterpret_cast<GameManager* (__stdcall*)()>(
-				base + 0xC4A50
-				)();
+			return reinterpret_cast<GameManager* (__stdcall*)()>(base + 0xC4A50)();
 		}
 		void reloadAll(bool bSwitch, bool bFullscreen, bool bReloadedInSession) {
-			return reinterpret_cast<void(__thiscall*)(GameManager*, bool, bool, bool)>(
-				base + 0xCE950
-				)(this, bSwitch, bFullscreen, bReloadedInSession);
-		}
-		void setQuality(cocos2d::TextureQuality quality) {
-			m_eQuality = quality;
-		}
+			return reinterpret_cast<void(__thiscall*)(GameManager*, bool, bool, bool)>(base + 0xCE950)(this, bSwitch, bFullscreen, bReloadedInSession);}
+		void setQuality(cocos2d::TextureQuality quality) {m_eQuality = quality;}
 		bool getGameVariable(const char* key) {
-			return reinterpret_cast<bool(__thiscall*)(GameManager*, const char*)>(
-				base + 0xC9D30
-				)(this, key);
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, const char*)>(base + 0xC9D30)(this, key);
 		}
 		void setGameVariable(const char* key, bool value) {
-			return reinterpret_cast<void(__thiscall*)(GameManager*, const char*, bool)>(
-				base + 0xC9B50
-				)(this, key, value);
+			return reinterpret_cast<void(__thiscall*)(GameManager*, const char*, bool)>(base + 0xC9B50)(this, key, value);
 		}
 		int getIntGameVariable(const char* key) {
-			return reinterpret_cast<int(__thiscall*)(GameManager*, const char*)>(
-				base + 0xCA330
-				)(this, key);
+			return reinterpret_cast<int(__thiscall*)(GameManager*, const char*)>(base + 0xCA330)(this, key);
 		}
 		void setIntGameVariable(const char* key, int value) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, const char*, int)>(base + 0xCA230)(this, key, value);
@@ -222,41 +202,27 @@ namespace gd {
 			reinterpret_cast<void(__stdcall*)(const char*)>(base + 0xc9e90)(key);
 		}
 		bool getUGV(const char* key) {
-			return reinterpret_cast<bool(__thiscall*)(GameManager*, const char*)>(
-				base + 0xCA0D0
-				)(this, key);
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, const char*)>(base + 0xCA0D0)(this, key);
 		}
 		void setUGV(const char* key, bool value) {
-			return reinterpret_cast<void(__thiscall*)(GameManager*, const char*, bool)>(
-				base + 0xc9f90
-				)(this, key, value);
-		}
-		void fadeInMusic(const char* filename) {
-			return reinterpret_cast<void(__thiscall*)(GameManager*, const char*)>(
-				base + 0xC4BD0
-				)(this, filename);
-		}
+			return reinterpret_cast<void(__thiscall*)(GameManager*, const char*, bool)>(base + 0xc9f90)(this, key, value);
+		}v
 		PlayLayer* getPlayLayer() { return m_pPlayLayer; }
 		LevelEditorLayer* getEditorLayer() { return m_pLevelEditorLayer; }
-
 		bool getGameVariableDefault(const char* key, bool defaultValue) {
 			auto object = reinterpret_cast<cocos2d::CCString*>(m_pValueKeeper->objectForKey(std::string("gv_") + key));
 			if (object == nullptr)
 				return defaultValue;
 			return object->boolValue();
 		}
-
 		int getIntGameVariableDefault(const char* key, int defaultValue) {
 			auto object = reinterpret_cast<cocos2d::CCString*>(m_pValueKeeper->objectForKey(std::string("gv_") + key));
 			if (object == nullptr)
 				return defaultValue;
 			return object->intValue();
 		}
-
 		void returnToLastScene(GJGameLevel* level) {
-			reinterpret_cast<void(__thiscall*)(GameManager*, GJGameLevel*)>(
-				base + 0xce6a0
-			)(this, level);
+			reinterpret_cast<void(__thiscall*)(GameManager*, GJGameLevel*)>(base + 0xce6a0)(this, level);
 		}
 	};
 }
