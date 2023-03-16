@@ -8,6 +8,7 @@ bool isBackgroundMusicPlaying() {
 	return reinterpret_cast<bool(__thiscall*)(FMODAudioEngine*)>(base + 0xc4fc0)(this);
 }
 ```
+
 from [geode/bindings/GeometryDash.bro#L1593](https://github.com/geode-sdk/geode/blob/main/bindings/GeometryDash.bro#L1593)
 ```
 bool isBackgroundMusicPlaying(const std::string& path) {
@@ -15,7 +16,6 @@ bool isBackgroundMusicPlaying(const std::string& path) {
 }
 ```
 from [geode/bindings/GeometryDash.bro#L1594](https://github.com/geode-sdk/geode/blob/main/bindings/GeometryDash.bro#L1594)
---------------------------
 
 --------------------------
 in manager_nodes\GameManager.h
@@ -27,4 +27,5 @@ void setUGV(const char* key, bool value) {
 }
 ```
 from [geode/bindings/GeometryDash.bro#L2854](https://github.com/geode-sdk/geode/blob/main/bindings/GeometryDash.bro#L2854)
+
 --------------------------
