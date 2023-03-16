@@ -1,65 +1,42 @@
-#ifndef __GAMESTATSMANAGER_H__
-#define __GAMESTATSMANAGER_H__
-
 #include <gd.h>
-
 namespace gd {
+	class GDH_DLL GameStatsManager : cocos2d::CCNode
+	{
+	public:
+		PAD(40);
+		cocos2d::CCDictionary* m_pDailyChests;
+		cocos2d::CCDictionary* m_pWorldAdvertChests;
+		cocos2d::CCDictionary* m_pActiveChallenges;
+		cocos2d::CCDictionary* m_pUpcomingChallenges;
+		PAD(12);
+		cocos2d::CCDictionary* m_pPlayerStats;
+		PAD(16);
+		cocos2d::CCDictionary* m_pCompletedLevels;
+		cocos2d::CCDictionary* m_pVerifiedUserCoins;
+		cocos2d::CCDictionary* m_pPendingUserCoins;
+		cocos2d::CCDictionary* m_pPurchasedItems;
+		cocos2d::CCDictionary* m_pOnlineCurrencyScores;
+		cocos2d::CCDictionary* m_pMainCurrencyScores;
+		cocos2d::CCDictionary* m_pGauntletCurrencyScores;
+		cocos2d::CCDictionary* m_pTimelyCurrencyScores;
+		cocos2d::CCDictionary* m_pOnlineStars;
+		cocos2d::CCDictionary* m_pTimelyStars;
+		cocos2d::CCDictionary* m_pGauntletDiamondScores;
+		cocos2d::CCDictionary* m_pTimelyDiamondScores;
+		cocos2d::CCDictionary* m_pUnusedCurrencyAwardDict;
+		cocos2d::CCDictionary* m_pChallengeDiamonds;
+		cocos2d::CCDictionary* m_pCompletedMappacks;
+		cocos2d::CCDictionary* m_pWeeklyChest;
+		cocos2d::CCDictionary* m_pTreasureRoomChests;
+		int m_nBonusKeySeed;
+		int m_nBonusKeyRand;
+		int m_nBonusKey;
+		cocos2d::CCDictionary* m_pMiscChests;
 
-    class GJChallengeItem;
-
-    class GameStatsManager : public cocos2d::CCNode {
-    public:
-        // i stole this from geode lol
-
-        PAD(0x28);
-        cocos2d::CCDictionary* m_dailyChests;
-        cocos2d::CCDictionary* m_worldAdvertChests;
-        cocos2d::CCDictionary* m_activeChallenges;
-        cocos2d::CCDictionary* m_upcomingChallenges;
-        PAD(0xc);
-        cocos2d::CCDictionary* m_playerStats;
-        PAD(0x10);
-        cocos2d::CCDictionary* m_completedLevels;
-        cocos2d::CCDictionary* m_verifiedUserCoins;
-        cocos2d::CCDictionary* m_pendingUserCoins;
-        cocos2d::CCDictionary* m_purchasedItems;
-        cocos2d::CCDictionary* m_onlineCurrencyScores;
-        cocos2d::CCDictionary* m_mainCurrencyScores;
-        cocos2d::CCDictionary* m_gauntletCurrencyScores;
-        cocos2d::CCDictionary* m_timelyCurrencyScores;
-        cocos2d::CCDictionary* m_onlineStars;
-        cocos2d::CCDictionary* m_timelyStars;
-        cocos2d::CCDictionary* m_gauntletDiamondScores;
-        cocos2d::CCDictionary* m_timelyDiamondScores;
-        cocos2d::CCDictionary* m_unusedCurrencyAwardDict;
-        cocos2d::CCDictionary* m_challengeDiamonds;
-        cocos2d::CCDictionary* m_completedMappacks;
-        cocos2d::CCDictionary* m_weeklyChest;
-        cocos2d::CCDictionary* m_treasureRoomChests;
-        int m_bonusKeySeed;
-        int m_bonusKeyRand;
-        int m_bonusKey;
-        cocos2d::CCDictionary* m_miscChests;
-        
-        GJChallengeItem* getChallenge(int id) {
-            return reinterpret_cast<GJChallengeItem*(__thiscall*)(GameStatsManager*, int)>(base + 0xA2FB0)(this, id);
-        }
-
-        static GameStatsManager* sharedState() {
-            return reinterpret_cast<GameStatsManager*(__stdcall*)()>(
-                base + 0xF1E50
-            )();
-        }
-
-        int getAwardedCurrencyForLevel(GJGameLevel* level) {
-            return reinterpret_cast<int(__thiscall*)(GameStatsManager*, GJGameLevel*)>(base + 0xF83E0)(this, level);
-        }
-
-        int getBaseCurrencyForLevel(GJGameLevel* level) {
-            return reinterpret_cast<int(__thiscall*)(GameStatsManager*, GJGameLevel*)>(base + 0xF8530)(this, level);
-        }
-    };
-
+		static GameStatsManager* sharedState() {
+			return reinterpret_cast<GameStatsManager* (__stdcall*)()>(
+				base + 0xf1e50
+				)();
+		}
+	};
 }
-
-#endif

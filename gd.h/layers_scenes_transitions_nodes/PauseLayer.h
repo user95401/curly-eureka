@@ -7,7 +7,7 @@ namespace gd {
 
 	class CCBlockLayer;
 
-	class PauseLayer : public CCBlockLayer {
+	class GDH_DLL PauseLayer : public CCBlockLayer {
 	protected:
 		bool m_bUnknown;
 		bool m_bUnknown2;
@@ -21,8 +21,16 @@ namespace gd {
 					)(this, callback, on, menu, caption, pos);
 		}
 
-		void onRestart(cocos2d::CCObject* sender) {
-			return reinterpret_cast<void(__thiscall*)(PauseLayer*, cocos2d::CCObject*)>(base + 0x1e6040)(this, sender);
+		void musicSliderChanged(cocos2d::CCObject* pSender) {
+			reinterpret_cast<void(__thiscall*)(PauseLayer*, cocos2d::CCObject*)>(
+				base + 0x1e5ce0
+			)(this, pSender);
+		}
+
+		void sfxSliderChanged(cocos2d::CCObject* pSender) {
+			reinterpret_cast<void(__thiscall*)(PauseLayer*, cocos2d::CCObject*)>(
+				base + 0x1ddfa0
+			)(this, pSender);
 		}
 	};
 }

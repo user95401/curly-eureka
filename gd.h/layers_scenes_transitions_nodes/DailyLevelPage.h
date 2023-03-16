@@ -4,15 +4,14 @@
 #include <gd.h>
 
 namespace gd {
-
-    class GJSearchObject;
-
-    class DailyLevelPage : public gd::FLAlertLayer {
-    public:
-        PAD(493 - sizeof(gd::FLAlertLayer));
-        bool isWeekly;
+    class GDH_DLL DailyLevelPage : public FLAlertLayer {
+        public:
+            static DailyLevelPage* create(bool weekly) {
+                return reinterpret_cast<DailyLevelPage*(__fastcall*)(bool)>(
+                    base + 0x6a860
+                )(weekly);
+            }
     };
-
 }
 
 #endif

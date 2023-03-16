@@ -4,17 +4,25 @@
 #include <gd.h>
 
 namespace gd {
-
-    class LeaderboardsLayer : public cocos2d::CCLayer {
-    public:
-
-        static LeaderboardsLayer* create(int leaderboardState) { //lb state is actually enum member
-            return reinterpret_cast<LeaderboardsLayer*(__fastcall*)(int)>(
-                gd::base + 0x158710
-            )(leaderboardState);
-        }
+    enum LeaderboardState {
+        kLeaderboardStateTop100     = 1,
+        kLeaderboardStateGlobal     = 2,
+        kLeaderboardStateCreator    = 3,
+        kLeaderboardStateFriends    = 4,
     };
 
+    class LeaderboardsLayer : public cocos2d::CCLayer {
+        public:
+            static LeaderboardsLayer* create(LeaderboardState state) {
+                return reinterpret_cast<LeaderboardsLayer*(__fastcall*)(
+                    LeaderboardState
+                )>(
+                    base + 0x158710
+                )(
+                    state
+                );
+            }
+    };
 }
 
 #endif

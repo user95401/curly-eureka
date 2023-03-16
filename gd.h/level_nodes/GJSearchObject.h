@@ -5,104 +5,63 @@
 
 namespace gd {
 
-    enum SearchType {
-        kSearchTypeSearch         = 0,
-        kSearchTypeMostDownloaded = 1,
-        kSearchTypeMostLiked      = 2,
-        kSearchTypeTrending       = 3,
-        kSearchTypeRecent         = 4,
-        kSearchTypeUsersLevels    = 5,
-        kSearchTypeFeatured       = 6,
-        kSearchTypeMagic          = 7,
-        kSearchTypeMapPacks       = 9,
-        kSearchTypeMapPackList    = 10,
-        kSearchTypeAwarded        = 11,
-        kSearchTypeFollowed       = 12,
-        kSearchTypeFriends        = 13,
-        kSearchTypeFindUsers      = 14,
-        kGJSearchTypeLikedGDW     = 15,
-        kSearchTypeHallOfFame     = 16,
-        kGJSearchTypeFeaturedGDW  = 17,
-        kSearchTypeSimilar        = 18,
-        kSearchType19             = 19,
-        kSearchTypeDaily          = 21,
-        kSearchTypeWeekly         = 22,
-        kSearchTypeMyLevels       = 98,
-        kSearchTypeSavedLevels    = 99,
-        kSearchTypeFavorite       = 100,
-    };
+ enum SearchType {
+    kGJSearchTypeLiked = 0,
+    kGJSearchTypeDownloaded = 1,
+    kGJSearchTypeSearch = 2,
+    kGJSearchTypeTrending = 3,
+    kGJSearchTypeRecent = 4,
+    kGJSearchTypeUsersLevels = 5,
+    kGJSearchTypeFeatured = 6,
+    kGJSearchTypeMagic = 7,
+    kGJSearchTypeSends = 8,
+    kGJSearchTypeMapPack = 9,
+    kGJSearchTypeMapPackOnClick = 10,
+    kGJSearchTypeAwarded = 11,
+    kGJSearchTypeFollowed = 12,
+    kGJSearchTypeFriends = 13,
+    kGJSearchTypeUsers = 14,
+    kGJSearchTypeLikedGDW = 15,
+    kGJSearchTypeHallOfFame = 16,
+    kGJSearchTypeFeaturedGDW = 17,
+    kGJSearchTypeSimilar = 18,
+    kGJSearchTypeMyLevels = 98,
+    kGJSearchTypeSavedLevels = 99,
+    kGJSearchTypeFavouriteLevels = 100
+};
+    
 
-    class GJSearchObject : public cocos2d::CCNode {
+    class GDH_DLL GJSearchObject : public cocos2d::CCNode {
     public:
-        SearchType m_nScreenID; //236 android
-        std::string m_sSearchQuery;
-        std::string m_sDifficulty;
-        std::string m_sLength;
-        int m_nPage;
-        bool m_bStarFilter;
-        bool m_bNoStarFilter;
-        int m_nTotal;
-        bool m_bUncompletedFilter; //264 android
-        bool m_bCompletedFilter;
-        bool m_bFeaturedFilter;
-        bool m_bOriginalFilter;
-        bool m_bTwoPlayerFilter;
-        bool m_bCoinsFilter;
-        bool m_bEpicFilter;
-        int m_eDemonFilter;
-        int currentFolder; // might be unsigned, but then again its robtop
-        int m_nSongID;
-        bool m_bCustomSongFilter;
-        bool m_bSongFilter;
+            SearchType m_nScreenID;
+            std::string m_sSearchQuery;
+            std::string m_sDifficulty;
+            std::string m_sLength;
+            int m_nPage;
+            bool m_bStarFilter;
+            bool m_bNoStarFilter;
+            char PAD1[2];
+            int unknownMember;
+            bool m_bUncompletedFilter;
+            bool m_bCompletedFilter;
+            bool m_bFeaturedFilter;
+            bool m_bOriginalFilter;
+            bool m_bTwoPlayerFilter;
+            bool m_bCoinsFilter;
+            bool m_bEpicFilter;
+            char PAD2;
+            GJDifficulty m_eDemonFilter;
+            int m_nUnk;
+            int m_nSongID;
+            bool m_bCustomSongFilter;
+            bool m_bSongFilter;
+            char PAD3[2];
 
         static GJSearchObject* create(SearchType nID) {
             return reinterpret_cast<GJSearchObject*(__fastcall*)(SearchType)>(
                 gd::base + 0xc2b90
             )(nID);
         }
-
-        static GJSearchObject* create(SearchType nID, std::string str) {
-            auto pRet = reinterpret_cast<GJSearchObject*(__fastcall*)(SearchType, std::string)>(
-                gd::base + 0xC2C80
-            )(nID, str);
-            __asm add esp, 0x18
-            return pRet;
-        }
-
-        static GJSearchObject* createFromKey(const char* key) {
-            return reinterpret_cast<GJSearchObject*(__fastcall*)(const char*)>(
-                gd::base + 0xC2760
-            )(key);
-        }
-
-        const char* getKey() {
-            return reinterpret_cast<const char*(__thiscall*)(GJSearchObject*)>(
-                gd::base + 0xC30A0
-            )(this);
-        } 
-
-        const char* getNextPageKey() {
-            return reinterpret_cast<const char*(__thiscall*)(GJSearchObject*)>(
-                gd::base + 0xC31F0
-            )(this);
-        } 
-
-        //getSearchKey 0xC3490
-
-        //this isnt a robtop function
-        void setSongInfo(bool customSong, int songID) {
-            m_bCustomSongFilter = customSong;
-            m_nSongID = songID;
-            m_bSongFilter = true;
-        }
-
-        /*static GJSearchObject* create(SearchType nID, std::string str, std::string diff,std::string len, int page, bool star, bool uncompleted, bool featured, int songID, bool original, bool twoPlayer, bool customSong, bool songFilter, bool noStar, bool coins, bool epic, bool completed, int demonDiff, int folderNum) {
-            auto pRet = reinterpret_cast<GJSearchObject*(__fastcall*)(SearchType, std::string, std::string,std::string,int,bool,bool,bool,int,bool,bool,bool,bool,bool,bool,bool,bool,int,int)>(
-                gd::base + 0xC2D80
-            )(nID, str, diff, len, page, star, uncompleted, featured, songID, original, twoPlayer, customSong, songFilter, noStar, coins, epic, completed, demonDiff, folderNum);
-            __asm add esp, 0x48
-            return pRet;
-        }*/
 
         SearchType getType() {
             return this->m_nScreenID;

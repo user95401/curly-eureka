@@ -1,65 +1,102 @@
 #ifndef DELEGATES_H
-#define DELEGATES_H
+#define DELEGATES_h
 
 #include <gd.h>
 
 namespace gd {
     class GJGameLevel;
-    class GJUserScore;
     class NumberInputLayer;
     class SetIDPopup;
     class CCTextInputNode;
     class GJDropDownLayer;
     class SongInfoObject;
     class GJSpecialColorSelect;
-    class CCCircleWave;
-    class CurrencyRewardLayer;
+    class HSVWidgetPopup;
+    class GJUserScore;
+    class ListButtonBar;
     class DialogLayer;
+    class CCCircleWave;
+    class CCScrollLayerExt;
 
     enum GJSongError {
-        kGJSongErrorUnknown = 0,
+        kGJSongErrorUnknown_not_REd = 0,
         // dunno, didnt bother to RE
     };
 
-    class TextInputDelegate {
-        virtual void textChanged(CCTextInputNode*) {}
-        virtual void textInputOpened(CCTextInputNode*) {}
-        virtual void textInputClosed(CCTextInputNode*) {}
-        virtual void textInputShouldOffset(CCTextInputNode*, float) {}
-        virtual void textInputReturn(CCTextInputNode*) {}
-        virtual bool allowTextInput(CCTextInputNode*) { return true; }
+    class GDH_DLL TextInputDelegate {
+        public:
+            virtual void textChanged(CCTextInputNode*) {}
+            virtual void textInputOpened(CCTextInputNode*) {}
+            virtual void textInputClosed(CCTextInputNode*) {}
+            virtual void textInputShouldOffset(CCTextInputNode*, float) {}
+            virtual void textInputReturn(CCTextInputNode*) {}
+            virtual bool allowTextInput(CCTextInputNode*) { return true; }
     };
 
-    class ColorSelectDelegate {
-        virtual void colorSelectClosed(cocos2d::CCNode*);
+    class GDH_DLL GameRateDelegate {
+        public:
+            virtual void updateRate(void) {}
     };
 
-    class ColorPickerDelegate {
-        virtual void colorValueChanged(cocos2d::ccColor3B color);
+    class GDH_DLL ListButtonBarDelegate {
+        public:
+            virtual void listButtonBarSwitchedPage(ListButtonBar *, int) {}
     };
 
-    class GJSpecialColorSelectDelegate {
-        virtual void colorSelectClosed(GJSpecialColorSelect*, int);
+    class GDH_DLL DialogDelegate {
+        public:
+            virtual void dialogClosed(DialogLayer *) {}
     };
 
-    class GJRotationControlDelegate {
-        virtual void angleChangeBegin(void);
-        virtual void angleChangeEnded(void);
-        virtual void angleChanged(float);
+    class GDH_DLL GooglePlayDelegate {
+        virtual void googlePlaySignedIn(void) {}
     };
 
-    class GJScaleControlDelegate {
-        virtual void scaleChangeBegin(void);
-        virtual void scaleChangeEnded(void);
-        virtual void scaleChanged(float);
+    class GDH_DLL ColorSelectDelegate {
+        public:
+            virtual void colorSelectClosed(cocos2d::CCNode*)  {}
     };
 
-    class MusicDownloadDelegate {
-        virtual void downloadSongFailed(int, GJSongError);
-        virtual void downloadSongFinished(SongInfoObject*);
-        virtual void loadSongInfoFailed(int, GJSongError);
-        virtual void loadSongInfoFinished(SongInfoObject*);
-        virtual void songStateChanged(void);
+    class GDH_DLL ColorSetupDelegate {
+        public:
+            virtual void colorSetupClosed(int)  {}
+    };
+
+    class GDH_DLL ColorPickerDelegate {
+        virtual void colorValueChanged(cocos2d::ccColor3B color) {}
+    };
+
+    class GDH_DLL GJSpecialColorSelectDelegate {
+        public:
+            virtual void colorSelectClosed(GJSpecialColorSelect*, int) {}
+    };
+    
+    class GDH_DLL HSVWidgetPopupDelegate {
+        public:
+            virtual void hsvPopupClosed(HSVWidgetPopup *, cocos2d::ccHSVValue)  {}
+    };
+
+    class GDH_DLL GJRotationControlDelegate {
+        public:
+            virtual void angleChanged(float)  {}
+            virtual void angleChangeBegin(void)  {}
+            virtual void angleChangeEnded(void)  {}
+    };
+
+    class GDH_DLL GJScaleControlDelegate {
+        public:
+            virtual void scaleChanged(float)  {}
+            virtual void scaleChangeBegin(void)  {}
+            virtual void scaleChangeEnded(void)  {}
+    };
+
+    class GDH_DLL MusicDownloadDelegate {
+        public:
+            virtual void downloadSongFailed(int, GJSongError)  {}
+            virtual void downloadSongFinished(SongInfoObject*)  {}
+            virtual void loadSongInfoFailed(int, GJSongError)  {}
+            virtual void loadSongInfoFinished(SongInfoObject*)  {}
+            virtual void songStateChanged(void)  {}
     };
 
     enum UpdateResponse {
@@ -69,113 +106,148 @@ namespace gd {
         kUpdateResponseUpdateSuccess,
     };
 
+    enum CommentError {
+        kCommentErrorUnknown_not_REd = 0x0,
+    };
+
     enum LikeItemType {
-        kLikeItemTypeUnknown,
-        kLikeItemTypeLevel,
-        kLikeItemTypeComment,
-        kLikeItemTypeAccountComment,
+        kLikeItemTypeUnknown_not_REd = 0x0,
     };
 
-    class LevelDownloadDelegate {
-        virtual void levelDownloadFinished(GJGameLevel*);
-        virtual void levelDownloadFailed(int);
+    class GDH_DLL LeaderboardManagerDelegate {
+        virtual void updateUserScoreFinished(void)  {}
+        virtual void updateUserScoreFailed(void)  {}
+        virtual void loadLeaderboardFinished(cocos2d::CCArray *,char const*)  {}
+        virtual void loadLeaderboardFailed(char const*)  {}
     };
 
-    class LevelDeleteDelegate {
-        virtual void levelDeleteFinished(int);
-        virtual void levelDeleteFailed(int);
+    class GDH_DLL UserInfoDelegate {
+        virtual void getUserInfoFailed(int)  {}
+        virtual void getUserInfoFinished(GJUserScore *)  {}
+        virtual void userInfoChanged(GJUserScore *)  {}
     };
 
-    class LevelManagerDelegate {
-        virtual void loadLevelsFinished(cocos2d::CCArray*, const char*) {};
-        virtual void loadLevelsFailed(const char*) {};
-        virtual void setupPageInfo(std::string, const char*) {};
+    class GDH_DLL CommentUploadDelegate {
+        virtual void commentUploadFinished(int)  {}
+        virtual void commentUploadFailed(int, CommentError)  {}
+        virtual void commentDeleteFailed(int, int)  {}
     };
 
-    class LevelUpdateDelegate {
-        virtual void levelUpdateFinished(GJGameLevel*, UpdateResponse);
-        virtual void levelUpdateFailed(int);
-    };
-
-    class OnlineListDelegate {
-        virtual void loadListFinished(cocos2d::CCArray*, const char*) {};
-        virtual void loadListFailed(const char*) {};
-        virtual void setupPageInfo(std::string, const char*) {};
-    };
-
-    class UploadActionDelegate {
-        virtual void uploadActionFinished(int, int) {};
-        virtual void uploadActionFailed(int, int) {};
-    };
-
-    class UploadPopupDelegate {
-        virtual void onClosePopup(void) {};
-    };
-    
-    class LikeItemDelegate {
-        virtual void likedItem(LikeItemType, int, bool);
-    };
-
-    class RateLevelDelegate {
-        virtual void rateLevelClosed(void);
-    };
-
-    class NumberInputDelegate {
-        virtual void numberInputClosed(NumberInputLayer*);
-    };
-
-    class SetIDPopupDelegate {
-        virtual void setIDPopupClosed(SetIDPopup*, int);
-    };
-
-    class SetTextPopupDelegate {
-        virtual void setIDPopupClosed(void*, std::string); //settextpopup
-    };
-
-    class GJDropDownLayerDelegate {
-        virtual void dropDownLayerWillClose(GJDropDownLayer*);
-    };
-
-    class GooglePlayDelegate {
-        virtual void googlePlaySignedIn() {}
-    };
-
-    class CCCircleWaveDelegate {
-        virtual void circleWaveWillBeRemoved(CCCircleWave*) {}
-    };
-
-    class CurrencyRewardDelegate {
-        virtual void currencyWillExit(CurrencyRewardLayer*);
-    };
-
-    class DialogDelegate {
-        virtual void dialogClosed(DialogLayer*);
-    };
-
-    class LevelCommentDelegate {
+    class GDH_DLL LevelCommentDelegate {
         virtual void loadCommentsFinished(cocos2d::CCArray *, const char*)  {}
         virtual void loadCommentsFailed(const char*)  {}
-        virtual void updateUserScoreFinished()  {}
+        virtual void updateUserScoreFinished(void)  {}
         virtual void setupPageInfo(std::string, const char*)  {}
     };
 
-    class CommentUploadDelegate {
-        virtual void commentUploadFinished(int) {}
-        virtual void commentUploadFailed(int, int) {}
-        virtual void commentDeleteFailed(int, int) {}
+    class GDH_DLL LevelDownloadDelegate {
+        public:
+            virtual void levelDownloadFinished(GJGameLevel *)  {}
+            virtual void levelDownloadFailed(int)  {}
     };
 
-    class UserInfoDelegate {
-        virtual void getUserInfoFinished(GJUserScore *) {}
-        virtual void getUserInfoFailed(int) {}
-        virtual void getUserInfoChanged(GJUserScore *) {}
+    class GDH_DLL LevelDeleteDelegate {
+        public:
+            virtual void levelDeleteFinished(int)  {}
+            virtual void levelDeleteFailed(int)  {}
     };
 
-    class LeaderboardManagerDelegate {
-        virtual void updateUserScoreFinished() {}
-        virtual void updateUserScoreFailed() {}
-        virtual void loadLeaderboardFinished(cocos2d::CCArray*, const char*) {}
-        virtual void loadLeaderboardFailed(const char*) {}
+    class GDH_DLL LevelUpdateDelegate {
+        public:
+            virtual void levelUpdateFinished(GJGameLevel*, UpdateResponse)  {}
+            virtual void levelUpdateFailed(int)  {}
+    };
+
+    class GDH_DLL UploadActionDelegate {
+        public:
+            virtual void uploadActionFinished(int, int) {};
+            virtual void uploadActionFailed(int, int) {};
+    };
+
+    class GDH_DLL UploadPopupDelegate {
+        public:
+            virtual void onClosePopup(void) {};
+    };
+    
+    class GDH_DLL LikeItemDelegate {
+        public:
+            virtual void likedItem(LikeItemType, int, bool)  {}
+    };
+
+    class GDH_DLL RateLevelDelegate {
+        public:
+            virtual void rateLevelClosed(void)  {}
+    };
+
+    class GDH_DLL NumberInputDelegate {
+        public:
+            virtual void numberInputClosed(NumberInputLayer*)  {}
+    };
+
+    class GDH_DLL SetIDPopupDelegate {
+        public:
+            virtual void setIDPopupClosed(SetIDPopup*, int)  {}
+    };
+
+    class GDH_DLL GJDropDownLayerDelegate {
+        public:
+            virtual void dropDownLayerWillClose(GJDropDownLayer*)  {}
+    };
+
+    class GDH_DLL CCCircleWaveDelegate {
+        void circleWaveWillBeRemoved(CCCircleWave*) {}
+    };
+
+    enum AccountError {
+        kAccountErrorUnknown = 0,
+    };
+
+    enum BackupAccountError {
+        kBackupAccountErrorUnknown = 0,
+    };
+
+    struct GJAccountRegisterDelegate {
+        virtual void registerAccountFailed(AccountError error) {}
+        virtual void registerAccountFinished(void) {}
+    };
+
+    struct GJAccountLoginDelegate {
+        virtual void loginAccountFailed(AccountError error) {}
+        virtual void loginAccountFinished(int, int) {}
+    };
+
+    struct GJAccountDelegate {
+        virtual void accountStatusChanged(void) {}
+    };
+
+    struct GJAccountBackupDelegate {
+        virtual void backupAccountFailed(BackupAccountError) {}
+        virtual void backupAccountFinished(void) {}
+    };
+    
+    struct GJAccountSyncDelegate {
+        virtual void syncAccountFailed(BackupAccountError) {}
+        virtual void syncAccountFinished(void) {}
+    };
+
+    struct GJAccountSettingsDelegate {
+        virtual void updateSettingsFailed(void) {}
+        virtual void updateSettingsFinished(void) {}
+    };
+
+	class GDH_DLL CCScrollLayerExtDelegate {
+		public:
+			//lol nice typo rob
+			virtual void scrllViewWillBeginDecelerating(CCScrollLayerExt*) {}
+			virtual void scrollViewDidEndDecelerating(CCScrollLayerExt*) {}
+			virtual void scrollViewTouchMoving(CCScrollLayerExt*) {}
+			virtual void scrollViewDidEndMoving(CCScrollLayerExt*) {}
+			virtual void scrollViewTouchBegin(CCScrollLayerExt*) {}
+			virtual void scrollViewTouchEnd(CCScrollLayerExt*) {}
+	};
+
+    struct DynamicScrollDelegate {
+        void updatePageWithObject(cocos2d::CCObject*, cocos2d::CCObject*) {}
     };
 }
 

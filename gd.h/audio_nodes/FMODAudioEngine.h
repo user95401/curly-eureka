@@ -4,7 +4,7 @@
 #include <gd.h>
 
 namespace gd {
-	class FMODAudioEngine : public cocos2d::CCNode {
+	class GDH_DLL FMODAudioEngine : public cocos2d::CCNode {
 	public:
 		cocos2d::CCDictionary* m_pDictionary;
 		std::string m_sFilePath;
@@ -39,6 +39,8 @@ namespace gd {
 				base + 0x24240
 				)(this, filename);
 		}
+		float getMusicVolume() { return m_fBackgroundMusicVolume; }
+		float getSFXVolume() { return m_fEffectsVolume; }
 		//my own function
 		void reloadEffects() {
 			using namespace std::filesystem;
@@ -61,10 +63,10 @@ namespace gd {
 		bool isBackgroundMusicPlaying(const std::string& path) {
 			return reinterpret_cast<bool(__thiscall*)(FMODAudioEngine*, std::string)>(base + 0x24080)(this, path);
 		}
-
-		void setBackgroundMusicTime(float time) {
-			__asm movss xmm1, time;
-			reinterpret_cast<void(__thiscall*)(FMODAudioEngine*)>(base + 0x23fb0)(this);
+		void playBackgroundMusic(std::string const& path, bool idk0, bool idk1) {
+			reinterpret_cast<void(__thiscall*)(FMODAudioEngine*, bool, bool, std::string)>(
+				base + 0x23d80
+			)(this, idk0, idk1, path);
 		}
 	};
 }

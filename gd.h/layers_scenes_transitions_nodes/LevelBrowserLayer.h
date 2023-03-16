@@ -4,57 +4,30 @@
 #include <gd.h>
 
 namespace gd {
-
     class GJSearchObject;
-    class TextArea;
 
-    class LevelBrowserLayer : public cocos2d::CCLayer, public LevelManagerDelegate, public FLAlertLayerProtocol, public SetIDPopupDelegate, public SetTextPopupDelegate {
-    public:
-        int unk0;
-        TextArea* noInternet;
-        GJListLayer* listLayer;
-        CCMenuItemSpriteExtra* nextBtn;
-        CCMenuItemSpriteExtra* prevBtn;
-        CCMenuItemSpriteExtra* lastBtn;
-        CCMenuItemSpriteExtra* cancelSearchBtn;
-        void* unk4;
-        cocos2d::CCArray* array;
-        GJSearchObject* searchObject;
-        cocos2d::CCLabelBMFont* countText;
-        cocos2d::CCLabelBMFont* pageText;
-        CCMenuItemSpriteExtra* pageBtn;
-        cocos2d::CCLabelBMFont* folderText;
-        CCMenuItemSpriteExtra* folderBtn;
-        int total;
-        int from;
-        int to;
+    class GDH_DLL LevelBrowserLayer : public cocos2d::CCLayer {
+        public:
+            static LevelBrowserLayer* create(gd::GJSearchObject* pSearch) {
+                return reinterpret_cast<LevelBrowserLayer*(__fastcall*)(
+                    gd::GJSearchObject*
+                )>(
+                    gd::base + 0x159fa0
+                )(
+                    pSearch
+                );
+            }
 
-        static cocos2d::CCScene* scene(gd::GJSearchObject* searchObject) {
-            return reinterpret_cast<cocos2d::CCScene*(__fastcall*)(gd::GJSearchObject*)>(
-                gd::base + 0x159F60
-            )(searchObject);
-        }
+            static void scene(gd::GJSearchObject* pSearch) {
+                auto pScene = cocos2d::CCScene::create();
 
-        void loadPage(gd::GJSearchObject* searchObj) {
-            reinterpret_cast<void(__thiscall*)(LevelBrowserLayer*, gd::GJSearchObject*)>(base + 0x15B160)(this, searchObj);
-        }
+                pScene->addChild(gd::LevelBrowserLayer::create(pSearch));
+
+                cocos2d::CCDirector::sharedDirector()->replaceScene(
+                    cocos2d::CCTransitionFade::create(.5f, pScene)
+                );
+            }
     };
-
-    class LevelSearchLayer : public cocos2d::CCLayer {
-    public:
-        PAD(12);
-        CCTextInputNode* input;
-    };
-
-    class MoreSearchLayer : public FLAlertLayer {
-    public:
-        static MoreSearchLayer* create() {
-            return reinterpret_cast<MoreSearchLayer*(__fastcall*)()>(
-                gd::base + 0x182520
-            )();
-        }
-    };
-
 }
 
 #endif

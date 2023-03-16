@@ -10,23 +10,28 @@ namespace gd {
 	class ScrollingLayer;
 
 	#pragma runtime_checks("s", off)
-	class FLAlertLayer : public cocos2d::CCLayerColor {
+	class GDH_DLL FLAlertLayer : public cocos2d::CCLayerColor {
 	public:
-		cocos2d::CCMenu* m_pButtonMenu;
+		cocos2d::CCMenu* m_pButtonMenu;	// 0x198
 		int m_nControlConnected; //?
-		cocos2d::CCObject* m_pTarget;
-		cocos2d::CCObject* m_pParent;
+		cocos2d::CCObject* m_pTarget;	// 0x1a0
+		cocos2d::CCNode* m_pTargetLayer;	// 0x1a4
 		PAD(4);
-		cocos2d::CCLayer* m_pLayer;
-		int m_nZOrder2;
-		bool m_bNoElasticity;
+		cocos2d::CCLayer* m_pLayer;	// 0x1ac
+		int m_nZOrder2;	// 0x1b0
+		bool m_bNoElasticity;	// 0x1b4
 		cocos2d::ccColor3B m_cColor2; //?
-		ButtonSprite* m_pButton1;
-		ButtonSprite* m_pButton2;
-		ScrollingLayer* m_pScrollingLayer;
-		int m_nJoystickConnected;
-		bool m_bBorder; //?
+		ButtonSprite* m_pButton1;	// 0x1b8
+		ButtonSprite* m_pButton2;	// 0x1bc
+		ScrollingLayer* m_pScrollingLayer; // 0x1c0
+		int m_nJoystickConnected;	// 0x1c4
+		bool m_bScrollable; // 0x1c8
 		bool m_bNoAction; //?
+
+		virtual ~FLAlertLayer() {
+			// recreate destructor
+			cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->decrementForcePrio(2);
+		}
 
 	public:
 		//CCNode vtable
@@ -99,11 +104,6 @@ namespace gd {
 				base + 0x23380
 				)(this, btn);
 		}
-		void onClose(cocos2d::CCObject* btn) {
-			return reinterpret_cast<void(__thiscall*)(FLAlertLayer*, cocos2d::CCObject*)>(
-				base + 0x49C60
-				)(this, btn);
-		}
 		/*FLAlertLayer supports colors of text for the caption. wrap desired text in "<cx></c>"
 			* where x is the color desired. colors are:
 			* r - red
@@ -133,28 +133,8 @@ namespace gd {
 			__asm add esp, 0x24
 			return pRet;
 		}
-		static FLAlertLayer* create(FLAlertLayerProtocol* target, const char* title,
-			const char* btn1, const char* btn2, float width, bool scroll, float height, std::string caption) {
-			auto pRet = reinterpret_cast<FLAlertLayer* (__fastcall*)(FLAlertLayerProtocol*, const char*,
-				const char*, const char*, float, bool, float, std::string)>(
-					base + 0x227e0
-					)(target, title, btn1, btn2, width, scroll, height, caption);
-			__asm add esp, 0x2C
-			return pRet;
-		}
-		bool init(FLAlertLayerProtocol* target, const char* title,
-			const char* btn1, const char* btn2, float width, bool scroll, float height, std::string caption) {
-			auto pRet = reinterpret_cast<FLAlertLayer* (__thiscall*)(FLAlertLayer*, FLAlertLayerProtocol*, const char*,
-				const char*, const char*, float, bool, float, std::string)>(
-					base + 0x228E0
-					)(this, target, title, btn1, btn2, width, scroll, height, caption);
-			return pRet;
-			
-		}
-		void setParentFLAlert(cocos2d::CCObject* target){
-			m_pParent = target;
-			//m_pTarget = target;
-		}
+		cocos2d::CCLayer* getLayer() { return m_pLayer; }
+		cocos2d::CCLayer* getButtonMenu() { return m_pButtonMenu; }
 	};
 	#pragma runtime_checks("s", restore)
 }

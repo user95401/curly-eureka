@@ -4,20 +4,12 @@
 #include <gd.h>
 
 namespace gd {
-
     class GJGameLevel;
     class CCMenuItemSpriteExtra;
     class CCMenuItemToggler;
     class TextArea;
 
-    class LevelPage : public cocos2d::CCLayer, public DialogDelegate
-    {
-        public:
-            PAD(4);
-            GJGameLevel* m_pLevel;
-    };
-
-    class EditLevelLayer :
+    class GDH_DLL EditLevelLayer :
         public cocos2d::CCLayer,
         public TextInputDelegate,
         public FLAlertLayerProtocol,
@@ -49,7 +41,7 @@ namespace gd {
             }
     };
 
-    class LevelInfoLayer : public cocos2d::CCLayer,
+    class GDH_DLL LevelInfoLayer : public cocos2d::CCLayer,
         LevelDownloadDelegate,
         LevelUpdateDelegate,
         RateLevelDelegate,
@@ -62,7 +54,7 @@ namespace gd {
         public:
             PAD(0x4)
             cocos2d::CCMenu* m_pPlayBtnMenu;
-            GJGameLevel* level;
+            GJGameLevel* m_pLevel;
             cocos2d::CCArray* m_pUnknown;
             CCMenuItemSpriteExtra* m_pLikeBtn;
             CCMenuItemSpriteExtra* m_pStarRateBtn;
@@ -91,7 +83,6 @@ namespace gd {
                 )(this, pSender);
             }
     };
-
 }
 
 #endif
