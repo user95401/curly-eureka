@@ -7,17 +7,17 @@
 
 namespace gd {
 	enum IconType {
-		kIconTypeCube           = 0,
-		kIconTypeShip           = 1,
-		kIconTypeBall           = 2,
-		kIconTypeUfo            = 3,
-		kIconTypeWave           = 4,
-		kIconTypeRobot          = 5,
-		kIconTypeSpider         = 6,
-		kIconTypeDeathEffect    = 98,
-		kIconTypeSpecial        = 99,
+		kIconTypeCube = 0,
+		kIconTypeShip = 1,
+		kIconTypeBall = 2,
+		kIconTypeUfo = 3,
+		kIconTypeWave = 4,
+		kIconTypeRobot = 5,
+		kIconTypeSpider = 6,
+		kIconTypeDeathEffect = 98,
+		kIconTypeSpecial = 99,
 	};
-	
+
 	enum UnlockType {
 		kUnlockTypeUnknown = 0,
 		kUnlockTypeCube = 1,
@@ -154,17 +154,6 @@ namespace gd {
 		PLAYER_ICON_FUNC(DeathEffect)
 		PLAYER_ICON_FUNC(Color)
 		PLAYER_ICON_FUNC(Color2)
-		void setPlayerFrame(int id) {m_playerFrame = id;}
-		void setPlayerShip(int id) {m_playerShip = id;}
-		void setPlayerBall(int id) {m_playerBall = id;}
-		void setPlayerBird(int id) {m_playerBird = id;}
-		void setPlayerDart(int id) {m_playerDart = id;}
-		void setPlayerRobot(int id) {m_playerRobot = id;}
-		void setPlayerSpider(int id) {m_playerSpider = id;}
-		void setPlayerStreak(int id) {m_playerStreak = id;}
-		void setPlayerDeathEffect(int id) {m_playerDeathEffect = id;}
-		void setPlayerColor(int id) {m_playerColor = id;}
-		void setPlayerColor2(int id) {m_playerColor2 = id;}
 		void setPlayerGlow(bool v) { m_bPlayerGlow = v; }
 		void setPlayerIconType(IconType v) { m_nPlayerIconType = v; }
 
@@ -200,8 +189,8 @@ namespace gd {
 		void setIntGameVariable(const char* key, int value) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, const char*, int)>(base + 0xCA230)(this, key, value);
 		}
-		static void toggleGameVariable(const char* key) {
-			reinterpret_cast<void(__stdcall*)(const char*)>(base + 0xc9e90)(key);
+		void toggleGameVariable(const char* key) {
+			return reinterpret_cast<void(__thiscall*)(GameManager*, const char*)>(base + 0xc9e90)(this, key);
 		}
 		bool getUGV(const char* key) {
 			return reinterpret_cast<bool(__thiscall*)(GameManager*, const char*)>(base + 0xCA0D0)(this, key);
@@ -225,6 +214,12 @@ namespace gd {
 		}
 		void returnToLastScene(GJGameLevel* level) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, GJGameLevel*)>(base + 0xce6a0)(this, level);
+		}
+		virtual void update(float fl) {
+			return reinterpret_cast<void(__thiscall*)(GameManager*, float)>(base + 0xce440)(this, fl);
+		}
+		void fadeInMusic(const char* res) {
+			return reinterpret_cast<void(__thiscall*)(GameManager*, const char*)>(base + 0xc4bd0)(this, res);
 		}
 	};
 }
