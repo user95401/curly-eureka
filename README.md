@@ -15,3 +15,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE ../curly-eureka/gd.h ../curly
 #include <cocos2d.h>
 #include <gd.h>
 ```
+---
+### [org](https://github.com/poweredbypie/gd.h) by [pie](https://github.com/poweredbypie) | based on [HJfod's fork](https://github.com/HJfod/gd.h)
