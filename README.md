@@ -1,5 +1,5 @@
 # gd.h
-just gd.h that I use
+just gd.h(windows geometry dash headers) that I use
 </br>and i'll add some things from [geode](https://github.com/geode-sdk/geode/tree/main/bindings)
 
 ## prepare gd.h for cmake❤️ proj
