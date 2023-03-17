@@ -8,7 +8,7 @@ just gd.h(windows geometry dash headers) that I use
 ![image translated (1)](https://user-images.githubusercontent.com/90561697/225808803-f85860f8-5814-4d6a-b251-082e165e1473.jpg)
 - to CMakeLists.txt
 ```cmake
-target_include_directories(${PROJECT_NAME} PRIVATE ../curly-eureka/gd.h ../curly-eureka/gd.h/include)
+target_include_directories(${PROJECT_NAME} PRIVATE ../curly-eureka/gd.h/ ../curly-eureka/gd.h/include)
 ```
 - in code
 ```cpp
