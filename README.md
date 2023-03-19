@@ -9,11 +9,14 @@ just gd.h(windows geometry dash headers) that I use
 - to CMakeLists.txt
 ```cmake
 target_include_directories(${PROJECT_NAME} PRIVATE ../curly-eureka/gd.h/ ../curly-eureka/gd.h/include)
+add_subdirectory(../curly-eureka/cocos-headers build)
 ```
 - in code
 ```cpp
 #include <cocos2d.h>
 #include <gd.h>
+#include "../curly-eureka/mod_utils.hpp"
+#include "../curly-eureka/mapped-hooks.hpp"
 ```
 ---
 ### [org](https://github.com/poweredbypie/gd.h) by [pie](https://github.com/poweredbypie) | based on [HJfod's fork](https://github.com/HJfod/gd.h)
