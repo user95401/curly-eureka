@@ -72,15 +72,22 @@ namespace gd {
         
         public:
             static LevelInfoLayer* create(gd::GJGameLevel* level) {
-                return reinterpret_cast<LevelInfoLayer*(__fastcall*)(gd::GJGameLevel*)>(
-                    base + 0x175d50
-                )(level);
+                return reinterpret_cast<LevelInfoLayer*(__fastcall*)(gd::GJGameLevel*)>(base + 0x175d50)(level);
             }
-
             void onGarage(cocos2d::CCObject* pSender) {
-                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(
-                    base + 0x177c10
-                )(this, pSender);
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x177c10)(this, pSender);
+            }
+            void onViewProfile(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17ac90)(this, pSender);
+            }
+            void onLevelInfo(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17acf0)(this, pSender);
+            }
+            void setupProgressBars() {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*)>(base + 0x177fc0)(this);
+            }
+            void downloadLevel() {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*)>(base + 0x177d90)(this);
             }
     };
 }
