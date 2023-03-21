@@ -16,18 +16,10 @@ namespace gd {
 
 	public:
 		static GameSoundManager* sharedState() {
-			return reinterpret_cast<GameSoundManager* (__stdcall*)()>(
-				base + 0x24800
-				)();
+			return reinterpret_cast<GameSoundManager* (__stdcall*)()>(base + 0x24800)();
 		}
-		static void playSound(std::string sName) {
-			reinterpret_cast<void(__stdcall*)(
-				std::string
-			)>(
-				base + 0x25450
-			)(
-				sName
-			);
+		static void playEffect(std::string sName) {
+			reinterpret_cast<void(__stdcall*)(std::string)>(base + 0x25450)(sName);
 		}
 		void playBackgroundMusic(std::string path, bool idk, bool idk2) {
 			reinterpret_cast<void(__thiscall*)(GameSoundManager*, std::string, bool, bool)>(base + 0x252b0)(this, path, idk, idk2);
@@ -38,6 +30,18 @@ namespace gd {
 		}
 		void stopBackgroundMusic() {
 			reinterpret_cast<void(__thiscall*)(GameSoundManager*)>(base + 0x253a0)(this);
+		}
+		void asynchronousSetup() {
+			reinterpret_cast<void(__thiscall*)(GameSoundManager*)>(base + 0x25520)(this);
+		}
+		void enableMetering() {
+			reinterpret_cast<void(__thiscall*)(GameSoundManager*)>(base + 0x256F0)(this);
+		}
+		void getMeteringValue() {
+			reinterpret_cast<void(__thiscall*)(GameSoundManager*)>(base + 0x258f0)(this);
+		}
+		void disableMetering() {
+			reinterpret_cast<void(__thiscall*)(GameSoundManager*)>(base + 0x257D0)(this);
 		}
 	};
 }
