@@ -7,4 +7,5 @@ just gd.h(windows geometry dash headers) that I use
 #### [org](https://github.com/poweredbypie/gd.h) by [pie](https://github.com/poweredbypie) | based on [HJfod's fork](https://github.com/HJfod/gd.h)
 
 ## cocos-headers and minhook
-its just including cocos-headers/
+its just including cocos-headers and minhook
+/
