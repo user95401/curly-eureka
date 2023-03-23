@@ -27,7 +27,8 @@ namespace gd {
     kGJSearchTypeSimilar = 18,
     kGJSearchTypeMyLevels = 98,
     kGJSearchTypeSavedLevels = 99,
-    kGJSearchTypeFavouriteLevels = 100
+    kGJSearchTypeFavouriteLevels = 100,
+    kGJSearchTypeTopListsIDK = 20
 };
     
 
