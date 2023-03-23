@@ -97,6 +97,6 @@ void ModUtils::strToLower(std::string& str) {
         for(auto& c : str) c = tolower(c);
 }
 
-bool write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
+bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
     return WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
 }
