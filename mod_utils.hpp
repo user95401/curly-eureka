@@ -1,4 +1,4 @@
-#include <cocos2d.h>
+﻿#include <cocos2d.h>
 #include <gd.h>
 #include <fstream>
 #include <array>
@@ -22,9 +22,12 @@ namespace ModUtils {
     void strToLower(std::string& str);
 
     /*example:
-    [Trail Bug Fix (Fixes trail cutting on high refresh rates)]
+    //Fixes trail cutting on high refresh rates
     ModUtils::write_bytes((DWORD)GetModuleHandleA("libcocos2d.dll") + 0xAE9BD, { 0xBB , 0xFF , 0x00 , 0x00 , 0x00 , 0x90 });
-    [Verify Hack]
+    //Verify Hack
     ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });*/
     bool write_bytes(const std::uintptr_t, std::vector<uint8_t> const&);
+
+    /*idk why but CCMenu creates with center position 😏*/
+    CCPoint getCenterPoint();
 }

@@ -1,4 +1,4 @@
-#include <cocos2d.h>
+﻿#include <cocos2d.h>
 #include <gd.h>
 #include <fstream>
 #include "mod_utils.hpp"
@@ -99,4 +99,8 @@ void ModUtils::strToLower(std::string& str) {
 
 bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
     return WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
+}
+
+CCPoint ModUtils::getCenterPoint() {
+    return CCMenu::create()->getPosition();
 }
