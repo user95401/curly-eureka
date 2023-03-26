@@ -21,6 +21,7 @@ namespace gd {
 		GJSpiderSprite* m_pSpiderSprite;
 		PAD(4); // seems to be unused
 		bool m_bHasGlowOutline;
+		bool m_playerGlow;
 
 		virtual bool init(int iconID) {
 			return reinterpret_cast<bool (__thiscall*)(SimplePlayer*, int)>(
@@ -72,6 +73,10 @@ namespace gd {
 		void setGlowOutline(bool value) {
 			m_bHasGlowOutline = value;
 			updateColors();
+		}
+
+		void setPlayerGlow(bool v) {
+			m_playerGlow = v;
 		}
 	};
 }

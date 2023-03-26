@@ -60,6 +60,10 @@ namespace gd {
 
 				return pRet;
 			}
+			//fuck
+			static ButtonSprite* create(char const* label, int a2, int a3, float fontSize, bool dontMatchSize, char const* font, char const* btnTexture, float height) {
+				return reinterpret_cast<ButtonSprite* (__fastcall*)(const char*, int, int, float, bool, const char*, char const*, float)>(base + 0x137d0)(label, a2, a3, fontSize, dontMatchSize, font, btnTexture, height);
+			}
 
 			void updateBGImage(const char* spr) {
 				reinterpret_cast<void(__thiscall*)(ButtonSprite*, const char*)>(
