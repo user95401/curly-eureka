@@ -30,6 +30,7 @@ enum FMOD_RESULT;
 #include "GDProtocols.h"
 
 #include "delegates/delegates.h"
+#include "delegates/AppDelegate.h"
 
 #include "actions/CCCircleWave.h"
 
