@@ -159,6 +159,46 @@ namespace gd {
 
 		#undef FUCK_THIS
 
+		void setPlayerUserID(int id) {
+			return reinterpret_cast<void(__thiscall*)(GameManager*, int)>(base + 0x9F5F0)(this, id);
+		}
+
+		int iconKey(int id, IconType type) {
+			return reinterpret_cast<int(__thiscall*)(int, IconType)>(base + 0xC4DA0)(id, type);
+		}
+
+		int iconTypeToUnlockType(int id, IconType type) {
+			return reinterpret_cast<int(__thiscall*)(int, IconType)>(base + 0xC50C0)(id, type);
+		}
+
+		int unlockIcon(int a1, const char* a2, unsigned int a3) {
+			return reinterpret_cast<int(__thiscall*)(int, const char*, unsigned int)>(base + 0xC51B0)(a1, a2, a3);
+		}
+
+		int lockIcon(int a1, const char* a2, unsigned int a3) {
+			return reinterpret_cast<int(__thiscall*)(int, const char*, unsigned int)>(base + 0xC5240)(a1, a2, a3);
+		}
+
+		int colorKey(int a1, int a2, const char* a3, int a4) {
+			return reinterpret_cast<int(__thiscall*)(int, int, const char*, int)>(base + 0xC52C0)(a1, a2, a3, a4);
+		}
+
+		int unlockColor(int a1, const char* a2, unsigned int a3) {
+			return reinterpret_cast<int(__thiscall*)(int, const char*, unsigned int)>(base + 0xC54D0)(a1, a2, a3);
+		}
+		
+		int lockColor(int a1, const char* a2, unsigned int a3) {
+			return reinterpret_cast<int(__thiscall*)(int, const char*, unsigned int)>(base + 0xC5570)(a1, a2, a3);
+		}
+
+		unsigned int completedAchievement(const char* a2) {
+			return reinterpret_cast<unsigned int(__thiscall*)(GameManager*, const char*)>(base + 0xC5600)(this, a2);
+		}
+		//resetAchievement 
+		/*AchievementManager* reportAchievementWithID(const char* a2, int a3, bool a4) {
+			return reinterpret_cast<AchievementManager * (__thiscall*)(GameManager*, const char*, int, bool)>(base + 0xC64C0)(this, a2, a3, a4);
+		}*/
+
 		bool isColorUnlocked(int _id, bool _type) {
 			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, bool)>(base + 0xc53f0)(this, _id, _type);
 		}
