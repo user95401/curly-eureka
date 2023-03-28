@@ -15,6 +15,10 @@ namespace gd {
 		float m_fSliderGrooveXPos;
 		PAD(4);
 		bool m_bFromRefresh;
+		bool m_unknown;
+		bool m_unknown2;
+		int m_loadStep;
+		float m_sliderGrooveHeight;
 
 	public:
 		static LoadingLayer* create(bool fromReload) {
@@ -24,6 +28,15 @@ namespace gd {
 		}
 		void setFromRefresh(bool value) {
 			m_bFromRefresh = value;
+		}
+		const char* getLoadingString() {
+			reinterpret_cast<const char*(__fastcall*)()>(base + 0x18cf40)();
+		}
+		void loadAssets() {
+			reinterpret_cast<void(__fastcall*)()>(base + 0x18c8e0)();
+		}
+		void loadingFinished() {
+			reinterpret_cast<void(__fastcall*)()>(base + 0x18c790)();
 		}
 	};
 }
