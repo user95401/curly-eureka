@@ -30,13 +30,13 @@ namespace gd {
 			m_bFromRefresh = value;
 		}
 		const char* getLoadingString() {
-			reinterpret_cast<const char*(__fastcall*)()>(base + 0x18cf40)();
+			return reinterpret_cast<const char*(__fastcall*)()>(base + 0x18cf40)();
 		}
 		void loadAssets() {
-			reinterpret_cast<void(__fastcall*)()>(base + 0x18c8e0)();
+			reinterpret_cast<void(__thiscall*)(void*)>(base + 0x191940)(this);
 		}
 		void loadingFinished() {
-			reinterpret_cast<void(__fastcall*)()>(base + 0x18c790)();
+			reinterpret_cast<void(__thiscall*)(void*)>(base + 0x191940)(this);
 		}
 	};
 }

@@ -69,6 +69,15 @@ class GJGameLevel;
                 GameLevelManager*, int, bool
             )>( base + 0xa0940 )(this, id, unk);
         }
+        void getCompletedLevels(bool newFilter) {
+            reinterpret_cast<void(__thiscall*)(void*, bool)>(base + 0xa2d20)(this, newFilter);
+        }
+        void getGJUserInfo(int a1) {
+            reinterpret_cast<void(__thiscall*)(void*, bool)>(base + 0xb00b0)(this, a1);
+        }
+        int requestUserAccess() {
+            return reinterpret_cast<int(__fastcall*)(GameLevelManager*)>(base + 0xb00b0)(this);
+        }
     };
 
 }
