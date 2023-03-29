@@ -78,6 +78,9 @@ class GJGameLevel;
         int requestUserAccess() {
             return reinterpret_cast<int(__fastcall*)(GameLevelManager*)>(base + 0xB8110)(this);
         }
+        GameManager* onRequestUserAccessCompleted(int a1, const char** a2) {
+            return reinterpret_cast<GameManager * (__fastcall*)(int, const char**)>(base + 0xa0940)(a1, a2);
+        }
     };
 
 }
