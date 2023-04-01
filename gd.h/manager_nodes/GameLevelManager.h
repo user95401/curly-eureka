@@ -65,22 +65,52 @@ class GJGameLevel;
         }
 
         GJGameLevel* getMainLevel(int id, bool unk) {
-            return reinterpret_cast<GJGameLevel*(__thiscall*)(
-                GameLevelManager*, int, bool
-            )>( base + 0xa0940 )(this, id, unk);
+            return reinterpret_cast<GJGameLevel*(__thiscall*)(GameLevelManager*, int, bool)>( base + 0xa0940 )(this, id, unk);
         }
+
         void getCompletedLevels(bool newFilter) {
             reinterpret_cast<void(__thiscall*)(void*, bool)>(base + 0xa2d20)(this, newFilter);
         }
+
         void getGJUserInfo(int a1) {
             reinterpret_cast<void(__thiscall*)(void*, bool)>(base + 0xb00b0)(this, a1);
         }
+
         int requestUserAccess() {
             return reinterpret_cast<int(__fastcall*)(GameLevelManager*)>(base + 0xB8110)(this);
         }
+
         GameManager* onRequestUserAccessCompleted(int a1, const char** a2) {
             return reinterpret_cast<GameManager * (__fastcall*)(int, const char**)>(base + 0xa0940)(a1, a2);
         }
+
+        cocos2d::CCArray* getSavedLevels(bool favorite, int levelFolder) {
+            return reinterpret_cast<cocos2d::CCArray*(__fastcall*)(GameLevelManager*, bool,int)>(base + 0xa2960)(this, favorite, levelFolder);
+        }
+
+        cocos2d::CCArray* getSavedLevels(char const* e) {
+            return reinterpret_cast<cocos2d::CCArray * (__fastcall*)(GameLevelManager*, char const*)>(base + 0xa3a90)(this, e);
+        }
+
+        void  updateUserScore() {
+            return reinterpret_cast<void(__fastcall*)(GameLevelManager*)>(base + 0xada60)(this);
+        }
+
+        void downloadLevel(int id, bool downloadData) {
+            return reinterpret_cast<void(__fastcall*)(GameLevelManager*, int, bool)>(base + 0xaa730)(this, id, downloadData);
+        }// = win 0xaa730;
+
+        bool hasDownloadedLevel(int id) {
+            return reinterpret_cast<bool(__fastcall*)(GameLevelManager*, int)>(base + 0xab830)(this, id);
+        }// = win 0xab830;
+
+        GJGameLevel* getSavedLevel(int id) {
+            return reinterpret_cast<GJGameLevel * (__fastcall*)(GameLevelManager*, int)>(base + 0xa2ee0)(this, id);
+        } // = win 0xa2ee0;
+
+        void saveLevel(GJGameLevel* level) {
+            return reinterpret_cast<void(__fastcall*)(GameLevelManager*, GJGameLevel*)>(base + 0xa31c0)(this, level);
+        }// = win 0xa31c0;
     };
 
 }
