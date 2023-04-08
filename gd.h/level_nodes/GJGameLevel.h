@@ -122,7 +122,7 @@ namespace gd {
         int m_nOriginalLevel_rand;  // 0x2cc
         int m_nOriginalLevel_seed;  // 0x2d0
         int m_nOriginalLevel;       // 0x2d4
-        bool m_bTwoPlayerMode;      // 0x2d8
+        bool m_twoPlayerMode;      // 0x2d8
         int m_nFailedPasswordAttempts;  // 0x2dc
         int m_nFirstCoinVerified_rand;  // 0x2e0
         int m_nFirstCoinVerified_seed;  // 0x2e4
