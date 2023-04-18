@@ -8,8 +8,11 @@ using namespace cocos2d;
 using namespace gd;
 
 CCSprite* ModUtils::createWithSpriteFrameNameOrPlaceholder(const char* name){
-    auto sprite = CCSprite::createWithSpriteFrameName(name);
+    auto spriteWithSpriteFrameName = CCSprite::createWithSpriteFrameName(name);
+    if (spriteWithSpriteFrameName) return spriteWithSpriteFrameName;
+    auto sprite = CCSprite::create(name);
     if (sprite) return sprite;
+
     CCSprite* placeholder = createPlaceholder();
 
     auto placeholderLabel = CCLabelBMFont::create(name, "chatFont.fnt", 6, kCCTextAlignmentCenter);
@@ -22,6 +25,9 @@ CCSprite* ModUtils::createWithSpriteFrameNameOrPlaceholder(const char* name){
 CCSprite* ModUtils::createSpriteOrPlaceholder(const char* name){
     auto sprite = CCSprite::create(name);
     if (sprite) return sprite;
+    auto spriteWithSpriteFrameName = CCSprite::createWithSpriteFrameName(name);
+    if (spriteWithSpriteFrameName) return spriteWithSpriteFrameName;
+
     CCSprite* placeholder = createPlaceholder();
 
     auto placeholderLabel = CCLabelBMFont::create(name, "chatFont.fnt", 6, kCCTextAlignmentCenter);
