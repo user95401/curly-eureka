@@ -14,6 +14,7 @@ like<br>
  > ![image](https://user-images.githubusercontent.com/90561697/227592296-14e3952a-d639-4c2b-a8da-926ec24d1923.png)
  - write_bytes
  - getCenterPoint
+ - getRandomFileNameFromDir
  - copyToClipboard
  - createTextButton
  - strToLower
