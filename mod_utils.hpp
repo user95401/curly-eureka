@@ -7,9 +7,10 @@ using namespace cocos2d;
 using namespace gd;
 
 namespace ModUtils {
-    CCSprite* createWithSpriteFrameNameOrPlaceholder(const char* name);
-    
-    CCSprite* createSpriteOrPlaceholder(const char* name);
+    /*Recommended use it to create sprite)
+    It will try create sprite with CCSprite::create() or CCSprite::createWithSpriteFrameName()
+    and if both methods falils, will be created placeholder*/
+    CCSprite* createSprite(const char* name);
     
     CCSprite* createPlaceholder();
     
@@ -30,4 +31,8 @@ namespace ModUtils {
 
     /*idk why but CCMenu creates with center position 😏*/
     CCPoint getCenterPoint();
+
+    /*Gets name of a random file in folder
+    example: getRandomFileNameFromDir("Resources/DeathEffects", "explode_11.ogg")*/
+    std::string getRandomFileNameFromDir(std::string path, std::string or_else);
 }

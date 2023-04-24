@@ -7,22 +7,7 @@
 using namespace cocos2d;
 using namespace gd;
 
-CCSprite* ModUtils::createWithSpriteFrameNameOrPlaceholder(const char* name){
-    auto spriteWithSpriteFrameName = CCSprite::createWithSpriteFrameName(name);
-    if (spriteWithSpriteFrameName) return spriteWithSpriteFrameName;
-    auto sprite = CCSprite::create(name);
-    if (sprite) return sprite;
-
-    CCSprite* placeholder = createPlaceholder();
-
-    auto placeholderLabel = CCLabelBMFont::create(name, "chatFont.fnt", 6, kCCTextAlignmentCenter);
-    placeholderLabel->setPosition({ placeholder->getContentSize().width / 2, placeholder->getContentSize().height / 2 });
-    placeholder->addChild(placeholderLabel);
-
-    return placeholder;
-}
-
-CCSprite* ModUtils::createSpriteOrPlaceholder(const char* name){
+CCSprite* ModUtils::createSprite(const char* name){
     auto sprite = CCSprite::create(name);
     if (sprite) return sprite;
     auto spriteWithSpriteFrameName = CCSprite::createWithSpriteFrameName(name);
@@ -109,4 +94,20 @@ bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> co
 
 CCPoint ModUtils::getCenterPoint() {
     return CCMenu::create()->getPosition();
+}
+
+std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_else) {
+    if(CCFileUtils::sharedFileUtils()->isFileExist(path)){
+        std::vector<std::string> files;
+        for (auto& p : std::filesystem::directory_iterator(std::filesystem::current_path() / path)) {
+            files.push_back(p.path().filename().string());
+        }
+        if (files.size() == 0) { return or_else; }
+        return path + std::string("/") + files[rand() % files.size()].c_str();
+    }
+    else {
+        //                          :skull:
+        MessageBox(nullptr, std::string("The directory '" + path + "' isn't founded").c_str(), std::string("ModUtils::getRandomFileNameFromDir("+ path +", " + or_else + ")").c_str(), MB_ICONERROR | MB_OK);
+    }
+    return or_else;
 }
