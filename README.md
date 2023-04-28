@@ -10,7 +10,7 @@ its just including cocos-headers and minhook
 ### ModUtils
 code of some functions<br>
 like<br>
- - create sprite or placeholder
+ - create a sprite or placeholder
  > ![image](https://user-images.githubusercontent.com/90561697/227592296-14e3952a-d639-4c2b-a8da-926ec24d1923.png)
  - write_bytes
  - getCenterPoint
@@ -20,4 +20,4 @@ like<br>
  - strToLower
 
 ### mapped-hooks
-just some stolen thins for minhook
+just some stolen things for minhook
