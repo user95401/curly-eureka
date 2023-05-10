@@ -111,3 +111,9 @@ std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_
     }
     return or_else;
 }
+
+bool ModUtils::isCube(gd::PlayerObject* player) {
+    if (!player->m_isShip && !player->m_isBall && !player->m_isBird && !player->m_isDart && !player->m_isRobot && !player->m_isSpider)
+        return true;
+    return false;
+}

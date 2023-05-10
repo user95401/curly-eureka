@@ -26,6 +26,9 @@ namespace gd {
 		void runAnimation(std::string name) {
 			reinterpret_cast<void(__thiscall*)(CCAnimatedSprite*, std::string)>(base + 0x14f60)(this, name);
 		}
+		void tweenToAnimation(int a1, const char* a2, cocos2d::CCDelayTime* a3) {
+			reinterpret_cast<void(__thiscall*)(CCAnimatedSprite*, int, const char*, cocos2d::CCDelayTime*)>(base + 0x15080)(this, a1, a2, a3);
+		}
 	};
 
 	class GDH_DLL AnimatedSpriteDelegate {

@@ -31,7 +31,7 @@ namespace gd {
             Gamemode m_gamemode; // 0xf0
             Speed m_speed; // 0xf4
             bool m_bMiniMode; // 0xf8
-            bool m_bTwoPlayerMode;  // 0xf9
+            bool m_twoPlayerMode;  // 0xf9
             PAD(23);
             bool m_bFlipped; // 0x111
             PAD(2);

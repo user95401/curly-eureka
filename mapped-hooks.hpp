@@ -12,7 +12,7 @@ namespace MHook {
         auto status = MH_CreateHook(reinterpret_cast<void**>(address), hook, &trampoline);
         if (status == MH_OK)
             hooks[hook] = trampoline;
-        else if(MessageBoxA(nullptr, "An error has occured while hooking a function...\nMaybe you have original minhook.x32.dll\nDo you want to download right version?", "MinHook", MB_ICONERROR | MB_YESNO) == IDYES) system("explorer https://github.com/HJfod/minhook/releases/latest");
+        else if(MessageBoxA(nullptr, "An error has occured while hooking a function...\nMaybe you have original minhook.x32.dll\nDo you want to download right version?", __FUNCTION__, MB_ICONERROR | MB_YESNO) == IDYES) system("explorer https://github.com/HJfod/minhook/releases/latest");
         return status;
     }
 
@@ -25,6 +25,7 @@ namespace MHook {
 //lol 
 #define HOOK_GD(offset, name) create_hook_gd(offset, h_##name, reinterpret_cast<LPVOID*>(&o_##name))
 #define CC_HOOK(symbol, hook, orig) MH_CreateHook((PVOID)((int)GetProcAddress(GetModuleHandle("libcocos2d.dll"), symbol)), hook, (PVOID*)&orig)
+#define CCEXT_HOOK(symbol, hook, orig) MH_CreateHook((PVOID)((int)GetProcAddress(GetModuleHandle("libExtensions.dll"), symbol)), hook, (PVOID*)&orig)
 
 static bool create_hook(
 	LPVOID target,

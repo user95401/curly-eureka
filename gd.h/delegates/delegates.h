@@ -249,6 +249,10 @@ namespace gd {
     struct DynamicScrollDelegate {
         void updatePageWithObject(cocos2d::CCObject*, cocos2d::CCObject*) {}
     };
+
+    class GDH_DLL  LevelSettingsDelegate {
+        virtual void levelSettingsUpdated() {}
+    };
 }
 
 #endif

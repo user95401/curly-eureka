@@ -35,4 +35,6 @@ namespace ModUtils {
     /*Gets name of a random file in folder
     example: getRandomFileNameFromDir("Resources/DeathEffects", "explode_11.ogg")*/
     std::string getRandomFileNameFromDir(std::string path, std::string or_else);
+
+    bool isCube(gd::PlayerObject* player);
 }

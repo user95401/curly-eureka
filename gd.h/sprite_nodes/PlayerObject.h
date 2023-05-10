@@ -126,10 +126,62 @@ namespace gd {
 		float unk6A4[200]; // last 200 Y positions, tf
 		PAD(28);
 
+		virtual void update(float ft) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1e8200)(this, ft);
+		}
+		virtual void setScaleX(float ft) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1fa7e0)(this, ft);
+		}
+		virtual void setScaleY(float ft) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1fa7e0)(this, ft);
+		}
+		virtual void setScale(float ft) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1fa820)(this, ft);
+		}
+		virtual void setPosition(cocos2d::CCPoint const& point) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, cocos2d::CCPoint const&)>(base + 0x1f7370)(this, point);
+		}
 		virtual void setVisible(bool visible) {
-			return reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(
-				base + 0x1FA860
-				)(this, visible);
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1FA860)(this, visible);
+		}
+		virtual void setRotation(float ft) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1fa650)(this, ft);
+		}
+		virtual void setOpacity(unsigned char o) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, unsigned char)>(base + 0x1f7d40)(this, o);
+		}
+		virtual void setColor(cocos2d::_ccColor3B const& col3b){
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, cocos2d::_ccColor3B const&)>(base + 0x1f77f0)(this, col3b);
+		}
+		virtual void setFlipX(bool pr) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1fa690)(this, pr);
+		}
+		virtual void setFlipY(bool pr) {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1fa740)(this, pr);
+		}
+		virtual void resetObject() {
+			return reinterpret_cast<void(__thiscall*)(PlayerObject*)>(base + 0x1eecd0)(this);
+		}
+		virtual cocos2d::CCPoint getRealPosition() {
+			return reinterpret_cast<cocos2d::CCPoint(__thiscall*)(PlayerObject*)>(base + 0x1f7e20)(this);
+		}
+		void addAllParticles() {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*)>(base + 0x1e7d60)(this);
+		}
+		void boostPlayer(float boost) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1f8f30)(this, boost);
+		}
+		void convertToClosestRotation(float rotidk) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1e9ac0)(this, rotidk);
+		}
+		void copyAttributes(PlayerObject* plObj) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, PlayerObject*)>(base + 0x1f93f0)(this, plObj);
+		}
+		void deactivateParticle() {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*)>(base + 0x1e8f50)(this);
+		}
+		void playerDestroyed(bool param1) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1efaa0)(this, param1);
 		}
 		void pushButton(int button) {
 			reinterpret_cast<void(__thiscall*)(PlayerObject*, int)>(base + 0x1F4E40)(this, button);
@@ -158,11 +210,41 @@ namespace gd {
 		void runNormalRotation() {
 			reinterpret_cast<void(__thiscall*)(PlayerObject*)>(base + 0x1e9c50)(this);
 		}
-		void runBallRotation() {
-			reinterpret_cast<void(__thiscall*)(PlayerObject*)>(base + 0x1e9d10)(this);
+		void runBallRotation(float ft) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, float)>(base + 0x1e9d10)(this,ft);
+		}
+		void playDynamicSpiderRun() {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*)>(base + 0x1f9d80)(this);
 		}
 		void activateStreak() {
 			reinterpret_cast<void(__thiscall*)(PlayerObject*)>(base + 0x1f9080)(this);
+		}
+		void stopRotation(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1e9aa0)(this, boolean);
+		}
+		void toggleBirdMode(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f6050)(this, boolean);
+		}
+		void toggleDartMode(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f62c0)(this, boolean);
+		}
+		void toggleFlyMode(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f5e40)(this, boolean);
+		}
+		/*void toggleGhostEffect(GhostType type) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, GhostType)>(base + 0x1f8930)(this, type);
+		}*/
+		void togglePlayerScale(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f9640)(this, boolean);
+		}
+		void toggleRobotMode(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f6a10)(this, boolean);
+		}
+		void toggleRollMode(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f68e0)(this, boolean);
+		}
+		void toggleSpiderMode(bool boolean) {
+			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f94d1)(this, boolean);
 		}
 	};
 }

@@ -358,6 +358,10 @@ namespace gd {
 				base + 0xd1b90
 			)(this, pAction);
 		}
+
+		cocos2d::CCPoint getRealPosition() {
+			return reinterpret_cast<cocos2d::CCPoint(__thiscall*)(GameObject*)>(base + 0xe4d90)(this);
+		}
 	};
 
 	#pragma runtime_checks("s", restore)

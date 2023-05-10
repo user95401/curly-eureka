@@ -84,7 +84,7 @@ namespace gd {
 		cocos2d::CCSpriteBatchNode* m_pEffectBatchNodeAddBot4; // 0x220 
 		PlayerObject* m_pPlayer1; // 0x224 
 		PlayerObject* m_pPlayer2; // 0x228 
-		LevelSettingsObject* m_pLevelSettings; // 0x22C 
+		LevelSettingsObject* m_levelSettings; // 0x22C 
 		cocos2d::CCDictionary* unk230;
 		cocos2d::CCArray* m_pObjects; // 0x234 
 		cocos2d::CCArray* m_pObjectContainerArrays;	// 0x238

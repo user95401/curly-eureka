@@ -22,7 +22,7 @@ namespace gd {
     class GDH_DLL LevelEditorLayer : public GJBaseGameLayer {
     public:
         PAD(4)
-        bool m_unk2d0;   // 0x2d0
+            bool m_unk2d0;   // 0x2d0
         bool m_unk2d1;   // 0x2d1
         bool m_unk2d2;   // 0x2d2
         bool m_unk2d3;   // 0x2d3
@@ -36,20 +36,20 @@ namespace gd {
         bool m_unk2db;   // 0x2db
         bool m_bHighDetail;   // 0x2dc
         PAD(0x33)
-        GameObject* m_pCopyStateObject; // 0x310
+            GameObject* m_pCopyStateObject; // 0x310
         PAD(0x40)
-        int m_nCurrentLayer;    // 0x354
+            int m_nCurrentLayer;    // 0x354
         PAD(0x28)
-        EditorUI* m_pEditorUI;  // 0x380
+            EditorUI* m_pEditorUI;  // 0x380
         PAD(4)
-        cocos2d::CCArray* m_pUndoObjects;   // 0x388
+            cocos2d::CCArray* m_pUndoObjects;   // 0x388
         cocos2d::CCArray* m_pSomeArray; // 0x38c
         PAD(0x14)
-        DrawGridLayer* m_pDrawGridLayer;    // 0x3a4
+            DrawGridLayer* m_pDrawGridLayer;    // 0x3a4
         PAD(4)
-        PlaybackMode m_ePlaybackMode;   // 0x3a8
+            PlaybackMode m_ePlaybackMode;   // 0x3a8
         PAD(0x14)
-        GJGroundLayer* m_pGroundLayer;  // 0x3c4
+            GJGroundLayer* m_pGroundLayer;  // 0x3c4
 
     public:
         static LevelEditorLayer* get() { return gd::GameManager::sharedState()->getEditorLayer(); }
