@@ -101,8 +101,8 @@ namespace gd {
 			PAD(8);
 			bool m_isDead; // 0x39C
 			bool unk39D; // smth to do with the camera
-			bool MovingCameraX; // set to true when cameraMoveX is called
-			bool MovingCameraY; // set to true when cameraMoveY is called
+			bool unk39E; // set to true when cameraMoveX is called
+			bool unk39F; // set to true when cameraMoveY is called
 			PAD(4);
 			int unk3A4;
 			PAD(12);
