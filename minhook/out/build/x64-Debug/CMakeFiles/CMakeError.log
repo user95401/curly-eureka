@@ -1,0 +1,46 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+2
+Оптимизирующий компилятор Microsoft (R) C/C++ версии 19.29.30148 для x64
+(C) Корпорация Майкрософт (Microsoft Corporation).  Все права защищены.
+
+CMakeCCompilerId.c
+Microsoft (R) Incremental Linker Version 14.29.30148.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:CMakeCCompilerId.exe 
+CMakeCCompilerId.obj 
+LINK : fatal error LNK1104: не удается открыть файл "kernel32.lib"
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: C:/Users/user666/source/curly-eureka/minhook/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_4cdfa && [1/2] Building C object CMakeFiles\cmTC_4cdfa.dir\CMakeCCompilerABI.c.obj
+[2/2] Linking C executable cmTC_4cdfa.exe
+FAILED: cmTC_4cdfa.exe 
+cmd.exe /C "cd . && "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_4cdfa.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- "C:\PROGRA~2\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\link.exe" /nologo CMakeFiles\cmTC_4cdfa.dir\CMakeCCompilerABI.c.obj  /out:cmTC_4cdfa.exe /implib:cmTC_4cdfa.lib /pdb:cmTC_4cdfa.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+RC Pass 1: command "rc /fo CMakeFiles\cmTC_4cdfa.dir/manifest.res CMakeFiles\cmTC_4cdfa.dir/manifest.rc" failed (exit code 0) with the following output:
+Не удается найти указанный файл
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: C:/Users/user666/source/curly-eureka/minhook/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_9a6ef && [1/2] Building C object CMakeFiles\cmTC_9a6ef.dir\testCCompiler.c.obj
+[2/2] Linking C executable cmTC_9a6ef.exe
+FAILED: cmTC_9a6ef.exe 
+cmd.exe /C "cd . && "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_9a6ef.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- "C:\PROGRA~2\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\link.exe" /nologo CMakeFiles\cmTC_9a6ef.dir\testCCompiler.c.obj  /out:cmTC_9a6ef.exe /implib:cmTC_9a6ef.lib /pdb:cmTC_9a6ef.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+RC Pass 1: command "rc /fo CMakeFiles\cmTC_9a6ef.dir/manifest.res CMakeFiles\cmTC_9a6ef.dir/manifest.rc" failed (exit code 0) with the following output:
+Не удается найти указанный файл
+ninja: build stopped: subcommand failed.
+
+
+
