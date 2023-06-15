@@ -270,6 +270,9 @@ namespace gd {
 			virtual void onEnterTransitionDidFinish() {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x20dbd0)(this);
 			}
+			void onQuit() {
+				reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x20D810)(this);
+			}
 			void onExit() {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x20d810)(this);
 			}

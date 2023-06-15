@@ -8,10 +8,10 @@ using namespace cocos2d;
 using namespace gd;
 
 CCSprite* ModUtils::createSprite(const char* name){
-    auto sprite = CCSprite::create(name);
-    if (sprite) return sprite;
     auto spriteWithSpriteFrameName = CCSprite::createWithSpriteFrameName(name);
     if (spriteWithSpriteFrameName) return spriteWithSpriteFrameName;
+    auto sprite = CCSprite::create(name);
+    if (sprite) return sprite;
 
     CCSprite* placeholder = createPlaceholder();
 

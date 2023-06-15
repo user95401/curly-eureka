@@ -6,7 +6,7 @@
 namespace gd {
 	enum MenuAnimationType {
 		kMenuAnimationTypeScale	= 0,
-		kMenuAnimationTypeMove 	= 1,
+		kMenuAnimationTypeMove = 1,
 	};
 
 	#pragma runtime_checks("s", off)

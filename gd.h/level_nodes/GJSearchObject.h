@@ -25,10 +25,13 @@ namespace gd {
     kGJSearchTypeHallOfFame = 16,
     kGJSearchTypeFeaturedGDW = 17,
     kGJSearchTypeSimilar = 18,
+    kSearchType19 = 19,
+    kGJSearchTypeTopListsIDK = 20,
+    kSearchTypeDaily = 21,
+    kSearchTypeWeekly = 22,
     kGJSearchTypeMyLevels = 98,
     kGJSearchTypeSavedLevels = 99,
-    kGJSearchTypeFavouriteLevels = 100,
-    kGJSearchTypeTopListsIDK = 20
+    kGJSearchTypeFavouriteLevels = 100
 };
     
 

@@ -5,7 +5,7 @@
 
 namespace gd {
 	class GDH_DLL LoadingLayer : public cocos2d::CCLayer {
-	protected:
+	public:
 		PAD(4);
 		int m_nLoadIndex;
 		cocos2d::CCLabelBMFont* m_pCaption;
@@ -15,7 +15,6 @@ namespace gd {
 		float m_fSliderGrooveXPos;
 		PAD(4);
 		bool m_bFromRefresh;
-	public:
 		static LoadingLayer* create(bool fromReload) {
 			return reinterpret_cast<LoadingLayer* (__fastcall*)(bool)>(
 				base + 0x18BFE0
