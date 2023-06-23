@@ -61,8 +61,8 @@ namespace gd {
 		PAD(20);
 		GameObject* unk59C;
 		PAD(8);
-		GJRobotSprite* unk5A8;
-		GJSpiderSprite* unk5AC;
+		GJRobotSprite* RobotSprite;//unk5A8
+		GJSpiderSprite* SpiderSprite;//unk5AC
 		bool unk5B0;
 		cocos2d::CCParticleSystemQuad* unk5B4;
 		cocos2d::CCParticleSystemQuad* unk5B8;

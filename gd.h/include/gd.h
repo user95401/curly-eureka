@@ -8,6 +8,7 @@
 
 namespace gd {
 	inline auto base = reinterpret_cast<uintptr_t>(GetModuleHandle(0));
+	inline auto libcocos2d = (DWORD)GetModuleHandleA("libcocos2d.dll");
 
 	inline bool init() {
 		static_assert(sizeof(std::string) == 24,

@@ -14,6 +14,7 @@ namespace gd {
         static MusicDownloadManager* sharedState() {
             return reinterpret_cast<MusicDownloadManager*(__stdcall*)()>(base + 0x1945b0)();
         }
+
         static std::string pathForSong(int id) {
             std::string res;
 
@@ -30,6 +31,17 @@ namespace gd {
 
         void songStateChanged() {
             return reinterpret_cast<void(__thiscall*)(MusicDownloadManager*)>(base + 0x194d90)(this);
+        }
+
+        //mat
+        void downloadSong(int id) {
+            reinterpret_cast<void(__thiscall*)(MusicDownloadManager*, int)>(base + 0x194d90)(this, id);
+        }
+        SongInfoObject* getSongInfoObject(int id) {
+            return reinterpret_cast<SongInfoObject* (__thiscall*)(MusicDownloadManager*, int)>(base + 0x195F10)(this, id);
+        }
+        bool isSongDownloaded(int id) {
+            return reinterpret_cast<bool(__thiscall*)(MusicDownloadManager*, int)>(base + 0x195FF0)(this, id);
         }
     };
 }
