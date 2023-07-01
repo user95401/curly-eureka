@@ -100,11 +100,11 @@ namespace gd {
 			GJGroundLayer* m_topGround; // 0x390
 			PAD(8);
 			bool m_isDead; // 0x39C
-			bool unk39D; // smth to do with the camera
-			bool unk39E; // set to true when cameraMoveX is called
-			bool unk39F; // set to true when cameraMoveY is called
+			bool m_startCameraAtCorner; // smth to do with the camera
+			bool m_cameraYLocked; // set to true when cameraMoveX is called
+			bool m_cameraXLocked; // set to true when cameraMoveY is called
 			PAD(4);
-			int unk3A4;
+			int m_ballFrameSeed;
 			PAD(12);
 			float m_levelLength; // 0x3B4
 			float unk3B8;

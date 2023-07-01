@@ -64,13 +64,13 @@ namespace gd {
 		GJRobotSprite* RobotSprite;//unk5A8
 		GJSpiderSprite* SpiderSprite;//unk5AC
 		bool unk5B0;
-		cocos2d::CCParticleSystemQuad* unk5B4;
-		cocos2d::CCParticleSystemQuad* unk5B8;
-		cocos2d::CCParticleSystemQuad* unk5BC;
-		cocos2d::CCParticleSystemQuad* unk5C0;
-		cocos2d::CCParticleSystemQuad* unk5C4;
-		cocos2d::CCParticleSystemQuad* unk5C8;
-		cocos2d::CCParticleSystemQuad* unk5CC;
+		cocos2d::CCParticleSystemQuad* m_playerGroundParticles;
+		cocos2d::CCParticleSystemQuad* m_unk5B8;
+		cocos2d::CCParticleSystemQuad* m_shipBoostParticles;
+		cocos2d::CCParticleSystemQuad* m_vehicleGroundParticles;
+		cocos2d::CCParticleSystemQuad* m_unk5C4;
+		cocos2d::CCParticleSystemQuad* m_robotJumpParticles;
+		cocos2d::CCParticleSystemQuad* m_unk5CC;
 		PAD(4);
 		cocos2d::CCParticleSystemQuad* unk5D4;
 		cocos2d::CCParticleSystemQuad* unk5D8;
