@@ -3,7 +3,7 @@ Generalization of libraries for traditional Geometry Dash modding.
 A few utilities for mods...
 ### gd.h
 i'll add some things from [geode](https://github.com/geode-sdk/geode/tree/main/bindings) and mat's [func_dump](https://github.com/matcool/re-scripts/blob/main/func_dump.txt)
-##### examle commits:
+##### example commits:
 [buttons in menulayer](https://github.com/user95401/curly-eureka/commit/ba3b388c5d6cdaf5da8ecadd619629455f21e8ed), 
 [CreatorLayer](https://github.com/user95401/curly-eureka/commit/c18f2c57f253a7d3ec33adc41ceef024aaa3d9bd), 
 [GameSoundManager](https://github.com/user95401/curly-eureka/commit/50f2a0b4cbe3ef27afcdd4d471222ddb7b39338f), 
@@ -27,6 +27,3 @@ like<br>
  - copyToClipboard
  - createTextButton
  - strToLower
-
-### mapped-hooks
-just some stolen things for minhook
