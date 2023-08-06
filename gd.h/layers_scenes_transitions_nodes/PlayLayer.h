@@ -214,7 +214,7 @@ namespace gd {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*, GameObject*, float, bool)>(base + 0x208b10)(this, obj,fl,b);
 			}
 			void animateInGround(bool instant) {
-				reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x209b20)(this, b);
+				reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x209b20)(this, instant);
 			}
 			void animateOutGround(bool instant) {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x209e60)(this, instant);
