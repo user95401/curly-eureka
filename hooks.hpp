@@ -43,3 +43,6 @@ CC_HOOK("?create@CCSprite@cocos2d@@SAPAV12@PBD@Z", CCSprite_create, false);
 #define CC_HOOK(symbol, name, immediately) hook::create((PVOID)((int)GetProcAddress(GetModuleHandle("libcocos2d.dll"), symbol)), reinterpret_cast<LPVOID*>(name##_H), reinterpret_cast<LPVOID*>(&name), immediately)
 /*for libExtensions.dll funcs hooking*/
 #define CCEXT_HOOK(symbol, name, immediately) hook::create((PVOID)((int)GetProcAddress(GetModuleHandle("libExtensions.dll"), symbol)), reinterpret_cast<LPVOID*>(name##_H), reinterpret_cast<LPVOID*>(&name), immediately)
+
+#define MEMBERBYOFFSET(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset)
+#define MBO MEMBERBYOFFSET

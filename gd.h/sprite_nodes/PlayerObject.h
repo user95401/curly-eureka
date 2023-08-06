@@ -246,6 +246,11 @@ namespace gd {
 		void toggleSpiderMode(bool boolean) {
 			reinterpret_cast<void(__thiscall*)(PlayerObject*, bool)>(base + 0x1f94d1)(this, boolean);
 		}
+
+		//custom func, returns bool(!m_isShip && !m_isBall && !m_isBird && !m_isDart && !m_isRobot && !m_isSpider)
+		bool isCube() {
+			return bool(!m_isShip && !m_isBall && !m_isBird && !m_isDart && !m_isRobot && !m_isSpider);
+		}
 	};
 }
 

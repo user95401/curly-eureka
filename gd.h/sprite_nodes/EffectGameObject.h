@@ -115,14 +115,12 @@ namespace gd {
 
             std::string getSaveString() {
                 std::string ret;
-
-                reinterpret_cast<void(__thiscall*)(EffectGameObject*, std::string*)>(
-                    base + 0x257560
-                )(
-                    this, &ret
-                );
-
+                reinterpret_cast<void(__thiscall*)(EffectGameObject*, std::string*)>(base + 0x257560)(this, &ret);
                 return ret;
+            }
+            //bool init(char const*) = win 0x253CD0;
+            bool init(char const* name) {
+                return reinterpret_cast<bool(__thiscall*)(EffectGameObject*, char const*)>(base + 0x253CD0)(this, name);;
             }
 
             void updateLabel() {

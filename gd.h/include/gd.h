@@ -115,6 +115,7 @@ enum FMOD_RESULT;
 #include "layers_scenes_transitions_nodes/KeysLayer.h"
 #include "layers_scenes_transitions_nodes/GJOptionsLayer.h"
 #include "layers_scenes_transitions_nodes/EditorOptionsLayer.h"
+#include "layers_scenes_transitions_nodes/LevelSettingsLayer.h" 
 
 #include "audio_nodes/FMODAudioEngine.h"
 #include "audio_nodes/FMODSound.h"

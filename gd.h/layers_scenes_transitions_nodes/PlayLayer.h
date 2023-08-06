@@ -101,8 +101,8 @@ namespace gd {
 			PAD(8);
 			bool m_isDead; // 0x39C
 			bool m_startCameraAtCorner; // smth to do with the camera
-			bool m_cameraYLocked; // set to true when cameraMoveX is called
 			bool m_cameraXLocked; // set to true when cameraMoveY is called
+			bool m_cameraYLocked; // set to true when cameraMoveX is called
 			PAD(4);
 			int m_ballFrameSeed;
 			PAD(12);
@@ -213,11 +213,11 @@ namespace gd {
 			void animateInDualGround(GameObject* obj, float fl, bool b) {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*, GameObject*, float, bool)>(base + 0x208b10)(this, obj,fl,b);
 			}
-			void animateInGround(bool b) {
+			void animateInGround(bool instant) {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x209b20)(this, b);
 			}
-			void animateOutGround(bool b) {
-				reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x209e60)(this, b);
+			void animateOutGround(bool instant) {
+				reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x209e60)(this, instant);
 			}
 			void applyEnterEffect(GameObject* obj) {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*, GameObject*)>(base + 0x206880)(this, obj);

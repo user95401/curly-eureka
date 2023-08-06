@@ -7,13 +7,12 @@ namespace gd {
 	class FLAlertLayerProtocol;
 
 	class MenuLayer : public cocos2d::CCLayer, public FLAlertLayerProtocol, public GooglePlayDelegate {
-
-	cocos2d::CCSprite* m_googlePlaySprite;
-	cocos2d::CCSprite* m_viewProfileInfoText;
-	cocos2d::CCLabelBMFont* m_playerNameLabel;
-	CCMenuItemSpriteExtra* m_profileBtn;
-
 	public:
+		cocos2d::CCSprite* m_googlePlaySprite;
+		cocos2d::CCSprite* m_viewProfileInfoText;
+		cocos2d::CCLabelBMFont* m_playerNameLabel;
+		CCMenuItemSpriteExtra* m_profileBtn;
+
 		static MenuLayer* node() {
 			return reinterpret_cast<MenuLayer*(__stdcall*)()>(base + 0x190550)();
 		}

@@ -362,6 +362,11 @@ namespace gd {
 		cocos2d::CCPoint getRealPosition() {
 			return reinterpret_cast<cocos2d::CCPoint(__thiscall*)(GameObject*)>(base + 0xe4d90)(this);
 		}
+
+		//custom func
+		bool isGameModePortal() {
+			return bool(m_nObjectType == kGameObjectTypeShipPortal || m_nObjectType == kGameObjectTypeCubePortal || m_nObjectType == kGameObjectTypeBallPortal || m_nObjectType == kGameObjectTypeUfoPortal || m_nObjectType == kGameObjectTypeWavePortal || m_nObjectType == kGameObjectTypeRobotPortal || m_nObjectType == kGameObjectTypeSpiderPortal);
+		}
 	};
 
 	#pragma runtime_checks("s", restore)
