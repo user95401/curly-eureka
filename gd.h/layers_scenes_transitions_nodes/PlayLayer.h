@@ -244,7 +244,7 @@ namespace gd {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x20bdf0)(this);
 			}
 			void getLastCheckpoint() {
-				reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x20b800)(this);
+				return reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x20b800)(this);
 			}
 			void getObjectsState() {
 				reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x20b8b0)(this);

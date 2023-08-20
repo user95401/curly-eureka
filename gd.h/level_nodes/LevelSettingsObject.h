@@ -29,10 +29,14 @@ namespace gd {
         public:
             GJEffectManager* m_pEffectManager;  // 0xec
             Gamemode m_gamemode; // 0xf0
-            Speed m_speed; // 0xf4
-            bool m_bMiniMode; // 0xf8
-            bool m_twoPlayerMode;  // 0xf9
-            PAD(23);
+            Speed m_startSpeed;
+            bool m_startMini;
+            bool m_startDual;
+            bool m_twoPlayerMode;
+            float m_songOffset;
+            bool m_fadeIn;
+            bool m_fadeOut;
+            PAD(19);
             bool m_bFlipped; // 0x111
             PAD(2);
             GJGameLevel* m_pLevel;  // 0x114

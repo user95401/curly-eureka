@@ -34,6 +34,7 @@ namespace gd {
             bool m_pUpdatingTimeMarkers;    // 0x194
             bool m_bTimeNeedsUpdate;        // 0x195
             float m_fActiveGridNodeSize;    // 0x198
+            float m_gridSize;
 
             void draw() override {
                 reinterpret_cast<void(__thiscall*)(DrawGridLayer*)>(
