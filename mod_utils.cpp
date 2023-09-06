@@ -4,33 +4,30 @@
 #include "mod_utils.hpp"
 #include <array>
 
-using namespace cocos2d;
-using namespace gd;
-
-CCSprite* ModUtils::createSprite(const char* name){
-    auto spriteWithSpriteFrameName = CCSprite::createWithSpriteFrameName(name);
+cocos2d::CCSprite* ModUtils::createSprite(const char* name){
+    auto spriteWithSpriteFrameName = cocos2d::CCSprite::createWithSpriteFrameName(name);
     if (spriteWithSpriteFrameName) return spriteWithSpriteFrameName;
-    auto sprite = CCSprite::create(name);
+    auto sprite = cocos2d::CCSprite::create(name);
     if (sprite) return sprite;
 
-    CCSprite* placeholder = createPlaceholder();
+    cocos2d::CCSprite* placeholder = createPlaceholder();
 
-    auto placeholderLabel = CCLabelBMFont::create(name, "chatFont.fnt", 6, kCCTextAlignmentCenter);
+    auto placeholderLabel = cocos2d::CCLabelBMFont::create(name, "chatFont.fnt", 3.0, cocos2d::CCTextAlignment::kCCTextAlignmentCenter);
     placeholderLabel->setPosition({ placeholder->getContentSize().width / 2, placeholder->getContentSize().height / 2 });
     placeholder->addChild(placeholderLabel);
 
     return placeholder;
 }
 
-CCSprite* ModUtils::createPlaceholder(){
-        auto sprite = CCSprite::create();
+cocos2d::CCSprite* ModUtils::createPlaceholder(){
+        auto sprite = cocos2d::CCSprite::create();
 
-        auto subSprite1 = CCSprite::create("square02b_001.png");
-        auto subSprite2 = CCSprite::create("square02b_001.png");
-        auto subSprite3 = CCSprite::create("square02b_001.png");
-        auto subSprite4 = CCSprite::create("square02b_001.png");
+        auto subSprite1 = cocos2d::CCSprite::create("square02b_001.png");
+        auto subSprite2 = cocos2d::CCSprite::create("square02b_001.png");
+        auto subSprite3 = cocos2d::CCSprite::create("square02b_001.png");
+        auto subSprite4 = cocos2d::CCSprite::create("square02b_001.png");
 
-        std::array<CCSprite*, 4> sprites = {subSprite1, subSprite2, subSprite3, subSprite4};
+        std::array<cocos2d::CCSprite*, 4> sprites = {subSprite1, subSprite2, subSprite3, subSprite4};
 
         subSprite1->setAnchorPoint({0,0});
         subSprite2->setAnchorPoint({1,0});
@@ -67,12 +64,12 @@ void ModUtils::copyToClipboard(const char* text){
         CloseClipboard();
 }
 
-void ModUtils::copyToClipboard(const char* text, CCLayer* parent){
+void ModUtils::copyToClipboard(const char* text, cocos2d::CCLayer* parent){
         copyToClipboard(text);
-        parent->addChild(TextAlertPopup::create("Copied to clipboard", 0.5f, 0.6f), 100);
+        parent->addChild(gd::TextAlertPopup::create("Copied to clipboard", 0.5f, 0.6f), 100);
 }
 
-CCMenuItemSpriteExtra* ModUtils::createTextButton(CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale){
+gd::CCMenuItemSpriteExtra* ModUtils::createTextButton(cocos2d::CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale){
     auto buttonSprite = gd::ButtonSprite::create(text, width, true, "bigFont.fnt", "GJ_button_01.png", height, scale);
     auto buttonButton = gd::CCMenuItemSpriteExtra::create(
         buttonSprite,
@@ -92,12 +89,12 @@ bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> co
     return WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
 }
 
-CCPoint ModUtils::getCenterPoint() {
-    return CCMenu::create()->getPosition();
+cocos2d::CCPoint ModUtils::getCenterPoint() {
+    return cocos2d::CCMenu::create()->getPosition();
 }
 
 std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_else) {
-    if(CCFileUtils::sharedFileUtils()->isFileExist(path)){
+    if(cocos2d::CCFileUtils::sharedFileUtils()->isFileExist(path)){
         std::vector<std::string> files;
         for (auto& p : std::filesystem::directory_iterator(std::filesystem::current_path() / path)) {
             files.push_back(p.path().filename().string());
