@@ -82,6 +82,25 @@ namespace gd {
 			reinterpret_cast<void(__thiscall*)(void*, cocos2d::CCObject*)>(base + 0x1919A0)(this, pSender);
 		}
 	};
+
+	class MenuGameLayer : public cocos2d::CCLayer {
+	public:
+		void resetPlayer() {// = mac 0x28fdc0, win 0x18f4b0;
+			reinterpret_cast<void(__thiscall*)(void*)>(base + 0x18f4b0)(this);
+		}
+		void destroyPlayer() {//= win 0x190100;
+			reinterpret_cast<void(__thiscall*)(void*)>(base + 0x190100)(this);
+		}
+		virtual void update(float dtmayb) {// = mac 0x28fa70, win 0x18f190;
+			reinterpret_cast<void(__thiscall*)(void*, float)>(base + 0x18f190)(this, dtmayb);
+		}
+		virtual bool init() {// = win 0x18e770;
+			return reinterpret_cast<bool(__thiscall*)(void*)>(base + 0x18e770)(this);
+		}
+		void updateColors() {// = win 0x18edd0;
+			reinterpret_cast<void(__thiscall*)(void*)>(base + 0x18edd0)(this);
+		}
+	};
 }
 
 #endif

@@ -3,16 +3,13 @@
 #include <fstream>
 #include <array>
 
-using namespace cocos2d;
-using namespace gd;
-
 namespace ModUtils {
     /*Recommended use it to create sprite)
     It will try create sprite with CCSprite::create() or CCSprite::createWithSpriteFrameName()
     and if both methods falils, will be created placeholder*/
-    CCSprite* createSprite(const char* name);
+    cocos2d::CCSprite* createSprite(const char* name);
     
-    CCSprite* createPlaceholder();
+    cocos2d::CCSprite* createPlaceholder();
     
     void copyToClipboard(const char* text);
     
@@ -30,11 +27,9 @@ namespace ModUtils {
     bool write_bytes(const std::uintptr_t, std::vector<uint8_t> const&);
 
     /*idk why but CCMenu creates with center position 😏*/
-    CCPoint getCenterPoint();
+    cocos2d::CCPoint getCenterPoint();
 
     /*Gets name of a random file in folder
     example: getRandomFileNameFromDir("Resources/DeathEffects", "explode_11.ogg")*/
     std::string getRandomFileNameFromDir(std::string path, std::string or_else);
-
-    bool isCube(gd::PlayerObject* player);
 }
