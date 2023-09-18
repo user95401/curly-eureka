@@ -4,6 +4,7 @@
 #include <array>
 
 namespace ModUtils {
+
     /*Recommended use it to create sprite)
     It will try create sprite with CCSprite::create() or CCSprite::createWithSpriteFrameName()
     and if both methods falils, will be created placeholder*/
@@ -32,4 +33,20 @@ namespace ModUtils {
     /*Gets name of a random file in folder
     example: getRandomFileNameFromDir("Resources/DeathEffects", "explode_11.ogg")*/
     std::string getRandomFileNameFromDir(std::string path, std::string or_else);
+
+    /*return true; if layer init hook called 2 times*/
+    bool ttlihe(cocos2d::CCNode* node);
+
+    /*return true; if layer init hook called 2 times*/
+    void setupModSeed();
 }
+
+/* 
+stop the code via return; if layer init hook called 2 times
+useful for tradicional mod on Geode
+for seed set absolutely random number!
+*/
+#define twoTimesLayerInitHookEscape(node) if(ModUtils::ttlihe(node)) return true;
+
+/*xd*/
+#define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll");

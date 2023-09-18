@@ -6,27 +6,6 @@
 #include <iostream>
 #include <MinHook.h>
 
-/*hook may looks like:
-
-	inline bool(__thiscall* MenuLayer_init)(MenuLayer*);
-	bool __fastcall MenuLayer_init_H(MenuLayer* self) {
-		if (!MenuLayer_init(self)) return false;
-		CCLabelTTF* msg = CCLabelTTF::create("hello", "Comic Sans MS", 30.0f);
-		self->addChild(msg,10);
-		return true;
-	}
-
-	or
-
-	inline CCSprite* (__cdecl* CCSprite_create)(const char* name);
-	CCSprite* CCSprite_create_H(const char* name) {
-		if (std::string(name) == "GJ_colores_001.png" || std::string(name) == "GJ_paletaBtn_001.png")
-			return ModUtils::createSprite("GJ_paintBtn_001.png");
-		return CCSprite_create(name);
-	}
-
-*/
-
 struct hook {
 	static bool create(LPVOID target, LPVOID hook, LPVOID* original);
 	static bool safe_initialize();

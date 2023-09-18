@@ -1,8 +1,6 @@
-﻿#include <cocos2d.h>
-#include <gd.h>
-#include <fstream>
-#include "mod_utils.hpp"
-#include <array>
+﻿#include "mod_utils.hpp"
+
+int MOD_SEED;
 
 cocos2d::CCSprite* ModUtils::createSprite(const char* name){
     auto spriteWithSpriteFrameName = cocos2d::CCSprite::createWithSpriteFrameName(name);
@@ -107,4 +105,16 @@ std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_
         MessageBox(nullptr, std::string("The directory '" + path + "' isn't founded").c_str(), std::string("ModUtils::getRandomFileNameFromDir("+ path +", " + or_else + ")").c_str(), MB_ICONERROR | MB_OK);
     }
     return or_else;
+}
+
+bool ModUtils::ttlihe(cocos2d::CCNode* node) {
+    setupModSeed();
+    if (node->getChildByTag(MOD_SEED)) return true;
+    else node->addChild(cocos2d::CCNode::create(), -100, MOD_SEED);
+    return false;
+}
+
+void ModUtils::setupModSeed() {
+    srand((unsigned int)time(NULL));
+    if (MOD_SEED < 1) MOD_SEED = rand();
 }
