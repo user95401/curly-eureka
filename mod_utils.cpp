@@ -110,7 +110,7 @@ std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_
 bool ModUtils::ttlihe(cocos2d::CCNode* node) {
     setupModSeed();
     if (node->getChildByTag(MOD_SEED)) return true;
-    else node->addChild(cocos2d::CCNode::create(), -100, MOD_SEED);
+    else node->addChild(cocos2d::CCNode::create(), 9999, MOD_SEED);
     return false;
 }
 

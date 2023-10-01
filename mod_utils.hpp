@@ -44,9 +44,9 @@ namespace ModUtils {
 /* 
 stop the code via return; if layer init hook called 2 times
 useful for tradicional mod on Geode
-for seed set absolutely random number!
 */
 #define twoTimesLayerInitHookEscape(node) if(ModUtils::ttlihe(node)) return true;
+#define twoTimesLayerCustomSetupEscape(node) if(ModUtils::ttlihe(node)) return;
 
 /*xd*/
 #define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll");
