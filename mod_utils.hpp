@@ -49,4 +49,4 @@ useful for tradicional mod on Geode
 #define twoTimesLayerCustomSetupEscape(node) if(ModUtils::ttlihe(node)) return;
 
 /*xd*/
-#define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll");
+#define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll")
