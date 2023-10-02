@@ -83,16 +83,27 @@ namespace gd {
 		}
 	};
 
+	class PlayerObject;
+
 	class MenuGameLayer : public cocos2d::CCLayer {
 	public:
+		/*
+			founded at iAndyHD3's and CattoDev's github repositories
+		*/
+		//PlayerObject* m_pPlayer;//0x12C
+		//how works these fucks PAD()s
+
+		static MenuGameLayer* create() {
+			return reinterpret_cast<MenuGameLayer* (__fastcall*)()>(base + 0x18e6d0)();
+		}
 		void resetPlayer() {// = mac 0x28fdc0, win 0x18f4b0;
 			reinterpret_cast<void(__thiscall*)(void*)>(base + 0x18f4b0)(this);
 		}
 		void destroyPlayer() {//= win 0x190100;
 			reinterpret_cast<void(__thiscall*)(void*)>(base + 0x190100)(this);
 		}
-		virtual void update(float dtmayb) {// = mac 0x28fa70, win 0x18f190;
-			reinterpret_cast<void(__thiscall*)(void*, float)>(base + 0x18f190)(this, dtmayb);
+		virtual void update(float dt) {// = mac 0x28fa70, win 0x18f190;
+			reinterpret_cast<void(__thiscall*)(void*, float)>(base + 0x18f190)(this, dt);
 		}
 		virtual bool init() {// = win 0x18e770;
 			return reinterpret_cast<bool(__thiscall*)(void*)>(base + 0x18e770)(this);
