@@ -5,6 +5,7 @@
 //how this even works? im stupid 
 namespace gd {
     class AppDelegate : public cocos2d::CCApplication {
+    public:
         virtual bool applicationDidFinishLaunching() {
             return reinterpret_cast<bool(__thiscall*)(void*)>(base + 0x3cbb0)(this);
         }
