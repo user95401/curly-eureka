@@ -12,7 +12,7 @@ bool hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
 	return MH_EnableHook(target) == MH_STATUS::MH_OK;
 }
 
-bool hook::safe_initialize() {
+MH_STATUS hook::safe_initialize() {
 
 	std::random_device os_seed;
 	const unsigned int seed = os_seed();
@@ -22,7 +22,7 @@ bool hook::safe_initialize() {
 
 	Sleep(sleepMs);
 
-	return MH_Initialize() == MH_STATUS::MH_OK;
+	return MH_Initialize();
 }
 
 const char* Made_with_curly_eureka_by_user666 = "Made with curly-eureka by user666. :>";

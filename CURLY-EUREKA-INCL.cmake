@@ -14,8 +14,8 @@ ${CMAKE_CURRENT_LIST_DIR}/minhook/include
 ${CMAKE_CURRENT_LIST_DIR}/SimpleIni
 ${CMAKE_CURRENT_LIST_DIR}/DiscordRPCSDK/Includes
 )
-message("curly_eureka_incl - ${curly_eureka_incl}")
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/cocos-headers cocos-headers-build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/minhook minhook-build)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/uibuilder uibuilder-build)
 include_directories(${curly_eureka_incl})
 link_libraries(minhook cocos2d)

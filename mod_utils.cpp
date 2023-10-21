@@ -2,19 +2,28 @@
 
 int MOD_SEED;
 
-cocos2d::CCSprite* ModUtils::createSprite(const char* name){
-    auto spriteWithSpriteFrameName = cocos2d::CCSprite::createWithSpriteFrameName(name);
-    if (spriteWithSpriteFrameName) return spriteWithSpriteFrameName;
-    auto sprite = cocos2d::CCSprite::create(name);
+cocos2d::CCSprite* ModUtils::createSprite(const char* name) {
+
+    auto sprite = cocos2d::CCSprite::createWithSpriteFrameName(name);
+    if (!sprite) sprite = cocos2d::CCSprite::create(name);
     if (sprite) return sprite;
 
     cocos2d::CCSprite* placeholder = createPlaceholder();
-
     auto placeholderLabel = cocos2d::CCLabelBMFont::create(name, "chatFont.fnt", 3.0, cocos2d::CCTextAlignment::kCCTextAlignmentCenter);
     placeholderLabel->setPosition({ placeholder->getContentSize().width / 2, placeholder->getContentSize().height / 2 });
     placeholder->addChild(placeholderLabel);
 
     return placeholder;
+}
+
+cocos2d::CCSprite* ModUtils::createSprite(const char* name, bool IgnoreScaleFactor) {
+    float OldScaleFactor = cocos2d::CC_CONTENT_SCALE_FACTOR();
+
+    if (IgnoreScaleFactor) cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(2.f);
+    auto sprite = createSprite(name);
+    cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(OldScaleFactor);
+    
+    return sprite;
 }
 
 cocos2d::CCSprite* ModUtils::createPlaceholder(){

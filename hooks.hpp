@@ -8,7 +8,7 @@
 
 struct hook {
 	static bool create(LPVOID target, LPVOID hook, LPVOID* original);
-	static bool safe_initialize();
+	static MH_STATUS safe_initialize();
 };
 
 #define MH_SafeInitialize() hook::safe_initialize()

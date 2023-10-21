@@ -99,8 +99,8 @@ namespace gd {
 			this->m_obOffset = pos;
 		}
 		void setScale(float scale) override {
-			this->CCMenuItemSprite::setScale(scale);
 			this->m_fBaseScale = scale;
+			this->CCMenuItemSprite::setScale(scale);
 		}
 	};
 	#pragma runtime_checks("s", restore)

@@ -9,6 +9,7 @@ namespace ModUtils {
     It will try create sprite with CCSprite::create() or CCSprite::createWithSpriteFrameName()
     and if both methods falils, will be created placeholder*/
     cocos2d::CCSprite* createSprite(const char* name);
+    cocos2d::CCSprite* createSprite(const char* name, bool IgnoreScaleFactor);
     
     cocos2d::CCSprite* createPlaceholder();
     
@@ -42,10 +43,14 @@ namespace ModUtils {
 }
 
 /* 
-stop the code via return; if layer init hook called 2 times
+stop the code via return true; if layer init hook called 2 times
 useful for tradicional mod on Geode
 */
 #define twoTimesLayerInitHookEscape(node) if(ModUtils::ttlihe(node)) return true;
+/*
+stop the code via return; if layer init hook called 2 times
+useful for tradicional mod on Geode
+*/
 #define twoTimesLayerCustomSetupEscape(node) if(ModUtils::ttlihe(node)) return;
 
 /*xd*/
