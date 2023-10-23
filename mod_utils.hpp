@@ -38,8 +38,10 @@ namespace ModUtils {
     /*return true; if layer init hook called 2 times*/
     bool ttlihe(cocos2d::CCNode* node);
 
-    /*return true; if layer init hook called 2 times*/
     void setupModSeed();
+    int getModSeed();
+
+    std::filesystem::path GetModPath();
 }
 
 /* 

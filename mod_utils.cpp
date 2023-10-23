@@ -118,12 +118,42 @@ std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_
 
 bool ModUtils::ttlihe(cocos2d::CCNode* node) {
     setupModSeed();
-    if (node->getChildByTag(MOD_SEED)) return true;
-    else node->addChild(cocos2d::CCNode::create(), 9999, MOD_SEED);
+    printf((__FUNCTION__ "(" + ModUtils::GetModPath().filename().string() + "): getModSeed=" + std::to_string(getModSeed()) + "\n").c_str());
+    if (node->getChildByTag(ModUtils::getModSeed())) return true;
+    else node->addChild(cocos2d::CCNode::create(), 9999, ModUtils::getModSeed());
     return false;
 }
 
+#include <random>
 void ModUtils::setupModSeed() {
-    srand((unsigned int)time(NULL));
-    if (MOD_SEED < 1) MOD_SEED = rand();
+    if (MOD_SEED < 1) {
+        std::random_device os_seed;
+        const unsigned int seed = os_seed();
+        std::mt19937 generator(seed);
+        std::uniform_int_distribution<int> distribute(250, 1000);
+        MOD_SEED = distribute(generator);
+    }
+}
+
+int ModUtils::getModSeed() {
+    return MOD_SEED;
+}
+
+std::filesystem::path ModUtils::GetModPath() {
+    MEMORY_BASIC_INFORMATION mbi;
+    VirtualQuery(GetModPath, &mbi, sizeof(mbi));
+    HINSTANCE hModule = (HINSTANCE)(mbi.AllocationBase);
+    size_t size = 1;
+    char* buffer;
+    for (; ; ) {
+        buffer = new char[size + 1];
+        DWORD r = GetModuleFileName(hModule, buffer, size);
+        if (r < size && r != 0) break;
+        if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
+            delete buffer;
+            size += 64;
+        }
+        else return std::filesystem::path("");
+    }
+    return std::filesystem::path(buffer);
 }

@@ -134,7 +134,7 @@ namespace gd {
 			return pRet;
 		}
 		cocos2d::CCLayer* getLayer() { return m_pLayer; }
-		cocos2d::CCLayer* getButtonMenu() { return m_pButtonMenu; }
+		cocos2d::CCMenu* getButtonMenu() { return m_pButtonMenu; }
 	};
 	#pragma runtime_checks("s", restore)
 }

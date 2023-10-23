@@ -3,7 +3,6 @@
 #include <Windows.h>
 #include <random>
 #include <cstdint>
-#include <iostream>
 #include <MinHook.h>
 
 struct hook {
@@ -13,9 +12,8 @@ struct hook {
 
 #define MH_SafeInitialize() hook::safe_initialize()
 
-/*examples:
-	HOOK(base + 0x1907B0, MenuLayer_init, false); //to safe hook with a delay
-	HOOK(base + 0x18C8E0, LoadingLayer_loadAssets, true); //to unsafe hook immediately
+/*
+	HOOK(base + 0x1907B0, MenuLayer_init); //MenuLayer_init as org, MenuLayer_init_H as hook
 */
 #define HOOK(target, name) hook::create(reinterpret_cast<LPVOID>(target), reinterpret_cast<LPVOID*>(name##_H), reinterpret_cast<LPVOID*>(&name))
 /*for libcocos2d.dll funcs hooking
