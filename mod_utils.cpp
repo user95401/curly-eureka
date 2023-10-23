@@ -118,7 +118,6 @@ std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_
 
 bool ModUtils::ttlihe(cocos2d::CCNode* node) {
     setupModSeed();
-    printf((__FUNCTION__ "(" + ModUtils::GetModPath().filename().string() + "): getModSeed=" + std::to_string(getModSeed()) + "\n").c_str());
     if (node->getChildByTag(ModUtils::getModSeed())) return true;
     else node->addChild(cocos2d::CCNode::create(), 9999, ModUtils::getModSeed());
     return false;
@@ -132,11 +131,37 @@ void ModUtils::setupModSeed() {
         std::mt19937 generator(seed);
         std::uniform_int_distribution<int> distribute(250, 1000);
         MOD_SEED = distribute(generator);
+        ModUtils::log((__FUNCTION__": MOD_SEED=" + std::to_string(getModSeed()) + "\n"));
     }
 }
 
 int ModUtils::getModSeed() {
     return MOD_SEED;
+}
+
+//explode("str1.str2.str3", '.')
+std::vector<std::string> ModUtils::explode(const std::string& str, const char& ch) {
+    std::string next;
+    std::vector<std::string> result;
+    // For each character in the string
+    for (std::string::const_iterator it = str.begin(); it != str.end(); it++) {
+        // If we've hit the terminal character
+        if (*it == ch) {
+            // If we have some characters accumulated
+            if (!next.empty()) {
+                // Add them to the result vector
+                result.push_back(next);
+                next.clear();
+            }
+        }
+        else {
+            // Accumulate the next character into the sequence
+            next += *it;
+        }
+    }
+    if (!next.empty())
+        result.push_back(next);
+    return result;
 }
 
 std::filesystem::path ModUtils::GetModPath() {
@@ -156,4 +181,37 @@ std::filesystem::path ModUtils::GetModPath() {
         else return std::filesystem::path("");
     }
     return std::filesystem::path(buffer);
+}
+
+//get name of mod via parsing GetModPath()
+std::string ModUtils::GetModName() {
+    std::vector<std::string> vect = explode(GetModPath().filename().string(), '.');
+    if (vect[2] == "dll") {
+        return vect[1];
+    }
+    else return vect[0];
+}
+
+//get developer of mod via parsing GetModPath()
+std::string ModUtils::GetModDev() {
+    std::vector<std::string> vect = explode(GetModPath().filename().string(), '.');
+    if (vect[2] == "dll") {
+        return vect[0];
+    }
+    else return "unknown";
+}
+
+void ModUtils::log(std::string msg) {
+    std::ostringstream logentry;
+    //logTime
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    logentry << std::put_time(&tm, "%H:%M:%S");
+    //mod name prefix
+    logentry << " [" << GetModName() << "]: ";
+    //msg
+    logentry << msg << std::endl;
+
+    //just do it
+    printf(logentry.str().c_str());
 }

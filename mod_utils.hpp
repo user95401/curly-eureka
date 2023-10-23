@@ -41,7 +41,15 @@ namespace ModUtils {
     void setupModSeed();
     int getModSeed();
 
+    std::vector<std::string> explode(const std::string& str, const char& ch);
+
     std::filesystem::path GetModPath();
+
+    std::string GetModName();
+
+    std::string GetModDev();
+
+    void log(std::string);
 }
 
 /* 
