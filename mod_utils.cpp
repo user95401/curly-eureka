@@ -16,10 +16,18 @@ cocos2d::CCSprite* ModUtils::createSprite(const char* name) {
     return placeholder;
 }
 
-cocos2d::CCSprite* ModUtils::createSprite(const char* name, bool IgnoreScaleFactor) {
+cocos2d::CCSprite* ModUtils::createSprite(const char* name, bool ForceScaleFactor) {
+    float OldScaleFactor = cocos2d::CC_CONTENT_SCALE_FACTOR();
+    cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(ForceScaleFactor ? 2.0f : OldScaleFactor);
+    auto sprite = createSprite(name);
+    cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(OldScaleFactor);
+    return sprite;
+}
+
+cocos2d::CCSprite* ModUtils::createSprite(const char* name, float ForceScaleFactor) {
     float OldScaleFactor = cocos2d::CC_CONTENT_SCALE_FACTOR();
 
-    if (IgnoreScaleFactor) cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(2.f);
+    cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(ForceScaleFactor);
     auto sprite = createSprite(name);
     cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(OldScaleFactor);
     
@@ -57,9 +65,36 @@ cocos2d::CCSprite* ModUtils::createPlaceholder(){
 
         return sprite;
 }
-/*
-        Windows only code :D
-*/
+
+cocos2d::CCPoint ModUtils::getCenterPoint() {
+    return cocos2d::CCPoint(cocos2d::CCMenu::create()->getPosition());
+}
+
+cocos2d::CCAction* ModUtils::CreateRGB(float speed) {
+    return CreateRGB(speed, false);
+}
+
+cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
+    return is_reverse ?
+        cocos2d::CCRepeatForever::create(cocos2d::CCSequence::create(
+            cocos2d::CCTintTo::create(speed, 0, 255, 255),
+            cocos2d::CCTintTo::create(speed, 0, 0, 255),
+            cocos2d::CCTintTo::create(speed, 255, 0, 255),
+            cocos2d::CCTintTo::create(speed, 255, 0, 0),
+            cocos2d::CCTintTo::create(speed, 255, 255, 0),
+            cocos2d::CCTintTo::create(speed, 0, 255, 0),
+            nullptr
+        )) : cocos2d::CCRepeatForever::create(cocos2d::CCSequence::create(
+            cocos2d::CCTintTo::create(speed, 255, 0, 0),
+            cocos2d::CCTintTo::create(speed, 255, 255, 0),
+            cocos2d::CCTintTo::create(speed, 0, 255, 0),
+            cocos2d::CCTintTo::create(speed, 0, 255, 255),
+            cocos2d::CCTintTo::create(speed, 0, 0, 255),
+            cocos2d::CCTintTo::create(speed, 255, 0, 255),
+            nullptr
+        ));
+}
+
 void ModUtils::copyToClipboard(const char* text){
         const size_t len = strlen(text) + 1;
         HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
@@ -94,10 +129,6 @@ void ModUtils::strToLower(std::string& str) {
 
 bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
     return WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
-}
-
-cocos2d::CCPoint ModUtils::getCenterPoint() {
-    return cocos2d::CCMenu::create()->getPosition();
 }
 
 std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_else) {

@@ -144,20 +144,20 @@ namespace gd {
 		IconType getPlayerIconType() { return m_nPlayerIconType; }
 
 		PLAYER_ICON_FUNC(Frame)
-		PLAYER_ICON_FUNC(Ship)
-		PLAYER_ICON_FUNC(Ball)
-		PLAYER_ICON_FUNC(Bird)
-		PLAYER_ICON_FUNC(Dart)
-		PLAYER_ICON_FUNC(Robot)
-		PLAYER_ICON_FUNC(Spider)
-		PLAYER_ICON_FUNC(Streak)
-		PLAYER_ICON_FUNC(DeathEffect)
-		PLAYER_ICON_FUNC(Color)
-		PLAYER_ICON_FUNC(Color2)
-		void setPlayerGlow(bool v) { m_bPlayerGlow = v; }
+			PLAYER_ICON_FUNC(Ship)
+			PLAYER_ICON_FUNC(Ball)
+			PLAYER_ICON_FUNC(Bird)
+			PLAYER_ICON_FUNC(Dart)
+			PLAYER_ICON_FUNC(Robot)
+			PLAYER_ICON_FUNC(Spider)
+			PLAYER_ICON_FUNC(Streak)
+			PLAYER_ICON_FUNC(DeathEffect)
+			PLAYER_ICON_FUNC(Color)
+			PLAYER_ICON_FUNC(Color2)
+			void setPlayerGlow(bool v) { m_bPlayerGlow = v; }
 		void setPlayerIconType(IconType v) { m_nPlayerIconType = v; }
 
-		#undef FUCK_THIS
+#undef FUCK_THIS
 
 		void setPlayerUserID(int id) {
 			return reinterpret_cast<void(__thiscall*)(GameManager*, int)>(base + 0x9F5F0)(this, id);
@@ -186,7 +186,7 @@ namespace gd {
 		int unlockColor(int a1, const char* a2, unsigned int a3) {
 			return reinterpret_cast<int(__thiscall*)(int, const char*, unsigned int)>(base + 0xC54D0)(a1, a2, a3);
 		}
-		
+
 		int lockColor(int a1, const char* a2, unsigned int a3) {
 			return reinterpret_cast<int(__thiscall*)(int, const char*, unsigned int)>(base + 0xC5570)(a1, a2, a3);
 		}
@@ -210,10 +210,11 @@ namespace gd {
 			return ret;
 		}
 		static GameManager* sharedState() {
-			return reinterpret_cast<GameManager* (__stdcall*)()>(base + 0xC4A50)();
+			return reinterpret_cast<GameManager * (__stdcall*)()>(base + 0xC4A50)();
 		}
 		void reloadAll(bool bSwitch, bool bFullscreen, bool bReloadedInSession) {
-			return reinterpret_cast<void(__thiscall*)(GameManager*, bool, bool, bool)>(base + 0xCE950)(this, bSwitch, bFullscreen, bReloadedInSession);}
+			return reinterpret_cast<void(__thiscall*)(GameManager*, bool, bool, bool)>(base + 0xCE950)(this, bSwitch, bFullscreen, bReloadedInSession);
+		}
 		void setQuality(cocos2d::TextureQuality quality) {
 			m_eQuality = quality;
 		}

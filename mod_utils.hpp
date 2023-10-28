@@ -9,9 +9,18 @@ namespace ModUtils {
     It will try create sprite with CCSprite::create() or CCSprite::createWithSpriteFrameName()
     and if both methods falils, will be created placeholder*/
     cocos2d::CCSprite* createSprite(const char* name);
+    //create sprite only from medium scale factor
     cocos2d::CCSprite* createSprite(const char* name, bool IgnoreScaleFactor);
+    //sd - 1.0, hd - 2.0, uhd - 4.0
+    cocos2d::CCSprite* createSprite(const char* name, float ScaleFactor);
     
     cocos2d::CCSprite* createPlaceholder();
+
+    /*idk why but CCMenu creates with center position 😏*/
+    cocos2d::CCPoint getCenterPoint();
+
+    cocos2d::CCAction* CreateRGB(float speed);
+    cocos2d::CCAction* CreateRGB(float speed, bool is_reverse);
     
     void copyToClipboard(const char* text);
     
@@ -27,9 +36,6 @@ namespace ModUtils {
     //Verify Hack
     ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });*/
     bool write_bytes(const std::uintptr_t, std::vector<uint8_t> const&);
-
-    /*idk why but CCMenu creates with center position 😏*/
-    cocos2d::CCPoint getCenterPoint();
 
     /*Gets name of a random file in folder
     example: getRandomFileNameFromDir("Resources/DeathEffects", "explode_11.ogg")*/
