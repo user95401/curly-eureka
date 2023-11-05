@@ -86,6 +86,30 @@ namespace gd {
             void onLevelInfo(cocos2d::CCObject* pSender) {
                 reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17acf0)(this, pSender);
             }
+            void onInfo(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x179B50)(this, pSender);
+            }
+            void onClone(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x179EE0)(this, pSender);
+            }
+            void onOwnerDelete(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17A460)(this, pSender);
+            }
+            void onLike(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17A8A0)(this, pSender);
+            }
+            void onPlay(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x179730)(this, pSender);
+            }
+            void onBack(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17C110)(this, pSender);
+            }
+            void onDelete(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17A2B0)(this, pSender);
+            }
+            void onRate(cocos2d::CCObject* pSender) {
+                reinterpret_cast<void(__thiscall*)(LevelInfoLayer*, cocos2d::CCObject*)>(base + 0x17a530)(this, pSender);
+            }
             void setupProgressBars() {
                 reinterpret_cast<void(__thiscall*)(LevelInfoLayer*)>(base + 0x177fc0)(this);
             }

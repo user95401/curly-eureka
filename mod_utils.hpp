@@ -2,6 +2,7 @@
 #include <gd.h>
 #include <fstream>
 #include <array>
+#include "ValueSetupPopup.hpp"
 
 namespace ModUtils {
 
@@ -22,13 +23,7 @@ namespace ModUtils {
     cocos2d::CCAction* CreateRGB(float speed);
     cocos2d::CCAction* CreateRGB(float speed, bool is_reverse);
     
-    void copyToClipboard(const char* text);
-    
-    void copyToClipboard(const char* text, cocos2d::CCLayer* parent);
-    
     gd::CCMenuItemSpriteExtra* createTextButton(cocos2d::CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale);
-    
-    void strToLower(std::string& str);
 
     /*example:
     //Fixes trail cutting on high refresh rates
@@ -47,8 +42,6 @@ namespace ModUtils {
     void setupModSeed();
     int getModSeed();
 
-    std::vector<std::string> explode(const std::string& str, const char& ch);
-
     std::filesystem::path GetModPath();
 
     std::string GetModName();
@@ -56,6 +49,21 @@ namespace ModUtils {
     std::string GetModDev();
 
     void log(std::string);
+
+    std::vector<std::string> explode(const std::string& str, const char& ch);
+
+    void copyToClipboard(const char* text);
+
+    void copyToClipboard(const char* text, cocos2d::CCLayer* parent);
+
+    void strToLower(std::string& str);
+
+    std::string url_encode(const std::string& value);
+
+    std::string base64_encode(const std::string& in);
+
+    std::string base64_decode(const std::string& in);
+
 }
 
 /* 

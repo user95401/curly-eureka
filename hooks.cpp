@@ -1,15 +1,23 @@
 #include "hooks.hpp"
+#include "mod_utils.hpp"
 
-bool hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
-
+MH_STATUS hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
+	//MH_CreateHook
 	MH_STATUS hook_status = MH_CreateHook(target, hook, original);
-
+	//msg box if somth wrong
 	if (hook_status != MH_STATUS::MH_OK) {
-		MessageBoxA(nullptr, "something went wrong when attempting to hook function...", "MinHook", MB_ICONERROR | MB_OK);
-		return false;
+		MessageBoxA(nullptr,
+			(
+				std::string("something went wrong when attempting to hook function...\n") +
+				MH_StatusToString(hook_status)
+				).c_str(),
+			(ModUtils::GetModName() + " - " + __FUNCTION__).c_str(), MB_ICONERROR | MB_OK);
+		return hook_status;
 	}
-
-	return MH_EnableHook(target) == MH_STATUS::MH_OK;
+	//logit
+	ModUtils::log(std::to_string((DWORD)target) + std::string(" [hook]: ") + MH_StatusToString(hook_status));
+	//return status
+	return MH_EnableHook(target);
 }
 
 MH_STATUS hook::safe_initialize() {

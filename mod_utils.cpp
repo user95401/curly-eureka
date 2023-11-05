@@ -95,22 +95,6 @@ cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
         ));
 }
 
-void ModUtils::copyToClipboard(const char* text){
-        const size_t len = strlen(text) + 1;
-        HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
-        memcpy(GlobalLock(hMem), text, len);
-        GlobalUnlock(hMem);
-        OpenClipboard(0);
-        EmptyClipboard();
-        SetClipboardData(CF_TEXT, hMem);
-        CloseClipboard();
-}
-
-void ModUtils::copyToClipboard(const char* text, cocos2d::CCLayer* parent){
-        copyToClipboard(text);
-        parent->addChild(gd::TextAlertPopup::create("Copied to clipboard", 0.5f, 0.6f), 100);
-}
-
 gd::CCMenuItemSpriteExtra* ModUtils::createTextButton(cocos2d::CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale){
     auto buttonSprite = gd::ButtonSprite::create(text, width, true, "bigFont.fnt", "GJ_button_01.png", height, scale);
     auto buttonButton = gd::CCMenuItemSpriteExtra::create(
@@ -121,10 +105,6 @@ gd::CCMenuItemSpriteExtra* ModUtils::createTextButton(cocos2d::CCLayer* parent, 
     buttonButton->setSizeMult(1.2f);
 
     return buttonButton;
-}
-
-void ModUtils::strToLower(std::string& str) {
-        for(auto& c : str) c = tolower(c);
 }
 
 bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
@@ -168,31 +148,6 @@ void ModUtils::setupModSeed() {
 
 int ModUtils::getModSeed() {
     return MOD_SEED;
-}
-
-//explode("str1.str2.str3", '.')
-std::vector<std::string> ModUtils::explode(const std::string& str, const char& ch) {
-    std::string next;
-    std::vector<std::string> result;
-    // For each character in the string
-    for (std::string::const_iterator it = str.begin(); it != str.end(); it++) {
-        // If we've hit the terminal character
-        if (*it == ch) {
-            // If we have some characters accumulated
-            if (!next.empty()) {
-                // Add them to the result vector
-                result.push_back(next);
-                next.clear();
-            }
-        }
-        else {
-            // Accumulate the next character into the sequence
-            next += *it;
-        }
-    }
-    if (!next.empty())
-        result.push_back(next);
-    return result;
 }
 
 std::filesystem::path ModUtils::GetModPath() {
@@ -245,4 +200,111 @@ void ModUtils::log(std::string msg) {
 
     //just do it
     printf(logentry.str().c_str());
+}
+
+//explode("str1.str2.str3", '.')
+std::vector<std::string> ModUtils::explode(const std::string& str, const char& ch) {
+    std::string next;
+    std::vector<std::string> result;
+    // For each character in the string
+    for (std::string::const_iterator it = str.begin(); it != str.end(); it++) {
+        // If we've hit the terminal character
+        if (*it == ch) {
+            // If we have some characters accumulated
+            if (!next.empty()) {
+                // Add them to the result vector
+                result.push_back(next);
+                next.clear();
+            }
+        }
+        else {
+            // Accumulate the next character into the sequence
+            next += *it;
+        }
+    }
+    if (!next.empty())
+        result.push_back(next);
+    return result;
+}
+
+void ModUtils::strToLower(std::string& str) {
+    for (auto& c : str) c = tolower(c);
+}
+
+void ModUtils::copyToClipboard(const char* text) {
+    const size_t len = strlen(text) + 1;
+    HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
+    memcpy(GlobalLock(hMem), text, len);
+    GlobalUnlock(hMem);
+    OpenClipboard(0);
+    EmptyClipboard();
+    SetClipboardData(CF_TEXT, hMem);
+    CloseClipboard();
+}
+
+void ModUtils::copyToClipboard(const char* text, cocos2d::CCLayer* parent) {
+    copyToClipboard(text);
+    parent->addChild(gd::TextAlertPopup::create("Copied to clipboard", 0.5f, 0.6f), 100);
+}
+
+std::string ModUtils::url_encode(const std::string& value) {
+    using namespace std;
+    ostringstream escaped;
+    escaped.fill('0');
+    escaped << hex;
+
+    for (string::const_iterator i = value.begin(), n = value.end(); i != n; ++i) {
+        string::value_type c = (*i);
+
+        // Keep alphanumeric and other accepted characters intact
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+            continue;
+        }
+
+        // Any other characters are percent-encoded
+        escaped << uppercase;
+        escaped << '%' << setw(2) << int((unsigned char)c);
+        escaped << nouppercase;
+    }
+
+    return escaped.str();
+}
+
+std::string ModUtils::base64_encode(const std::string& in) {
+
+    std::string out;
+
+    int val = 0, valb = -6;
+    for (char c : in) {
+        val = (val << 8) + c;
+        valb += 8;
+        while (valb >= 0) {
+            out.push_back("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[(val >> valb) & 0x3F]);
+            valb -= 6;
+        }
+    }
+    if (valb > -6) out.push_back("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[((val << 8) >> (valb + 8)) & 0x3F]);
+    while (out.size() % 4) out.push_back('=');
+    return out;
+}
+
+std::string ModUtils::base64_decode(const std::string& in) {
+
+    std::string out;
+
+    std::vector<int> T(256, -1);
+    for (int i = 0; i < 64; i++) T["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[i]] = i;
+
+    int val = 0, valb = -8;
+    for (char c : in) {
+        if (T[c] == -1) break;
+        val = (val << 6) + T[c];
+        valb += 6;
+        if (valb >= 0) {
+            out.push_back(char((val >> valb) & 0xFF));
+            valb -= 8;
+        }
+    }
+    return out;
 }

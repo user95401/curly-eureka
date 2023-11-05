@@ -6,7 +6,7 @@
 #include <MinHook.h>
 
 struct hook {
-	static bool create(LPVOID target, LPVOID hook, LPVOID* original);
+	static MH_STATUS create(LPVOID target, LPVOID hook, LPVOID* original);
 	static MH_STATUS safe_initialize();
 };
 
