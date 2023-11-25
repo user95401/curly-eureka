@@ -308,3 +308,7 @@ std::string ModUtils::base64_decode(const std::string& in) {
     }
     return out;
 }
+
+cocos2d::CCNode* ModUtils::TheNodeOrSomeNode(cocos2d::CCNode* node) {
+    return (node && node->isRunning()) ? node : cocos2d::CCNode::create();
+}

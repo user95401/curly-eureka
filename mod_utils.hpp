@@ -64,6 +64,8 @@ namespace ModUtils {
 
     std::string base64_decode(const std::string& in);
 
+    /*will return new node if given node is wrong*/
+    cocos2d::CCNode* TheNodeOrSomeNode(cocos2d::CCNode* node);
 }
 
 /* 
@@ -79,3 +81,6 @@ useful for tradicional mod on Geode
 
 /*xd*/
 #define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll")
+
+/*will return new node if given node is wrong*/
+#define TheObjOrSomeObj(class, obj) dynamic_cast<class>(ModUtils::TheNodeOrSomeNode(obj))

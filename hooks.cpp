@@ -25,7 +25,7 @@ MH_STATUS hook::safe_initialize() {
 	std::random_device os_seed;
 	const unsigned int seed = os_seed();
 	std::mt19937 generator(seed);
-	std::uniform_int_distribution<int> distribute(10, 100);
+	std::uniform_int_distribution<int> distribute(10, 200);
 	int sleepMs = distribute(generator);
 
 	Sleep(sleepMs);
