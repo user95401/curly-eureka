@@ -37,7 +37,7 @@ namespace ModUtils {
     std::string getRandomFileNameFromDir(std::string path, std::string or_else);
 
     /*return true; if layer init hook called 2 times*/
-    bool ttlihe(cocos2d::CCNode* node);
+    bool ttcallesc(cocos2d::CCNode* pCCNode);
 
     void setupModSeed();
     int getModSeed();
@@ -68,16 +68,17 @@ namespace ModUtils {
     cocos2d::CCNode* TheNodeOrSomeNode(cocos2d::CCNode* node);
 }
 
-/* 
-stop the code via return true; if layer init hook called 2 times
-useful for tradicional mod on Geode
-*/
-#define twoTimesLayerInitHookEscape(node) if(ModUtils::ttlihe(node)) return true;
 /*
-stop the code via return; if layer init hook called 2 times
-useful for tradicional mod on Geode
+stop the code via return true; if layer init hook called 2 times
+useful for traditional mod on Geode
 */
-#define twoTimesLayerCustomSetupEscape(node) if(ModUtils::ttlihe(node)) return;
+#define twoTimesBoolCallEscapeByParrentNode(pCCNode) if(ModUtils::ttcallesc(pCCNode)) return true;
+
+/*
+stop the code via return; if hook called 2 times
+useful for traditional mod on Geode
+*/
+#define twoTimesVoidCallEscapeByParrentNode(pCCNode) if(ModUtils::ttcallesc(pCCNode)) return;
 
 /*xd*/
 #define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll")

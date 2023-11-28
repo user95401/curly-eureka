@@ -26,3 +26,25 @@ CC_HOOK("?create@CCSprite@cocos2d@@SAPAV12@PBD@Z", CCSprite_create, false);
 
 #define MEMBERBYOFFSET(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset)
 #define MBO MEMBERBYOFFSET
+
+#include <string>
+#include <cstdlib>
+#include <cstdint>
+#include <unordered_map>
+#include <type_traits> 
+#include "mod_utils.hpp"
+namespace MappedHooks {
+    using std::uintptr_t;
+    inline std::unordered_map<void*, void*> hooks;
+    inline auto registerHook(uintptr_t address, void* hook) {
+        void* trampoline;
+        auto status = hook::create(reinterpret_cast<void**>(address), hook, &trampoline);
+        if (status == MH_OK) MappedHooks::hooks[hook] = trampoline;
+        else ModUtils::log(__FUNCTION__" was failed!");
+        return status;
+    }
+    template <typename F>
+    inline auto getOriginal(F self) {
+        return reinterpret_cast<F>(MappedHooks::hooks[self]);
+    }
+}

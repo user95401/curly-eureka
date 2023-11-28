@@ -1,9 +1,13 @@
 #include "hooks.hpp"
 #include "mod_utils.hpp"
 
+//hook
+
 MH_STATUS hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
 	//MH_CreateHook
 	MH_STATUS hook_status = MH_CreateHook(target, hook, original);
+	//logit
+	ModUtils::log(std::to_string((DWORD)target) + std::string(" [hook]: ") + MH_StatusToString(hook_status));
 	//msg box if somth wrong
 	if (hook_status != MH_STATUS::MH_OK) {
 		MessageBoxA(nullptr,
@@ -14,8 +18,6 @@ MH_STATUS hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
 			(ModUtils::GetModName() + " - " + __FUNCTION__).c_str(), MB_ICONERROR | MB_OK);
 		return hook_status;
 	}
-	//logit
-	ModUtils::log(std::to_string((DWORD)target) + std::string(" [hook]: ") + MH_StatusToString(hook_status));
 	//return status
 	return MH_EnableHook(target);
 }
@@ -25,8 +27,9 @@ MH_STATUS hook::safe_initialize() {
 	std::random_device os_seed;
 	const unsigned int seed = os_seed();
 	std::mt19937 generator(seed);
-	std::uniform_int_distribution<int> distribute(10, 200);
+	std::uniform_int_distribution<int> distribute(10, 100);
 	int sleepMs = distribute(generator);
+	ModUtils::log((std::stringstream() << __func__ << " - sleep for " << sleepMs << "ms").str());
 
 	Sleep(sleepMs);
 
