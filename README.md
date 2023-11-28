@@ -3,7 +3,7 @@ a tool for traditional modding, almost every my mod requires this shit,<br>
 libraries collected: cocos-headers, gd.h, minhook, imgui-hook, uibuilder, Simple Ini, DiscordRPCSDK<br>
 It contains functions related to hooks and interference with the memory of the game, creating an interface etc.<br>
 
-You can create a mod on minhook for Geode without a cunt on the layers.<br>
+You can create a mod on minhook for Geode without a mess on the layers.<br>
 Compatible with other mods? exist some a solution there.<br>
 
 ### gd.h
@@ -32,4 +32,3 @@ it have some tools for hooking like
 
 ## modutils
 alot of things, just discover [mod_utils.hpp](mod_utils.hpp)
-
