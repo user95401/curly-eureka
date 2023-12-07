@@ -4,24 +4,23 @@
 #include "SimpleIni.h"
 
 class ValueSetupPopup : public gd::FLAlertLayer {
-public:
+private:
     cocos2d::extension::CCScale9Sprite* squareBg;
     cocos2d::extension::CCScale9Sprite* inputbg;
     gd::CCTextInputNode* input;
-    const char* m_key;
-    const char* m_section;
-    const char* m_file;
-    const char* m_comment;
+    std::string m_key;
+    std::string m_section;
+    std::string m_file;
+    std::string m_comment;
     bool m_vanillaFadeOut;
     bool m_isBoolean;
-
-    static ValueSetupPopup* create(const char* key, const char* section, const char* file, const char* comment);
-    bool init(const char* value, const char* section, const char* file, const char* comment);
+public:
+    static ValueSetupPopup* create(std::string key, std::string section, std::string file, std::string comment);
+    bool init(std::string key, std::string section, std::string file, std::string comment);
     virtual void keyBackClicked();
     virtual void update(float dt);
     void onClose(cocos2d::CCObject* callback);
     void onToggle(cocos2d::CCObject* callback);
-
     //close imedetatly
     ValueSetupPopup* vanillaFadeOut();
     //no showup anim
