@@ -188,19 +188,36 @@ std::string ModUtils::GetModDev() {
     else return "unknown";
 }
 
-void ModUtils::log(std::string msg) {
+void ModUtils::log(std::string msg, std::string prefix, bool milliseconds) {
     std::ostringstream logentry;
-    //logTime
-    auto t = std::time(nullptr);
-    auto tm = *std::localtime(&t);
-    logentry << std::put_time(&tm, "%H:%M:%S");
+    if (logentry << "\033[38;5;8m") {//gray color part bruh
+        //logTime
+        auto t = std::time(nullptr);
+        auto tm = *std::localtime(&t);
+        logentry << std::put_time(&tm, "%H:%M:%S");
+        //ms
+        if (milliseconds) logentry << "." << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() % 1000;
+        //log prefix
+        logentry << " " << prefix;
+    } logentry << "\033[0m";
     //mod name prefix
     logentry << " [" << GetModName() << "]: ";
     //msg
     logentry << msg << std::endl;
-
     //just do it
     printf(logentry.str().c_str());
+}
+
+void ModUtils::log(std::string msg, std::string prefix) {
+    ModUtils::log(msg, prefix, false);
+}
+
+void ModUtils::log(std::string msg, bool milliseconds) {
+    ModUtils::log(msg, "CE", milliseconds);
+}
+
+void ModUtils::log(std::string msg) {
+    ModUtils::log(msg, "CE", false);
 }
 
 //explode("str1.str2.str3", '.')

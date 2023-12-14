@@ -48,7 +48,10 @@ namespace ModUtils {
 
     std::string GetModDev();
 
-    void log(std::string);
+    void log(std::string msg, std::string prefix, bool milliseconds);
+    void log(std::string msg, std::string prefix);
+    void log(std::string msg, bool milliseconds);
+    void log(std::string msg);
 
     std::vector<std::string> explode(const std::string& str, const char& ch);
 

@@ -6,6 +6,7 @@
 #include <MinHook.h>
 
 struct hook {
+    static inline bool dontSendLogs;
 	static MH_STATUS create(LPVOID target, LPVOID hook, LPVOID* original);
 	static MH_STATUS safe_initialize();
 };
@@ -23,6 +24,8 @@ CC_HOOK("?create@CCSprite@cocos2d@@SAPAV12@PBD@Z", CCSprite_create, false);
 #define CC_HOOK(symbol, name) hook::create((PVOID)((int)GetProcAddress(GetModuleHandle("libcocos2d.dll"), symbol)), reinterpret_cast<LPVOID*>(name##_H), reinterpret_cast<LPVOID*>(&name))
 /*for libExtensions.dll funcs hooking*/
 #define CCEXT_HOOK(symbol, name) hook::create((PVOID)((int)GetProcAddress(GetModuleHandle("libExtensions.dll"), symbol)), reinterpret_cast<LPVOID*>(name##_H), reinterpret_cast<LPVOID*>(&name))
+/*hook::dontSendLogs*/
+#define DISABLE_HOOKS_LOGGING() hook::dontSendLogs = true
 
 #define MEMBERBYOFFSET(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset)
 #define MBO MEMBERBYOFFSET
