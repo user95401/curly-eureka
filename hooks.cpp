@@ -7,7 +7,7 @@ MH_STATUS hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
 	//MH_CreateHook
 	MH_STATUS hook_status = MH_CreateHook(target, hook, original);
 	//logit
-	if(!hook::dontSendLogs) ModUtils::log(std::to_string((DWORD)target) + std::string(" [hook]: ") + MH_StatusToString(hook_status), true);
+	if(!hook::dontSendLogs) ModUtils::log(std::to_string((DWORD)target) + std::string(" [hook]: ") + MH_StatusToString(hook_status), false);
 	//msg box if somth wrong
 	if (hook_status != MH_STATUS::MH_OK) {
 		MessageBoxA(nullptr,
@@ -20,23 +20,6 @@ MH_STATUS hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
 	}
 	//return status
 	return MH_EnableHook(target);
-}
-
-#include <thread>
-#include <chrono>
-MH_STATUS hook::safe_initialize() {
-
-	std::random_device os_seed;
-	const unsigned int seed = os_seed();
-	std::mt19937 generator(seed);
-	std::uniform_int_distribution<int> distribute(60, 180);
-	int sleepMs = distribute(generator);
-	if (!hook::dontSendLogs) ModUtils::log((std::stringstream() << __func__ << " - sleep for " << sleepMs << "ms").str(), true);
-
-	//Sleep(sleepMs);
-	std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
-
-	return MH_Initialize();
 }
 
 const char* Made_with_curly_eureka_by_user666 = "Made with curly-eureka by user666. :>";

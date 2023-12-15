@@ -8,10 +8,7 @@
 struct hook {
     static inline bool dontSendLogs;
 	static MH_STATUS create(LPVOID target, LPVOID hook, LPVOID* original);
-	static MH_STATUS safe_initialize();
 };
-
-#define MH_SafeInitialize() hook::safe_initialize()
 
 /*
 	HOOK(base + 0x1907B0, MenuLayer_init); //MenuLayer_init as org, MenuLayer_init_H as hook
@@ -37,6 +34,7 @@ CC_HOOK("?create@CCSprite@cocos2d@@SAPAV12@PBD@Z", CCSprite_create, false);
 #include <type_traits> 
 #include "mod_utils.hpp"
 namespace MappedHooks {
+    inline auto btw = "MappedHooks created by Cvolton";
     using std::uintptr_t;
     inline std::unordered_map<void*, void*> hooks;
     inline auto registerHook(uintptr_t address, void* hook) {
