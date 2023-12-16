@@ -2,6 +2,11 @@
 
 int MOD_SEED;
 
+/*
+    Recommended use it to create sprite :>
+    It will try create sprite with CCSprite::create() or CCSprite::createWithSpriteFrameName()
+    and if both methods falils, will be created placeholder
+*/
 cocos2d::CCSprite* ModUtils::createSprite(const char* name) {
 
     auto sprite = cocos2d::CCSprite::createWithSpriteFrameName(name);
@@ -16,6 +21,7 @@ cocos2d::CCSprite* ModUtils::createSprite(const char* name) {
     return placeholder;
 }
 
+//create sprite only from medium scale factor
 cocos2d::CCSprite* ModUtils::createSprite(const char* name, bool ForceScaleFactor) {
     float OldScaleFactor = cocos2d::CC_CONTENT_SCALE_FACTOR();
     cocos2d::CCDirector::sharedDirector()->setContentScaleFactor(ForceScaleFactor ? 2.0f : OldScaleFactor);
@@ -24,6 +30,7 @@ cocos2d::CCSprite* ModUtils::createSprite(const char* name, bool ForceScaleFacto
     return sprite;
 }
 
+//sd - 1.0, hd - 2.0, uhd - 4.0
 cocos2d::CCSprite* ModUtils::createSprite(const char* name, float ForceScaleFactor) {
     float OldScaleFactor = cocos2d::CC_CONTENT_SCALE_FACTOR();
 
@@ -34,7 +41,11 @@ cocos2d::CCSprite* ModUtils::createSprite(const char* name, float ForceScaleFact
     return sprite;
 }
 
-cocos2d::CCSprite* ModUtils::createPlaceholder(){
+/*
+    Its creating sprite with construction of square02b_001.png sub sprites.
+    Looks like emo textures (pink and black cell)
+*/
+cocos2d::CCSprite* ModUtils::createPlaceholder() {
         auto sprite = cocos2d::CCSprite::create();
 
         auto subSprite1 = cocos2d::CCSprite::create("square02b_001.png");
@@ -66,14 +77,19 @@ cocos2d::CCSprite* ModUtils::createPlaceholder(){
         return sprite;
 }
 
-cocos2d::CCPoint ModUtils::getCenterPoint() {
-    return cocos2d::CCPoint(cocos2d::CCMenu::create()->getPosition());
+/*
+    position as offset from 0 to center point of screen size
+*/
+const cocos2d::CCPoint ModUtils::getCenterPoint() {
+    return cocos2d::CCDirector::sharedDirector()->getWinSize() / 2;
 }
 
+//creating rgb animation that u can apply to node
 cocos2d::CCAction* ModUtils::CreateRGB(float speed) {
     return CreateRGB(speed, false);
 }
 
+//creating rgb animation that u can apply to node
 cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
     return is_reverse ?
         cocos2d::CCRepeatForever::create(cocos2d::CCSequence::create(
@@ -95,7 +111,8 @@ cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
         ));
 }
 
-gd::CCMenuItemSpriteExtra* ModUtils::createTextButton(cocos2d::CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale){
+//creating menu item with ButtonSprite
+gd::CCMenuItemSpriteExtra* ModUtils::createTextButton(cocos2d::CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale) {
     auto buttonSprite = gd::ButtonSprite::create(text, width, true, "bigFont.fnt", "GJ_button_01.png", height, scale);
     auto buttonButton = gd::CCMenuItemSpriteExtra::create(
         buttonSprite,
@@ -107,10 +124,19 @@ gd::CCMenuItemSpriteExtra* ModUtils::createTextButton(cocos2d::CCLayer* parent, 
     return buttonButton;
 }
 
+/*
+    Write current process memory with bytes vector
+    example:
+    //Fixes trail cutting on high refresh rates
+    ModUtils::write_bytes((DWORD)GetModuleHandleA("libcocos2d.dll") + 0xAE9BD, { 0xBB , 0xFF , 0x00 , 0x00 , 0x00 , 0x90 });
+    //Verify Hack
+    ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });
+*/
 bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
     return WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
 }
 
+//return string as relative path of random file in target directory
 std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_else) {
     if(cocos2d::CCFileUtils::sharedFileUtils()->isFileExist(path)){
         std::vector<std::string> files;
@@ -127,6 +153,10 @@ std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_
     return or_else;
 }
 
+/*
+    FOR GEODE LOADER
+    return true if pCCNode already has child with MOD_SEED tag
+*/
 bool ModUtils::ttcallesc(cocos2d::CCNode* pCCNode) {
     setupModSeed();
     if (pCCNode->getChildByTag(ModUtils::getModSeed())) return true;
@@ -136,6 +166,11 @@ bool ModUtils::ttcallesc(cocos2d::CCNode* pCCNode) {
 }
 
 #include <random>
+
+/*
+    FOR GEODE LOADER
+    generates a random number and defines it in MOD_SEED
+*/
 void ModUtils::setupModSeed() {
     if (MOD_SEED < 1) {
         std::random_device os_seed;
@@ -147,10 +182,15 @@ void ModUtils::setupModSeed() {
     }
 }
 
+/*
+    FOR GEODE LOADER
+    returns MOD_SEED
+*/
 int ModUtils::getModSeed() {
     return MOD_SEED;
 }
 
+//returns std::filesystem::path of self
 std::filesystem::path ModUtils::GetModPath() {
     MEMORY_BASIC_INFORMATION mbi;
     VirtualQuery(GetModPath, &mbi, sizeof(mbi));
@@ -188,6 +228,7 @@ std::string ModUtils::GetModDev() {
     else return "unknown";
 }
 
+//simple printf with time and mod name
 void ModUtils::log(std::string msg, std::string prefix, bool milliseconds) {
     std::ostringstream logentry;
     if (logentry << "\033[38;5;8m") {//gray color part bruh
@@ -208,19 +249,26 @@ void ModUtils::log(std::string msg, std::string prefix, bool milliseconds) {
     printf(logentry.str().c_str());
 }
 
+//simple printf with time and mod name
 void ModUtils::log(std::string msg, std::string prefix) {
     ModUtils::log(msg, prefix, false);
 }
 
+//simple printf with time and mod name
 void ModUtils::log(std::string msg, bool milliseconds) {
     ModUtils::log(msg, "CE", milliseconds);
 }
 
+//simple printf with time and mod name
 void ModUtils::log(std::string msg) {
     ModUtils::log(msg, "CE", false);
 }
 
-//explode("str1.str2.str3", '.')
+/*
+    create strings vector by splitting string with separator char
+    example:
+    ModUtils::log(ModUtils::explode("zero_str.str1.strTwo", '.')[2]); //print strTwo
+*/
 std::vector<std::string> ModUtils::explode(const std::string& str, const char& ch) {
     std::string next;
     std::vector<std::string> result;
@@ -245,10 +293,12 @@ std::vector<std::string> ModUtils::explode(const std::string& str, const char& c
     return result;
 }
 
+//set every char of string to lower
 void ModUtils::strToLower(std::string& str) {
     for (auto& c : str) c = tolower(c);
 }
 
+//its copy text to clipboard...
 void ModUtils::copyToClipboard(const char* text) {
     const size_t len = strlen(text) + 1;
     HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
@@ -260,11 +310,16 @@ void ModUtils::copyToClipboard(const char* text) {
     CloseClipboard();
 }
 
+/*
+    calls copyToClipboard(text) and popups on parent the text on black bg that says "Copied to clipboard"
+    for me dont working btw
+*/
 void ModUtils::copyToClipboard(const char* text, cocos2d::CCLayer* parent) {
     copyToClipboard(text);
     parent->addChild(gd::TextAlertPopup::create("Copied to clipboard", 0.5f, 0.6f), 100);
 }
 
+//for exaple: "(*&*$() 101 cvcds /*-`1мивфд" => "(*%26*%24()+101+cvcds+%2F*-%601мивфд"
 std::string ModUtils::url_encode(const std::string& value) {
     using namespace std;
     ostringstream escaped;
@@ -289,10 +344,9 @@ std::string ModUtils::url_encode(const std::string& value) {
     return escaped.str();
 }
 
+//for exaple: "dW5ubw==" => "unno"
 std::string ModUtils::base64_encode(const std::string& in) {
-
     std::string out;
-
     int val = 0, valb = -6;
     for (char c : in) {
         val = (val << 8) + c;
@@ -307,13 +361,11 @@ std::string ModUtils::base64_encode(const std::string& in) {
     return out;
 }
 
+//for exaple: "unno" => "dW5ubw=="
 std::string ModUtils::base64_decode(const std::string& in) {
-
     std::string out;
-
     std::vector<int> T(256, -1);
     for (int i = 0; i < 64; i++) T["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[i]] = i;
-
     int val = 0, valb = -8;
     for (char c : in) {
         if (T[c] == -1) break;
@@ -327,6 +379,7 @@ std::string ModUtils::base64_decode(const std::string& in) {
     return out;
 }
 
+//if node is bad it return new cocos2d::CCNode to escape crash
 cocos2d::CCNode* ModUtils::TheNodeOrSomeNode(cocos2d::CCNode* node) {
     return (node && node->isRunning()) ? node : cocos2d::CCNode::create();
 }
