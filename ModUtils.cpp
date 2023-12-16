@@ -1,4 +1,4 @@
-﻿#include "mod_utils.hpp"
+﻿#include "ModUtils.hpp"
 
 int MOD_SEED;
 

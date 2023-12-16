@@ -1,13 +1,13 @@
-#include "hooks.hpp"
-#include "mod_utils.hpp"
+#include "HooksUtils.hpp"
+#include "ModUtils.hpp"
 
 //hook
 
-MH_STATUS hook::create(LPVOID target, LPVOID hook, LPVOID* original) {
+MH_STATUS HooksUtils::CreateHook(LPVOID target, LPVOID hook, LPVOID* original) {
 	//MH_CreateHook
 	MH_STATUS hook_status = MH_CreateHook(target, hook, original);
 	//logit
-	if(!hook::dontSendLogs) ModUtils::log(std::to_string((DWORD)target) + std::string(" [hook]: ") + MH_StatusToString(hook_status), false);
+	if(!HooksUtils::DontSendLogs) ModUtils::log(std::to_string((DWORD)target) + std::string(" [hook]: ") + MH_StatusToString(hook_status), false);
 	//msg box if somth wrong
 	if (hook_status != MH_STATUS::MH_OK) {
 		MessageBoxA(nullptr,

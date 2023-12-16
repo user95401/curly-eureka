@@ -1,6 +1,6 @@
 #pragma once
-#include "mod_utils.hpp"
-#include "hooks.hpp"
+#include "ModUtils.hpp"
+#include "HooksUtils.hpp"
 #include "SimpleIni.h"
 
 class ValueSetupPopup : public gd::FLAlertLayer {
