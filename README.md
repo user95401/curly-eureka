@@ -4,6 +4,8 @@ It contains functions related to hooks and interference with the memory of the g
 
 ## features
 
+- independence (don't need anything, just inject built dll)
+
 - libraries collected in that sdk:
   - cocos-headers, gd.h, minhook(multi hook fork), imgui-hook, uibuilder, Simple Ini, DiscordRPCSDK, jute, kuba--zip<br>
 
