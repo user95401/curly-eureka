@@ -27,6 +27,13 @@ CC_HOOK("?create@CCSprite@cocos2d@@SAPAV12@PBD@Z", CCSprite_create, false);
 #define MEMBERBYOFFSET(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset)
 #define MBO MEMBERBYOFFSET
 
+template<typename T, typename U> constexpr size_t OFFSETBYMEMBER(U T::* member)
+{
+    return (char*)&((T*)nullptr->*member) - (char*)nullptr;
+}
+
+#define OBM(member) OFFSETBYMEMBER(member)
+
 #include <string>
 #include <cstdlib>
 #include <cstdint>

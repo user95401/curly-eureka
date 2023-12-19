@@ -131,4 +131,4 @@ useful for traditional mod on Geode
 #define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll")
 
 /*will return new node if given node is wrong*/
-#define TheObjOrSomeObj(class, obj) dynamic_cast<class>(ModUtils::TheNodeOrSomeNode(obj))
+#define TheObjOrSomeObj(class, obj) dynamic_cast<class>(ModUtils::TheNodeOrSomeNode(dynamic_cast<CCNode*>(obj)))
