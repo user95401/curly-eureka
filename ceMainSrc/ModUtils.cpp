@@ -1,6 +1,31 @@
 ﻿#include "ModUtils.hpp"
+#include <fstream>
+#include <array>
+#include <filesystem>
 
 int MOD_SEED;
+
+extern std::map<uint32_t, std::string> s_buildMap;
+
+std::map<uint32_t, std::string> s_buildMap =
+{
+    { 1419173053, "1.900" },
+    { 1419880840, "1.910" },
+    { 1421745341, "1.920" },
+    { 1440638199, "2.000" },
+    { 1440643927, "2.001" },
+    { 1443053232, "2.010" },
+    { 1443077847, "2.011" },
+    { 1443077847, "2.020" },
+    { 1484612867, "2.100" },
+    { 1484626658, "2.101" },
+    { 1484737207, "2.102" },
+    { 1510526914, "2.110" },
+    { 1510538091, "2.111" },
+    { 1510619253, "2.112" },
+    { 1511220108, "2.113" },
+    { 1702921605, "2.200" },
+};
 
 /*
     Recommended use it to create sprite :>
@@ -111,19 +136,6 @@ cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
         ));
 }
 
-//creating menu item with ButtonSprite
-gd::CCMenuItemSpriteExtra* ModUtils::createTextButton(cocos2d::CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale) {
-    auto buttonSprite = gd::ButtonSprite::create(text, width, true, "bigFont.fnt", "GJ_button_01.png", height, scale);
-    auto buttonButton = gd::CCMenuItemSpriteExtra::create(
-        buttonSprite,
-        parent,
-        handler
-    );
-    buttonButton->setSizeMult(1.2f);
-
-    return buttonButton;
-}
-
 /*
     Write current process memory with bytes vector
     example:
@@ -228,6 +240,19 @@ std::string ModUtils::GetModDev() {
     else return "unknown";
 }
 
+std::string ModUtils::GetGameVersion() {
+    HMODULE hMod = GetModuleHandle(NULL);
+    PIMAGE_DOS_HEADER dos_header = reinterpret_cast<PIMAGE_DOS_HEADER>(hMod);
+    if (dos_header->e_magic == IMAGE_DOS_SIGNATURE) {
+        PIMAGE_NT_HEADERS nt_header = reinterpret_cast<PIMAGE_NT_HEADERS>(reinterpret_cast<uintptr_t>(hMod) + dos_header->e_lfanew);
+        if (nt_header->Signature == IMAGE_NT_SIGNATURE) {
+            auto it = s_buildMap.find(nt_header->FileHeader.TimeDateStamp);
+            if (it != s_buildMap.end()) return it->second;
+        }
+    }
+    return std::string();
+}
+
 //simple printf with time and mod name
 void ModUtils::log(std::string msg, std::string prefix, bool milliseconds) {
     std::ostringstream logentry;
@@ -308,15 +333,6 @@ void ModUtils::copyToClipboard(const char* text) {
     EmptyClipboard();
     SetClipboardData(CF_TEXT, hMem);
     CloseClipboard();
-}
-
-/*
-    calls copyToClipboard(text) and popups on parent the text on black bg that says "Copied to clipboard"
-    for me dont working btw
-*/
-void ModUtils::copyToClipboard(const char* text, cocos2d::CCLayer* parent) {
-    copyToClipboard(text);
-    parent->addChild(gd::TextAlertPopup::create("Copied to clipboard", 0.5f, 0.6f), 100);
 }
 
 //for exaple: "(*&*$() 101 cvcds /*-`1мивфд" => "(*%26*%24()+101+cvcds+%2F*-%601мивфд"

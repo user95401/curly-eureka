@@ -1,8 +1,13 @@
 ﻿#include <cocos2d.h>//cocos2d-x headers
 #include <gd.h>//geometry dash headers
-#include <fstream>
-#include <array>
-#include "ValueSetupPopup.hpp"//curly-eureka stuff
+#include <iostream>
+#include <string>
+#include <filesystem>
+
+namespace gd {
+    class CCMenuItemSpriteExtra;
+    class ButtonSprite;
+}
 
 namespace ModUtils {
 
@@ -73,6 +78,9 @@ namespace ModUtils {
 
     //get developer of mod via parsing GetModPath()
     std::string GetModDev();
+
+    //get developer of mod via parsing GetModPath()
+    std::string GetGameVersion();
 
     //simple printf with time and mod name
     void log(std::string msg, std::string prefix, bool milliseconds);
