@@ -33,7 +33,7 @@ ${CMAKE_CURRENT_LIST_DIR}/jute
 )
 message("CURLY_EUREKA_INCL: ${CURLY_EUREKA_INCL}")
 
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/cocos-headers cocos-headers-build)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/cocos-headers_${GAME_VERSION} cocos-headers-build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/minhook minhook-build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/uibuilder uibuilder-build)
 
