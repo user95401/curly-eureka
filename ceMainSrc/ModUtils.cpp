@@ -399,3 +399,62 @@ std::string ModUtils::base64_decode(const std::string& in) {
 cocos2d::CCNode* ModUtils::TheNodeOrSomeNode(cocos2d::CCNode* node) {
     return (node && node->isRunning()) ? node : cocos2d::CCNode::create();
 }
+
+//set object id label for every children
+cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
+    for (int i = 0; i < node->getChildrenCount(); i++) {
+        cocos2d::CCNode* childa = reinterpret_cast<cocos2d::CCNode*>(node->getChildren()->objectAtIndex(i));
+        if (childa) {
+            float r = 1.0f;
+            //someMarkIdk
+            cocos2d::CCSprite* someMarkIdk = ModUtils::createSprite("circle.png");
+            someMarkIdk->setScale(0.2f);
+            someMarkIdk->runAction(ModUtils::CreateRGB(r));
+            //a bg
+            cocos2d::CCSprite* baga = ModUtils::createSprite("square.png");
+            baga->setScaleX(childa->getContentSize().width / baga->getContentSize().width);
+            baga->setScaleY(childa->getContentSize().height / baga->getContentSize().height);
+            baga->setPosition(childa->getContentSize() / 2);
+            cocos2d::ccColor3B color;
+            switch (rand() % 8) {
+            case 0:
+                color = { 255,255,255 };
+                break;
+            case 1:
+                color = { 255,255,0 };
+                break;
+            case 2:
+                color = { 0,0,255 };
+                break;
+            case 3:
+                color = { 0,255,0 };
+                break;
+            case 4:
+                color = { 255,0,0 };
+                break;
+            case 5:
+                color = { 255,0,255 };
+                break;
+            case 6:
+                color = { 0,0,0 };
+                break;
+            case 7:
+                color = { 255,127,0 };
+                break;
+            case 8:
+                color = { 166,166,166 };
+                break;
+            default:
+                color = { 255,255,255 };
+                break;
+            }
+            baga->setColor(color);
+            baga->runAction(cocos2d::CCRepeatForever::create(cocos2d::CCSequence::create(cocos2d::CCFadeTo::create(r, 0), cocos2d::CCFadeTo::create(r, 80), nullptr)));
+            //add stuff
+            childa->addChild(someMarkIdk);
+            childa->addChild(cocos2d::CCLabelTTF::create(std::format("Index: {}", i).c_str(), "arial", 12.f));
+            childa->addChild(baga);
+        }
+    }
+    return node;
+}

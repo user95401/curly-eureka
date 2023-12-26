@@ -5,7 +5,6 @@
 #include <filesystem>
 
 namespace gd {
-    class CCMenuItemSpriteExtra;
     class ButtonSprite;
 }
 
@@ -121,6 +120,10 @@ namespace ModUtils {
 
     //if node is bad it return new cocos2d::CCNode to escape crash
     cocos2d::CCNode* TheNodeOrSomeNode(cocos2d::CCNode* node);
+
+    //set object id label for every children
+    cocos2d::CCNode* markChildrensWithIndex(cocos2d::CCNode* node);
+
 }
 
 /*
@@ -139,4 +142,4 @@ useful for traditional mod on Geode
 #define geodeInstalled cocos2d::CCFileUtils::sharedFileUtils()->isFileExist("Geode.dll")
 
 /*will return new node if given node is wrong*/
-#define TheObjOrSomeObj(class, obj) dynamic_cast<class>(ModUtils::TheNodeOrSomeNode(dynamic_cast<CCNode*>(obj)))
+#define TheObjOrSomeObj(class, obj) reinterpret_cast<class>(ModUtils::TheNodeOrSomeNode(reinterpret_cast<CCNode*>(obj)))

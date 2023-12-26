@@ -27,7 +27,8 @@ namespace FMOD {
 }
 enum FMOD_RESULT;
 
-#include "layers/_layers.hpp"
+#include "../headers/_main.hpp"
+#include "../classes/_main.hpp"
 
 #include "GameToolbox.h"
 
