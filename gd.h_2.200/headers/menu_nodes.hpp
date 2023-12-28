@@ -1,5 +1,5 @@
-#ifndef __CCMENUITEMSPRITEEXTRA_HPP__
-#define __CCMENUITEMSPRITEEXTRA_HPP__
+#ifndef __MENU_NODES_HPP__
+#define __MENU_NODES_HPP__
 
 #include <gd.h>
 

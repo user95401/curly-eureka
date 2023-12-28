@@ -1,5 +1,5 @@
-#ifndef __FLALERTLAYER_HPP__
-#define __FLALERTLAYER_HPP__
+#ifndef __LAYERS_HPP__
+#define __LAYERS_HPP__
 
 #include <gd.h>
 

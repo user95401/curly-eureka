@@ -30,13 +30,21 @@ ${CMAKE_CURRENT_LIST_DIR}/SimpleIni
 ${CMAKE_CURRENT_LIST_DIR}/DiscordRPCSDK/Includes
 ${CMAKE_CURRENT_LIST_DIR}/jute
 "${CMAKE_CURRENT_LIST_DIR}/kuba--zip"
+${CMAKE_CURRENT_LIST_DIR}/imgui-hook
+${CMAKE_CURRENT_LIST_DIR}/imgui-hook/imgui
 )
 message("CURLY_EUREKA_INCL: ${CURLY_EUREKA_INCL}")
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/cocos-headers_${GAME_VERSION} cocos-headers-build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/minhook minhook-build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/uibuilder uibuilder-build)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/imgui-hook imgui-hook-build)
 
 include_directories(${CURLY_EUREKA_INCL})
 
-link_libraries(minhook cocos2d)
+link_libraries(
+cocos2d
+imgui-hook
+minhook
+opengl32
+)

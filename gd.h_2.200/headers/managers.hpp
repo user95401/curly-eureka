@@ -1,5 +1,5 @@
-#ifndef __GAMEMANAGER_H__
-#define __GAMEMANAGER_H__
+#ifndef __MANAGERS_H__
+#define __MANAGERS_H__
 
 #include <gd.h>
 

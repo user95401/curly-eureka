@@ -48,7 +48,7 @@ NS_CC_BEGIN
  /** @typedef ccDirectorProjection
   Possible OpenGL projections used by director
   */
-    typedef enum {
+typedef enum {
     /// sets a 2D projection (orthogonal projection)
     kCCDirectorProjection2D,
 
@@ -88,7 +88,7 @@ class CCTouchDispatcher;
 class CCKeypadDispatcher;
 class CCAccelerometer;
 RT_ADD(
-    class CCKeyboardDispatcher;
+class CCKeyboardDispatcher;
 class CCMouseDispatcher;
 class CCSceneDelegate;
 )
@@ -514,6 +514,9 @@ protected:
 
     /* window size in points */
     CCSize m_obWinSizeInPoints;
+
+    /* something like pad idk */
+    float asdasdasddd;
 
     /* content scale factor */
     float    m_fContentScaleFactor;

@@ -1,11 +1,11 @@
 
 #include "_delegates.hpp"
 
+//menu nodes
+#include "menu_nodes.hpp"
+
 //layers
-#include "FLAlertLayer.hpp"
+#include "layers.hpp"
 
 //managers
-#include "GameManager.hpp"
-
-//menu nodes
-#include "CCMenuItemSpriteExtra.hpp"
+#include "managers.hpp"
