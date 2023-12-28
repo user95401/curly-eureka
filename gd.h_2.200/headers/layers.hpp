@@ -16,38 +16,11 @@ namespace gd {
 			// recreate destructor
 			cocos2d::CCDirector::sharedDirector()->getTouchDispatcher()->decrementForcePrio(2);
 		}
-	public:
-		//order not tested
-		/*cocos2d::CCMenu* m_buttonMenu;
-		FLAlertLayerProtocol* m_alertProtocol;
-		cocos2d::CCNode* m_scene;
-		bool m_reverseKeyBack;
-		cocos2d::ccColor3B m_color;
-		cocos2d::CCLayer* m_mainLayer;
-		int m_ZOrder;
-		bool m_noElasticity;
-		cocos2d::ccColor3B m_color2;
-		ButtonSprite* m_button1;
-		ButtonSprite* m_button2;
-		ScrollingLayer* m_scrollingLayer;
-		int m_controlConnected;
-		bool m_containsBorder;
-		bool m_noAction;
-		int m_joystickConnected;
-		bool m_forcePrioRegistered;*/
-
-		//CCNode vtable
-		/*virtual void onEnter() {
-			return reinterpret_cast<void(__thiscall*)(FLAlertLayer*)>(
-				base + 0x23750
-				)(this);
-		}*/
 		virtual void registerWithTouchDispatcher() {
 			return reinterpret_cast<void(__thiscall*)(FLAlertLayer*)>(
 				base + 0x31df0
 				)(this);
 		}
-
 		//CCTouchDelegate vtable
 		virtual bool ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent) { 
 			return reinterpret_cast<bool(__thiscall*)(char*, cocos2d::CCTouch*, cocos2d::CCEvent*)>(
@@ -69,23 +42,20 @@ namespace gd {
 				base + 0x31bc0
 				)(reinterpret_cast<char*>(this) + 0xEC, pTouch, pEvent);
 		}
-
 		//CCKeyboardDelegate vtable
 		virtual void keyDown(cocos2d::enumKeyCodes key) {
 			return reinterpret_cast<void(__thiscall*)(FLAlertLayer*, cocos2d::enumKeyCodes)>(
 				base + 0x31930
 				)(this, key);
 		}
-
 		//CCKeypadDelegate vtable
 		virtual void keyBackClicked() {
 			return reinterpret_cast<void(__thiscall*)(char*)>(
 				base + 0x319a0
 				)(reinterpret_cast<char*>(this) + 0xF4);
 		}
-
 		//vtable
-		virtual void show() {
+		void show() {
 			return reinterpret_cast<void(__thiscall*)(FLAlertLayer*)>(
 				base + 0x31c60
 				)(this);
@@ -95,7 +65,6 @@ namespace gd {
 				base + 0x30b80
 				)(this);
 		}
-
 		void onBtn1(cocos2d::CCObject* btn) {
 			return reinterpret_cast<void(__thiscall*)(FLAlertLayer*, cocos2d::CCObject*)>(
 				base + 0x31a40
@@ -123,7 +92,7 @@ namespace gd {
 					base + 0x30c40
 					)(pFLAlertLayerProtocol, Title, Btn1Text, Btn2Text, TextAreaContent);
 			//clean stack.
-			__asm add esp, 0x20
+			//__asm add esp, 0x20
 			return pRet;
 		}
 		static FLAlertLayer* create(FLAlertLayerProtocol* pFLAlertLayerProtocol, const char* Title,

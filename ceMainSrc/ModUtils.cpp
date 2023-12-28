@@ -402,6 +402,7 @@ cocos2d::CCNode* ModUtils::TheNodeOrSomeNode(cocos2d::CCNode* node) {
 
 //set object id label for every children
 cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
+    node->setTag(5920);
     for (int i = 0; i < node->getChildrenCount(); i++) {
         cocos2d::CCNode* childa = reinterpret_cast<cocos2d::CCNode*>(node->getChildren()->objectAtIndex(i));
         if (childa->getChildByTag(8592)) break;//already got markChildrensWithIndex
