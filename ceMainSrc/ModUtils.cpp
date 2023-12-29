@@ -403,22 +403,13 @@ cocos2d::CCNode* ModUtils::TheNodeOrSomeNode(cocos2d::CCNode* node) {
 //set object id label for every children
 cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
     node->setTag(5920);
-    for (int i = 0; i < node->getChildrenCount(); i++) {
-        cocos2d::CCNode* childa = reinterpret_cast<cocos2d::CCNode*>(node->getChildren()->objectAtIndex(i));
+    for (int index = 0; index < node->getChildrenCount(); index++) {
+        cocos2d::CCNode* childa = reinterpret_cast<cocos2d::CCNode*>(node->getChildren()->objectAtIndex(index));
         if (childa->getChildByTag(8592)) break;//already got markChildrensWithIndex
         if (!childa) break;//bad node idk
         //hl shed
         markChildrensWithIndex(childa);
         float r = 1.5f;
-        //someMarkIdk
-        cocos2d::CCSprite* someMarkIdk = ModUtils::createSprite("circle.png");
-        someMarkIdk->setScale(0.3f);
-        someMarkIdk->runAction(ModUtils::CreateRGB(r));
-        //a bg
-        cocos2d::CCSprite* baga = ModUtils::createSprite("square.png");
-        baga->setScaleX(childa->getContentSize().width / baga->getContentSize().width);
-        baga->setScaleY(childa->getContentSize().height / baga->getContentSize().height);
-        baga->setPosition(childa->getContentSize() / 2);
         cocos2d::ccColor3B color;
         switch (rand() % 8) {
         case 0:
@@ -452,17 +443,29 @@ cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
             color = { 255,255,255 };
             break;
         }
+        //someMarkIdk
+        cocos2d::CCSprite* someMarkIdk = ModUtils::createSprite("circle.png");
+        childa->addChild(someMarkIdk, 100, 8592);
+        someMarkIdk->setScale(0.3f);
+        someMarkIdk->runAction(ModUtils::CreateRGB(r));
+        //a bg
+        cocos2d::CCSprite* baga = ModUtils::createSprite("square.png");
+        childa->addChild(baga, 100, 8592);
+        auto pCCSpriteBatchNode = reinterpret_cast<cocos2d::CCSpriteBatchNode*>(node->getChildren()->objectAtIndex(index));
+        if(pCCSpriteBatchNode)cocos2d::CCMessageBox("asd", std::format("baga{},{}", baga->getTexture()->getContentSize().width, baga->getTexture()->getContentSize().height).c_str());
+
+        if (someMarkIdk->getContentSize().height > 20);
+        baga->setScaleX(childa->getContentSize().width / baga->getContentSize().width);
+        baga->setScaleY(childa->getContentSize().height / baga->getContentSize().height);
+        baga->setPosition(childa->getContentSize() / 2);
         baga->setColor(color);
         baga->setOpacity(0);
         baga->runAction(cocos2d::CCRepeatForever::create(cocos2d::CCSequence::create(cocos2d::CCFadeTo::create(r, 12), cocos2d::CCFadeTo::create(r, 32), nullptr)));
         //index label
-        cocos2d::CCLabelTTF* pCCLabelTTF = cocos2d::CCLabelTTF::create(std::format("{}", i).c_str(), "arial", 8.f);
-        pCCLabelTTF->setPosition(childa->getContentSize() / 2);
-        pCCLabelTTF->setColor(color);
-        //add stuff
-        childa->addChild(baga, 100, 8592);
-        childa->addChild(someMarkIdk, 100, 8592);
+        cocos2d::CCLabelTTF* pCCLabelTTF = cocos2d::CCLabelTTF::create(std::format("{}", index).c_str(), "arial", 8.f);
         childa->addChild(pCCLabelTTF, 100, 8592);
+        pCCLabelTTF->setAnchorPoint(cocos2d::CCPointZero);
+        pCCLabelTTF->setColor(color);
     }
     return node;
 }
