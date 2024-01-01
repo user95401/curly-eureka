@@ -52,137 +52,114 @@ namespace gd {
 
 	class GDH_DLL GameManager : public GManager {
 	public:
-
-		bool m_switchModes;
-		bool m_toFullscreen;
-		bool m_reloading;
-		bool m_unknown0;
-		PAD(4);
-		cocos2d::CCDictionary* m_valueKeeper;
-		cocos2d::CCDictionary* m_unlockValueKeeper;
-		cocos2d::CCDictionary* m_customObjectDict;
-		double m_adTimer;
-		double m_adCache;
-		PAD(8);
-		double m_unknownDouble;
-		PAD(8);
-		bool m_loaded;
-		std::string m_unknownString;
-		PlayLayer* m_playLayer;
-		LevelEditorLayer* m_levelEditorLayer;
-		int m_unknown1;
-		MenuLayer* m_menuLayer;
-		bool m_inMenuLayer;
-		void* m_unknownVariable;
-		bool m_unknownBool3;
-		bool m_unknownPlayLayerBool;
-		bool m_unknownBool4;
-		bool m_unknownBool5;
-		std::string m_playerUDID;
-		std::string m_playerName;
-		bool m_commentsEnabled;
-		int m_playerUserID;
-		float m_backgroundMusicVolume;
-		float m_effectsVolume;
-		float m_timeOffset;
-		bool m_ratedGame;
-		bool m_likedFacebook;
-		bool m_followedTwitter;
-		bool m_subbedYoutube;
-		double m_socialsDuration;
-		bool m_showedAd;
-		bool m_unknownBool;
-		bool m_editorEnabled;
-		int m_sceneEnum;
-		int m_searchObjectType;
-		bool m_unknownBool6;
-		IconType m_playerFrame;
-		int m_playerShip;
-		int m_playerBall;
-		int m_playerBird;
-		int m_playerDart;
-		int m_playerRobot;
-		int m_playerSpider;
-		int m_playerColor;
-		int m_playerColor2;
-		int m_playerStreak;
-		int m_playerDeathEffect;
-		int m_chk;
-		int m_secretNumber;
-		bool m_playerGlow;
-		IconType m_playerIconType;
-		bool m_everyPlaySetup;
-		bool m_showSongMarkers;
-		bool m_showBPMMarkers;
-		bool m_recordGameplay;
-		bool m_showProgressBar;
-		bool m_performanceMode;
-		bool m_clickedGarage;
-		bool m_clickedEditor;
-		bool m_clickedName;
-		bool m_clickedPractice;
-		bool m_showedEditorGuide;
-		bool m_showedRateDiffDialog;
-		bool m_showedRateStarDialog;
-		bool m_showedLowDetailDialog;
-		PAD(48);
-		int m_bootups;
-		bool m_hasRatedGame;
-		bool m_unk0;
-		bool m_unk1;
-		bool m_unk2;
-		bool m_gameCenterEnabled;
-		bool m_smoothFix;
-		bool m_ratePower;
-		bool m_canGetLevelSaveData;
-		int m_resolution;
-		cocos2d::TextureQuality m_quality;
-
-		int getPlayerFrame() { return m_playerFrame; }
-		int getPlayerShip() { return m_playerShip; }
-		int getPlayerBall() { return m_playerBall; }
-		int getPlayerBird() { return m_playerBird; }
-		int getPlayerDart() { return m_playerDart; }
-		int getPlayerRobot() { return m_playerRobot; }
-		int getPlayerSpider() { return m_playerSpider; }
-		int getPlayerStreak() { return m_playerStreak; }
-		int getPlayerDeathEffect() { return m_playerDeathEffect; }
-		int getPlayerColor() { return m_playerColor; }
-		int getPlayerColor2() { return m_playerColor2; }
-		bool getPlayerGlow() { return m_playerGlow; }
-		IconType getPlayerIconType() { return m_playerIconType; }
-		void setPlayerFrame(IconType id) { m_playerFrame = id; }
-		void setPlayerShip(int id) { m_playerShip = id; }
-		void setPlayerBall(int id) { m_playerBall = id; }
-		void setPlayerBird(int id) { m_playerBird = id; }
-		void setPlayerDart(int id) { m_playerDart = id; }
-		void setPlayerRobot(int id) { m_playerRobot = id; }
-		void setPlayerSpider(int id) { m_playerSpider = id; }
-		void setPlayerStreak(int id) { m_playerStreak = id; }
-		void setPlayerDeathEffect(int id) { m_playerDeathEffect = id; }
-		void setPlayerColor(int id) { m_playerColor = id; }
-		void setPlayerColor2(int id) { m_playerColor2 = id; }
-		void setPlayerGlow(bool v) { m_playerGlow = v; }
-		void setPlayerIconType(IconType v) { m_playerIconType = v; }
-		void setQuality(cocos2d::TextureQuality quality) { m_quality = quality; }
-
-		PlayLayer* getPlayLayer() { return m_playLayer; }
-		LevelEditorLayer* getEditorLayer() { return m_levelEditorLayer; }
-
-		bool getGameVariableDefault(const char* key, bool defaultValue) {
-			auto object = static_cast<cocos2d::CCString*>(m_valueKeeper->objectForKey(std::string("gv_") + key));
-			if (object == nullptr) return defaultValue;
-			return object->boolValue();
+		void reloadMenu() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c510)(this);
 		}
-
-		int getIntGameVariableDefault(const char* key, int defaultValue) {
-			auto object = static_cast<cocos2d::CCString*>(m_valueKeeper->objectForKey(std::string("gv_") + key));
-			if (object == nullptr) return defaultValue;
-			return object->intValue();
+		void doQuickSave() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12bf00)(this);
+		}
+		bool isIconUnlocked(int id, IconType type) {
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, IconType)>(base + 0x120170)(this, id, type);
 		}
 		static GameManager* sharedState() {
-			return reinterpret_cast<GameManager * (__stdcall*)()>(base + 0x11f720)();
+			return reinterpret_cast<GameManager*(__stdcall*)()>(base + 0x11f720)();
 		}
+		void reloadAllStep2() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c620)(this);
+		}
+		void reloadAllStep3() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c780)(this);
+		}
+		void reloadAllStep4() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c820)(this);
+		}
+		void reloadAllStep5() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c890)(this);
+		}
+		void fadeInMenuMusic() {//todo: fadeInMenuMusic looks strange
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x11FBD0)(this);
+		}
+		bool getGameVariable(char const* gvtag) {
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x126920)(this, gvtag);
+		}
+		bool isColorUnlocked(int id, UnlockType type) {
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, UnlockType)>(base + 0x120670)(this, id, type);
+		}
+		void queueReloadMenu() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c4c0)(this);
+		}
+		void setGameVariable(char const* gvtag, bool b) {
+			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x1266D0)(this, gvtag, b);
+		}
+		void updateCustomFPS() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12cd40)(this);
+		}
+		void resolutionForKey(int key) {
+			reinterpret_cast<void(__thiscall*)(GameManager*, int)>(base + 0x12c8e0)(this, key);
+		}
+		void returnToLastScene(GJGameLevel* pGJGameLevel) {
+			reinterpret_cast<void(__thiscall*)(GameManager*, GJGameLevel*)>(base + 0x12C1F0)(this, pGJGameLevel);
+		}
+		std::string getPracticeMusicFile() {
+			return reinterpret_cast<std::string(__thiscall*)(GameManager*)>(base + 0x11f990)(this);
+		}
+		void reportPercentageForLevel(int a1, int a2, bool a3) {
+			reinterpret_cast<void(__thiscall*)(GameManager*, int, int, bool)>(base + 0x120f30)(this, a1, a2, a3);
+		}
+	};
+
+	class GDH_DLL GameLevelManager : public cocos2d::CCNode {
+	public:
+
+		static GameLevelManager* sharedState() {//upd
+			return reinterpret_cast<GameLevelManager * (__stdcall*)()>(gd::base + 0xF2D90)();
+		}
+
+		GJGameLevel* getMainLevel(int id, bool unk) {//upd
+			return reinterpret_cast<GJGameLevel * (__thiscall*)(GameLevelManager*, int, bool)>(base + 0xF40E0)(this, id, unk);
+		}
+
+		void firstSetup(bool newFilter) {//upd
+			reinterpret_cast<void(__thiscall*)(void*, bool)>(base + 0x397d10)(this, newFilter);
+		}
+
+		GJUserScore* getGJUserInfo(int a1) {//upd, idk what class it returns tbh
+			return reinterpret_cast<GJUserScore * (__thiscall*)(void*, bool)>(base + 0x105270)(this, a1);
+		}
+
+		bool isDLActive(char const* a1) {
+			return reinterpret_cast<bool(__fastcall*)(GameLevelManager*, char const*)>(base + 0xf7910)(this, a1);
+		}
+
+		void uploadLevel(GJGameLevel* pGJGameLevel) {
+			reinterpret_cast<void(__fastcall*)(GameLevelManager*, GJGameLevel*)>(base + 0xFA560)(this, pGJGameLevel);
+		}
+
+		//im lazy
+	};
+
+	class GDH_DLL GJAccountManager : public cocos2d::CCNode {
+	public:
+		PAD(0x4);
+		std::string m_username;
+		int m_accountID;
+		PAD(0x8);
+		std::string m_gjp2;
+		/*	
+			m_username 268,
+			m_accountID 292,
+			m_gjp2 304,
+		*/
+	public:
+		static GJAccountManager* sharedState() {
+			return reinterpret_cast<GJAccountManager * (__stdcall*)()>(
+				base + 0x186ff0
+				)();
+		}
+		auto getUsername() { return *reinterpret_cast<std::string*>(reinterpret_cast<uintptr_t>(this) + 268); }
+		//gjp2
+		auto getPassword() { return *reinterpret_cast<std::string*>(reinterpret_cast<uintptr_t>(this) + 292); }
+		auto getAccountID() { return *reinterpret_cast<std::string*>(reinterpret_cast<uintptr_t>(this) + 304); }
 	};
 }
 

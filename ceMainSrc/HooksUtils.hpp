@@ -27,11 +27,33 @@ CC_HOOK("?create@CCSprite@cocos2d@@SAPAV12@PBD@Z", CCSprite_create, false);
 #define MEMBERBYOFFSET(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset)
 #define MBO MEMBERBYOFFSET
 
+/*
+* OBM(&GJAccountManager::m_accountID)
+* ModUtils::copyToClipboard(std::format(
+*   "m_username {},\n"
+*   "m_accountID {},\n"
+*   "m_gjp2 {},\n",
+*   OBM(&GJAccountManager::m_username),
+*   OBM(&GJAccountManager::m_accountID),
+*   OBM(&GJAccountManager::m_gjp2)
+* ).c_str());
+*/
 template<typename T, typename U> constexpr size_t OFFSETBYMEMBER(U T::* member)
 {
     return (char*)&((T*)nullptr->*member) - (char*)nullptr;
 }
 
+/*
+* OBM(&GJAccountManager::m_accountID)
+* ModUtils::copyToClipboard(std::format(
+*   "m_username {},\n"
+*   "m_accountID {},\n"
+*   "m_gjp2 {},\n",
+*   OBM(&GJAccountManager::m_username),
+*   OBM(&GJAccountManager::m_accountID),
+*   OBM(&GJAccountManager::m_gjp2)
+* ).c_str());
+*/
 #define OBM(member) OFFSETBYMEMBER(member)
 
 #include <string>
