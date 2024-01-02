@@ -35,7 +35,6 @@ namespace gd {
 
 	class PlayLayer;
 	class LevelEditorLayer;
-	class GJGameLevel;
 	class MenuLayer;
 
 	class GDH_DLL GManager : public cocos2d::CCNode {

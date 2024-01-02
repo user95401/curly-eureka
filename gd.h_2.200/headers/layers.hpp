@@ -114,6 +114,111 @@ namespace gd {
 		}
 	};
 	#pragma runtime_checks("s", restore)
+
+	using GJBaseGameLayer = cocos2d::CCLayer;
+	class CheckpointObject;
+	class PlayerObject;
+	class GameObject;
+
+	//uh thats shit yet
+	class GDH_DLL PlayLayer : public GJBaseGameLayer, public CCCircleWaveDelegate {
+	public:
+		static PlayLayer* create(GJGameLevel* pGJGameLevel, bool a3, bool a4) {//upd
+			return reinterpret_cast<PlayLayer*(__fastcall*)(GJGameLevel*, int, int)>(base + 0x2D68F0)(pGJGameLevel, a3, a4);
+		}
+		static cocos2d::CCScene* scene(GJGameLevel* lvl, bool a1, bool a2) {//upd
+			return reinterpret_cast<cocos2d::CCScene * (__fastcall*)(GJGameLevel*, bool, bool)>(
+				base + 0x2D68A0
+				)(lvl, a1, a2);
+		}
+		void addObject(GameObject* obj) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, GameObject*)>(base + 0x2DBD30)(this, obj);
+		}
+		void togglePracticeMode(bool on) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x2e4eb0)(this, on);
+		}
+		void showHint() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2e12d0)(this);
+		}
+		void resetLevelFromStart() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E4210)(this);
+		}
+		void playEndAnimationToPos(cocos2d::CCPoint aCCPoint) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, cocos2d::CCPoint)>(base + 0x2da140)(this, aCCPoint);
+		}
+		void removeAllObjects() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E5750)(this);
+		}
+		void destroyPlayer(PlayerObject* plrobj, GameObject* obj) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, PlayerObject*, GameObject*)>(base + 0x2e0a90)(this, plrobj, obj);
+		}
+		virtual void flipGravity(bool bool1, bool bool2) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, bool, bool)>(base + 0x2CDDB0)(this, bool1, bool2);
+		}
+		void fullReset() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E40C0)(this);
+		}
+		void levelComplete() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2d7f30)(this);
+		}
+		void loadFromCheckpoint(CheckpointObject* checkpoint) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, CheckpointObject*)>(base + 0x2e28d0)(this, checkpoint);
+		}
+		void markCheckpoint() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2e2880)(this);
+		}
+		void onQuit() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2e5650)(this);
+		}
+		void onExit() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2e5910)(this);
+		}
+		void pauseGame(bool par) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x2e4fc0)(this, par);
+		}
+		void startGame() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2d7e80)(this);
+		}
+		void prepareMusic(bool a1) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, bool)>(base + 0x2E5480)(this, a1);
+		}
+		void incrementJumps() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2e4e50)(this);
+		}
+		void resetLevel() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E42B0)(this);
+		}
+		void updateAttempts() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E4CC0)(this);
+		}
+		void resumeAndRestart() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E5160)(this);
+		}
+		void delayedResetLevel() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E4200)(this);
+		}
+		void showCompleteText() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2d8770)(this);
+		}
+		void startGameDelayed() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2D7EC0)(this);
+		}
+		void showNewBest(bool bool1, int int1, int int2, bool bool2, bool bool3, bool bool4) {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*, bool, int, int, bool, bool, bool)>(base + 0x2D9100)(this, bool1, int1, int2, bool2, bool3, bool4);
+		}
+		void startMusic() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2E5570)(this);
+		}
+		void updateInfoLabel() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2dfe30)(this);
+		}
+		void toggleGhostEffect() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2D20D0)(this);
+		}
+		void updateProgressbar() {//upd
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2df7a0)(this);
+		}
+	};
 }
 
 
