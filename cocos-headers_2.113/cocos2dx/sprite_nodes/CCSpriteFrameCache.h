@@ -142,7 +142,7 @@ public:
      You should retain the returned copy if you are going to use it.
      @js getSpriteFrame
      */
-    CCSpriteFrame* spriteFrameByName(const char *pszName);
+    CCSpriteFrame* spriteFrameByName(const char* pszName);
 
 public:
     /** Returns the shared instance of the Sprite Frame cache 

@@ -469,3 +469,23 @@ cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
     }
     return node;
 }
+
+#pragma comment (lib, "urlmon.lib") //has a URLDownloadToFile
+std::string ModUtils::DownloadFile(std::string sUrl, std::string sFileName) {
+    //modResourcesPath
+    std::string modResourcesPath = std::format("Resources/{}", ModUtils::GetModName());
+    //create dir
+    std::filesystem::create_directories(modResourcesPath);
+    //add search path
+    std::vector<std::string> SearchPaths = cocos2d::CCFileUtils::sharedFileUtils()->getSearchPaths();
+    SearchPaths.insert(SearchPaths.begin(), modResourcesPath);
+    cocos2d::CCFileUtils::sharedFileUtils()->setSearchPaths(SearchPaths);
+    //download.
+    if (S_OK != URLDownloadToFile(NULL,
+        //link
+        sUrl.c_str(),
+        //output
+        std::format("{}/{}", modResourcesPath, sFileName).c_str(), 0, NULL))
+        ;// ... if fails ...
+    return std::format("{}/{}", modResourcesPath, sFileName);
+}

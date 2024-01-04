@@ -10,22 +10,22 @@ else()
 endif()
 
 file(GLOB_RECURSE CURLY_EUREKA_SRC 
-${CMAKE_CURRENT_LIST_DIR}/ceMainSrc/*.cpp
-${CMAKE_CURRENT_LIST_DIR}/ceGameVersionRelatedSrc_${GAME_VERSION}/*.cpp
-${CMAKE_CURRENT_LIST_DIR}/SimpleIni/*.c
-${CMAKE_CURRENT_LIST_DIR}/DiscordRPCSDK/SourceFiles/*.cpp
-${CMAKE_CURRENT_LIST_DIR}/jute/*.c
-"${CMAKE_CURRENT_LIST_DIR}/kuba--zip/*.c"
+${CMAKE_CURRENT_LIST_DIR}/ceMainSrc/*
+${CMAKE_CURRENT_LIST_DIR}/ceGameVersionDependentSrc_${GAME_VERSION}/*
+${CMAKE_CURRENT_LIST_DIR}/SimpleIni/*
+${CMAKE_CURRENT_LIST_DIR}/DiscordRPCSDK/SourceFiles/*
+${CMAKE_CURRENT_LIST_DIR}/jute/*
+"${CMAKE_CURRENT_LIST_DIR}/kuba--zip/*"
 )
 message("CURLY_EUREKA_SRC: ${CURLY_EUREKA_SRC}")
     
 set(CURLY_EUREKA_INCL
 ${CMAKE_CURRENT_LIST_DIR}
 ${CMAKE_CURRENT_LIST_DIR}/ceMainSrc
-${CMAKE_CURRENT_LIST_DIR}/ceGameVersionRelatedSrc_${GAME_VERSION}
+${CMAKE_CURRENT_LIST_DIR}/ceGameVersionDependentSrc_${GAME_VERSION}
 ${CMAKE_CURRENT_LIST_DIR}/gd.h_${GAME_VERSION}
 ${CMAKE_CURRENT_LIST_DIR}/gd.h_${GAME_VERSION}/include
-${CMAKE_CURRENT_LIST_DIR}/minhook/include
+${CMAKE_CURRENT_LIST_DIR}/minhook-multihook/include
 ${CMAKE_CURRENT_LIST_DIR}/SimpleIni
 ${CMAKE_CURRENT_LIST_DIR}/DiscordRPCSDK/Includes
 ${CMAKE_CURRENT_LIST_DIR}/jute
@@ -36,7 +36,7 @@ ${CMAKE_CURRENT_LIST_DIR}/imgui-hook/imgui
 message("CURLY_EUREKA_INCL: ${CURLY_EUREKA_INCL}")
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/cocos-headers_${GAME_VERSION} cocos-headers-build)
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/minhook minhook-build)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/minhook-multihook minhook-build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/uibuilder uibuilder-build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/imgui-hook imgui-hook-build)
 
