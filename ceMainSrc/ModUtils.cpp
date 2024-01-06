@@ -451,9 +451,6 @@ cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
         //a bg
         cocos2d::CCSprite* baga = ModUtils::createSprite("square.png");
         childa->addChild(baga, 100, 8592);
-        auto pCCSpriteBatchNode = reinterpret_cast<cocos2d::CCSpriteBatchNode*>(node->getChildren()->objectAtIndex(index));
-        if(pCCSpriteBatchNode)cocos2d::CCMessageBox("asd", std::format("baga{},{}", baga->getTexture()->getContentSize().width, baga->getTexture()->getContentSize().height).c_str());
-
         if (someMarkIdk->getContentSize().height > 20);
         baga->setScaleX(childa->getContentSize().width / baga->getContentSize().width);
         baga->setScaleY(childa->getContentSize().height / baga->getContentSize().height);
@@ -470,22 +467,32 @@ cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
     return node;
 }
 
-#pragma comment (lib, "urlmon.lib") //has a URLDownloadToFile
-std::string ModUtils::DownloadFile(std::string sUrl, std::string sFileName) {
+std::string ModUtils::GetModResourcesPath() {
     //modResourcesPath
-    std::string modResourcesPath = std::format("Resources/{}", ModUtils::GetModName());
+    return std::format("Resources/{}", GetModName());
+}
+
+std::string ModUtils::AddSearchPathForMod() {
+    //modResourcesPath
+    std::string modResourcesPath = GetModResourcesPath();
     //create dir
     std::filesystem::create_directories(modResourcesPath);
     //add search path
     std::vector<std::string> SearchPaths = cocos2d::CCFileUtils::sharedFileUtils()->getSearchPaths();
     SearchPaths.insert(SearchPaths.begin(), modResourcesPath);
     cocos2d::CCFileUtils::sharedFileUtils()->setSearchPaths(SearchPaths);
+    return modResourcesPath;
+}
+
+#pragma comment (lib, "urlmon.lib") //has a URLDownloadToFile, retuns S_OK if ok
+STDAPI ModUtils::DownloadFile(std::string sUrl, std::string sFileName) {
+    //modResourcesPath
+    std::string modResourcesPath = AddSearchPathForMod();
     //download.
-    if (S_OK != URLDownloadToFile(NULL,
+    return URLDownloadToFile(NULL,
         //link
         sUrl.c_str(),
         //output
-        std::format("{}/{}", modResourcesPath, sFileName).c_str(), 0, NULL))
-        ;// ... if fails ...
-    return std::format("{}/{}", modResourcesPath, sFileName);
+        std::format("{}/{}", modResourcesPath, sFileName).c_str(),
+        0, NULL);
 }

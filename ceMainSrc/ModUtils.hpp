@@ -124,7 +124,14 @@ namespace ModUtils {
     //set object id label for every children
     cocos2d::CCNode* markChildrensWithIndex(cocos2d::CCNode* node);
 
-    std::string DownloadFile(std::string sUrl, std::string sFileName);
+    //return Resources/MOD_NAME
+    std::string GetModResourcesPath();
+
+    // adds Resources/MOD_NAME at begin of search pathes vector
+    std::string AddSearchPathForMod();
+
+    //URLDownloadToFile, retuns S_OK if ok
+    STDAPI DownloadFile(std::string sUrl, std::string sFileName);
 }
 
 /*
