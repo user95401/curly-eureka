@@ -132,6 +132,9 @@ namespace ModUtils {
 
     //URLDownloadToFile, retuns S_OK if ok
     STDAPI DownloadFile(std::string sUrl, std::string sFileName);
+
+    //for self->getChildren()->objectAtIndex(std::stoi(ModUtils::GetStringFromConsole())) or smth
+    std::string GetStringFromConsole();
 }
 
 /*

@@ -25,6 +25,8 @@ std::map<uint32_t, std::string> s_buildMap =
     { 1510619253, "2.112" },
     { 1511220108, "2.113" },
     { 1702921605, "2.200" },
+    { 1704582672, "2.201" },
+    { 1704601266, "2.202" },
 };
 
 /*
@@ -248,6 +250,7 @@ std::string ModUtils::GetGameVersion() {
         if (nt_header->Signature == IMAGE_NT_SIGNATURE) {
             auto it = s_buildMap.find(nt_header->FileHeader.TimeDateStamp);
             if (it != s_buildMap.end()) return it->second;
+            return std::format("{}", nt_header->FileHeader.TimeDateStamp);
         }
     }
     return std::string();
@@ -397,7 +400,7 @@ std::string ModUtils::base64_decode(const std::string& in) {
 
 //if node is bad it return new cocos2d::CCNode to escape crash
 cocos2d::CCNode* ModUtils::TheNodeOrSomeNode(cocos2d::CCNode* node) {
-    return (node && node->isRunning()) ? node : cocos2d::CCNode::create();
+    return (node) ? node : cocos2d::CCNode::create();
 }
 
 //set object id label for every children
@@ -495,4 +498,24 @@ STDAPI ModUtils::DownloadFile(std::string sUrl, std::string sFileName) {
         //output
         std::format("{}/{}", modResourcesPath, sFileName).c_str(),
         0, NULL);
+}
+std::string ModUtils::GetStringFromConsole() {
+    //return var
+    std::string ret;
+    //AllocConsole and freopen_s
+    AllocConsole();
+    FILE* fDummy;
+    freopen_s(&fDummy, "CONOUT$", "w", stdout);
+    freopen_s(&fDummy, "CONOUT$", "w", stderr);
+    freopen_s(&fDummy, "CONIN$", "r", stdin);
+    //cin into ret
+    //std::cout << ();///////
+    //cin into ret
+    std::cin >> ret;///////
+    //close console
+    HWND HWNDCONSLOE = GetConsoleWindow();
+    FreeConsole();
+    CloseWindow(HWNDCONSLOE);
+    //return
+    return ret;
 }
