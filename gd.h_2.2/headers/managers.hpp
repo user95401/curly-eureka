@@ -51,87 +51,81 @@ namespace gd {
 
 	class GDH_DLL GameManager : public GManager {
 	public:
-		void reloadMenu() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c510)(this);
-		}
-		void doQuickSave() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12bf00)(this);
-		}
-		bool isIconUnlocked(int id, IconType type) {
-			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, IconType)>(base + 0x120170)(this, id, type);
-		}
+		//2.202
 		static GameManager* sharedState() {
-			return reinterpret_cast<GameManager*(__stdcall*)()>(base + 0x11f720)();
-		}
-		void reloadAllStep2() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c620)(this);
-		}
-		void reloadAllStep3() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c780)(this);
-		}
-		void reloadAllStep4() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c820)(this);
-		}
-		void reloadAllStep5() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c890)(this);
-		}
-		void fadeInMenuMusic() {//todo: fadeInMenuMusic looks strange
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x11FBD0)(this);
-		}
-		bool getGameVariable(char const* gvtag) {
-			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x126920)(this, gvtag);
+			return reinterpret_cast<GameManager*(__stdcall*)()>(base + 0x120860)();
 		}
 		bool isColorUnlocked(int id, UnlockType type) {
-			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, UnlockType)>(base + 0x120670)(this, id, type);
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, UnlockType)>(base + 0x1217B0)(this, id, type);
 		}
-		void queueReloadMenu() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12c4c0)(this);
+		bool isIconUnlocked(int id, IconType type) {
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, IconType)>(base + 0x1212B0)(this, id, type);
+		}
+		bool getGameVariable(char const* gvtag) {
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x127A50)(this, gvtag);
+		}
+		int getIntGameVariable(char const* gvtag) {
+			return reinterpret_cast<int(__thiscall*)(GameManager*, char const*)>(base + 0x127FA0)(this, gvtag);
+		}
+		bool getUGV(char const* gvtag) {
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x127D40)(this, gvtag);
 		}
 		void setGameVariable(char const* gvtag, bool b) {
-			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x1266D0)(this, gvtag, b);
+			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x127800)(this, gvtag, b);
 		}
-		void updateCustomFPS() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x12cd40)(this);
+		void setIntGameVariable(char const* gvtag, int val) {
+			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x127EA0)(this, gvtag, val);
 		}
-		void resolutionForKey(int key) {
-			reinterpret_cast<void(__thiscall*)(GameManager*, int)>(base + 0x12c8e0)(this, key);
-		}
-		void returnToLastScene(GJGameLevel* pGJGameLevel) {
-			reinterpret_cast<void(__thiscall*)(GameManager*, GJGameLevel*)>(base + 0x12C1F0)(this, pGJGameLevel);
+		void setUGV(char const* gvtag, int val) {
+			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x127BF0)(this, gvtag, val);
 		}
 		std::string getPracticeMusicFile() {
-			return reinterpret_cast<std::string(__thiscall*)(GameManager*)>(base + 0x11f990)(this);
+			return reinterpret_cast<std::string(__thiscall*)(GameManager*)>(base + 0x120AD0)(this);
 		}
 		void reportPercentageForLevel(int a1, int a2, bool a3) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, int, int, bool)>(base + 0x120f30)(this, a1, a2, a3);
 		}
+		//members
+		/*
+		GameManager:
+			PlayLayer* | 0x198 -> playLayer1
+			LevelEditorLayer* | 0x19C -> levelEditorLayer
+			PlayLayer* | 0x1A0 -> playLayer2
+			PlayLayer* | 0x1A8 -> menuLayer
+			bool | 0x1AC -> inMenuLayer
+		*/
+		void getPlayLayer2() { MEMBERBYOFFSET(CCLayer*, this, 0x198); }
+		void getLevelEditorLayer() { MEMBERBYOFFSET(CCLayer*, this, 0x19C); }
+		void getPlayLayer2() { MEMBERBYOFFSET(CCLayer*, this, 0x1A0); }
+		void getMenuLayer() { MEMBERBYOFFSET(CCLayer*, this, 0x1A8); }
+		void isInMenuLayer() { MEMBERBYOFFSET(bool, this, 0x1AC); }
 	};
 
 	class GDH_DLL GameLevelManager : public cocos2d::CCNode {
 	public:
 
 		static GameLevelManager* sharedState() {//upd
-			return reinterpret_cast<GameLevelManager * (__stdcall*)()>(gd::base + 0xF2D90)();
+			//return reinterpret_cast<GameLevelManager * (__stdcall*)()>(gd::base + 0xF2D90)();
 		}
 
 		GJGameLevel* getMainLevel(int id, bool unk) {//upd
-			return reinterpret_cast<GJGameLevel * (__thiscall*)(GameLevelManager*, int, bool)>(base + 0xF40E0)(this, id, unk);
+			//return reinterpret_cast<GJGameLevel * (__thiscall*)(GameLevelManager*, int, bool)>(base + 0xF40E0)(this, id, unk);
 		}
 
 		void firstSetup(bool newFilter) {//upd
-			reinterpret_cast<void(__thiscall*)(void*, bool)>(base + 0x397d10)(this, newFilter);
+			//reinterpret_cast<void(__thiscall*)(void*, bool)>(base + 0x397d10)(this, newFilter);
 		}
 
 		GJUserScore* getGJUserInfo(int a1) {//upd, idk what class it returns tbh
-			return reinterpret_cast<GJUserScore * (__thiscall*)(void*, bool)>(base + 0x105270)(this, a1);
+			//return reinterpret_cast<GJUserScore * (__thiscall*)(void*, bool)>(base + 0x105270)(this, a1);
 		}
 
 		bool isDLActive(char const* a1) {
-			return reinterpret_cast<bool(__fastcall*)(GameLevelManager*, char const*)>(base + 0xf7910)(this, a1);
+			//return reinterpret_cast<bool(__fastcall*)(GameLevelManager*, char const*)>(base + 0xf7910)(this, a1);
 		}
 
 		void uploadLevel(GJGameLevel* pGJGameLevel) {
-			reinterpret_cast<void(__fastcall*)(GameLevelManager*, GJGameLevel*)>(base + 0xFA560)(this, pGJGameLevel);
+			//reinterpret_cast<void(__fastcall*)(GameLevelManager*, GJGameLevel*)>(base + 0xFA560)(this, pGJGameLevel);
 		}
 
 		//im lazy
