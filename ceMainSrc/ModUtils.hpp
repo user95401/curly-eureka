@@ -135,6 +135,8 @@ namespace ModUtils {
 
     //for self->getChildren()->objectAtIndex(std::stoi(ModUtils::GetStringFromConsole())) or smth
     std::string GetStringFromConsole();
+
+    void OpenConsole();
 }
 
 /*

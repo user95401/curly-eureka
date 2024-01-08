@@ -499,6 +499,7 @@ STDAPI ModUtils::DownloadFile(std::string sUrl, std::string sFileName) {
         std::format("{}/{}", modResourcesPath, sFileName).c_str(),
         0, NULL);
 }
+
 std::string ModUtils::GetStringFromConsole() {
     //return var
     std::string ret;
@@ -518,4 +519,20 @@ std::string ModUtils::GetStringFromConsole() {
     CloseWindow(HWNDCONSLOE);
     //return
     return ret;
+}
+
+void ModUtils::OpenConsole() {
+    //https://github.com/geode-sdk/geode/blob/main/loader/src/platform/windows/LoaderImpl.cpp#L57C2-L57C2
+    if (!AllocConsole()) return;
+    SetConsoleCP(CP_UTF8);
+    // redirect console output
+    freopen_s(reinterpret_cast<FILE**>(stdout), "CONOUT$", "w", stdout);
+    freopen_s(reinterpret_cast<FILE**>(stdin), "CONIN$", "r", stdin);
+    // Set output mode to handle ansi color sequences
+    auto handleStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD consoleMode = 0;
+    if (GetConsoleMode(handleStdout, &consoleMode)) {
+        consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+        SetConsoleMode(handleStdout, consoleMode);
+    }
 }

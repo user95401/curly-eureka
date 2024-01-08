@@ -85,6 +85,9 @@ namespace gd {
 		void reportPercentageForLevel(int a1, int a2, bool a3) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, int, int, bool)>(base + 0x120f30)(this, a1, a2, a3);
 		}
+		void fadeInMusic(std::string sName) {
+			reinterpret_cast<void(__thiscall*)(GameManager*, std::string)>(base + 0x120D80)(this, sName);
+		}
 		//members
 		/*
 		GameManager:
