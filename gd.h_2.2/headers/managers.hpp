@@ -94,10 +94,10 @@ namespace gd {
 			PlayLayer* | 0x1A8 -> menuLayer
 			bool | 0x1AC -> inMenuLayer
 		*/
-		void getPlayLayer2() { MEMBERBYOFFSET(CCLayer*, this, 0x198); }
-		void getLevelEditorLayer() { MEMBERBYOFFSET(CCLayer*, this, 0x19C); }
-		void getPlayLayer2() { MEMBERBYOFFSET(CCLayer*, this, 0x1A0); }
-		void getMenuLayer() { MEMBERBYOFFSET(CCLayer*, this, 0x1A8); }
+		void getPlayLayer1() { MEMBERBYOFFSET(cocos2d::CCLayer*, this, 0x198); }
+		void getLevelEditorLayer() { MEMBERBYOFFSET(cocos2d::CCLayer*, this, 0x19C); }
+		void getPlayLayer2() { MEMBERBYOFFSET(cocos2d::CCLayer*, this, 0x1A0); }
+		void getMenuLayer() { MEMBERBYOFFSET(cocos2d::CCLayer*, this, 0x1A8); }
 		void isInMenuLayer() { MEMBERBYOFFSET(bool, this, 0x1AC); }
 	};
 
