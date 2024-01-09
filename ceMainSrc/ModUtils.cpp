@@ -481,9 +481,7 @@ std::string ModUtils::AddSearchPathForMod() {
     //create dir
     std::filesystem::create_directories(modResourcesPath);
     //add search path
-    std::vector<std::string> SearchPaths = cocos2d::CCFileUtils::sharedFileUtils()->getSearchPaths();
-    SearchPaths.insert(SearchPaths.begin(), modResourcesPath);
-    cocos2d::CCFileUtils::sharedFileUtils()->setSearchPaths(SearchPaths);
+    cocos2d::CCFileUtils::sharedFileUtils()->addSearchPath(modResourcesPath.c_str());
     return modResourcesPath;
 }
 
