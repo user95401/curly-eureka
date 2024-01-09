@@ -88,6 +88,10 @@ namespace gd {
 		void fadeInMusic(std::string sName) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, std::string)>(base + 0x120D80)(this, sName);
 		}
+		//menuLoop
+		void fadeInMusic() {
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x120D10)(this);
+		}
 		//members
 		/*
 		GameManager:
