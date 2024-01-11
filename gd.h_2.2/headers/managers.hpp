@@ -55,40 +55,51 @@ namespace gd {
 		static GameManager* sharedState() {
 			return reinterpret_cast<GameManager*(__stdcall*)()>(base + 0x120860)();
 		}
+		//2.202
 		bool isColorUnlocked(int id, UnlockType type) {
 			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, UnlockType)>(base + 0x1217B0)(this, id, type);
 		}
+		//2.202
 		bool isIconUnlocked(int id, IconType type) {
 			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, IconType)>(base + 0x1212B0)(this, id, type);
 		}
+		//2.202
 		bool getGameVariable(char const* gvtag) {
 			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x127A50)(this, gvtag);
 		}
+		//2.202
 		int getIntGameVariable(char const* gvtag) {
 			return reinterpret_cast<int(__thiscall*)(GameManager*, char const*)>(base + 0x127FA0)(this, gvtag);
 		}
+		//2.202
 		bool getUGV(char const* gvtag) {
 			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x127D40)(this, gvtag);
 		}
+		//2.202
 		void setGameVariable(char const* gvtag, bool b) {
 			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x127800)(this, gvtag, b);
 		}
+		//2.202
 		void setIntGameVariable(char const* gvtag, int val) {
 			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x127EA0)(this, gvtag, val);
 		}
+		//2.202
 		void setUGV(char const* gvtag, int val) {
 			return reinterpret_cast<void(__thiscall*)(GameManager*, char const*, bool)>(base + 0x127BF0)(this, gvtag, val);
 		}
+		//2.202
 		std::string getPracticeMusicFile() {
 			return reinterpret_cast<std::string(__thiscall*)(GameManager*)>(base + 0x120AD0)(this);
 		}
+		//2.202
 		void reportPercentageForLevel(int a1, int a2, bool a3) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, int, int, bool)>(base + 0x120f30)(this, a1, a2, a3);
 		}
+		//2.202
 		void fadeInMusic(std::string sName) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, std::string)>(base + 0x120D80)(this, sName);
 		}
-		//menuLoop
+		//2.202, menuLoop
 		void fadeInMusic() {
 			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x120D10)(this);
 		}
@@ -110,7 +121,7 @@ namespace gd {
 
 	class GDH_DLL GameLevelManager : public cocos2d::CCNode {
 	public:
-
+		//NOT UPDATED
 		static GameLevelManager* sharedState() {//upd
 			//return reinterpret_cast<GameLevelManager * (__stdcall*)()>(gd::base + 0xF2D90)();
 		}
@@ -151,6 +162,7 @@ namespace gd {
 			m_gjp2 304,
 		*/
 	public:
+		//2.200
 		static GJAccountManager* sharedState() {
 			return reinterpret_cast<GJAccountManager * (__stdcall*)()>(
 				base + 0x186ff0

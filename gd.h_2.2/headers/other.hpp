@@ -158,18 +158,20 @@ namespace gd {
 		bool m_highObjectsEnabled;
 		std::string m_personalBests;
 		PAD(0x78);
-		// this function is inlined on pc builds
+		//2.200, this function is inlined on pc builds
 		static GJGameLevel* create() {
 			return reinterpret_cast<GJGameLevel * (__stdcall*)()>(
 				base + 0x112540
 				)();
 		}
+		//2.200
 		static GJGameLevel* createWithCoder(DS_Dictionary* dict, bool a1) {
 			//inlined on windows
 			auto level = GJGameLevel::create();
 			level->dataLoaded(dict);
 			return level;
 		}
+		//2.200
 		void dataLoaded(DS_Dictionary* dict) {
 			return reinterpret_cast<void(__thiscall*)(
 				GJGameLevel*, DS_Dictionary*

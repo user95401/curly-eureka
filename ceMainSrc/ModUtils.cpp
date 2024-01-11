@@ -27,6 +27,7 @@ std::map<uint32_t, std::string> s_buildMap =
     { 1702921605, "2.200" },
     { 1704582672, "2.201" },
     { 1704601266, "2.202" },
+    { 1704948277, "2.203" },
 };
 
 /*
@@ -39,6 +40,8 @@ cocos2d::CCSprite* ModUtils::createSprite(const char* name) {
     auto sprite = cocos2d::CCSprite::createWithSpriteFrameName(name);
     if (!sprite) sprite = cocos2d::CCSprite::create(name);
     if (sprite) return sprite;
+
+    log(std::format(__FUNCTION__": cant create {}", name));
 
     cocos2d::CCSprite* placeholder = createPlaceholder();
     auto placeholderLabel = cocos2d::CCLabelBMFont::create(name, "chatFont.fnt", 3.0, cocos2d::CCTextAlignment::kCCTextAlignmentCenter);
@@ -477,12 +480,12 @@ std::string ModUtils::GetModResourcesPath() {
 
 std::string ModUtils::AddSearchPathForMod() {
     //modResourcesPath
-    std::string modResourcesPath = GetModResourcesPath();
+    std::filesystem::path modResourcesPath = std::filesystem::path(GetModResourcesPath());
     //create dir
     std::filesystem::create_directories(modResourcesPath);
     //add search path
-    cocos2d::CCFileUtils::sharedFileUtils()->addSearchPath(modResourcesPath.c_str());
-    return modResourcesPath;
+    cocos2d::CCFileUtils::sharedFileUtils()->addSearchPath(modResourcesPath.string().c_str());
+    return modResourcesPath.string();
 }
 
 #pragma comment (lib, "urlmon.lib") //has a URLDownloadToFile, retuns S_OK if ok
