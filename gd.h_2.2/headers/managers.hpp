@@ -51,9 +51,9 @@ namespace gd {
 
 	class GDH_DLL GameManager : public GManager {
 	public:
-		//2.202
+		//2.203 READY
 		static GameManager* sharedState() {
-			return reinterpret_cast<GameManager*(__stdcall*)()>(base + 0x120860)();
+			return reinterpret_cast<GameManager*(__stdcall*)()>(base + 0x121530)();
 		}
 		//2.202
 		bool isColorUnlocked(int id, UnlockType type) {
@@ -63,9 +63,9 @@ namespace gd {
 		bool isIconUnlocked(int id, IconType type) {
 			return reinterpret_cast<bool(__thiscall*)(GameManager*, int, IconType)>(base + 0x1212B0)(this, id, type);
 		}
-		//2.202
+		//2.203 READY
 		bool getGameVariable(char const* gvtag) {
-			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x127A50)(this, gvtag);
+			return reinterpret_cast<bool(__thiscall*)(GameManager*, char const*)>(base + 0x128720)(this, gvtag);
 		}
 		//2.202
 		int getIntGameVariable(char const* gvtag) {
@@ -95,13 +95,13 @@ namespace gd {
 		void reportPercentageForLevel(int a1, int a2, bool a3) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, int, int, bool)>(base + 0x120f30)(this, a1, a2, a3);
 		}
-		//2.202
+		//2.203 READY
 		void fadeInMusic(std::string sName) {
-			reinterpret_cast<void(__thiscall*)(GameManager*, std::string)>(base + 0x120D80)(this, sName);
+			reinterpret_cast<void(__thiscall*)(GameManager*, std::string)>(base + 0x121A50)(this, sName);
 		}
-		//2.202, menuLoop
+		//2.203 READY, menuLoop
 		void fadeInMusic() {
-			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x120D10)(this);
+			reinterpret_cast<void(__thiscall*)(GameManager*)>(base + 0x1219E0)(this);
 		}
 		//members
 		/*

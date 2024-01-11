@@ -190,9 +190,9 @@ namespace gd {
 		void markCheckpoint() {//upd
 			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2e2880)(this);
 		}
-		//2.200
+		//2.203
 		void onQuit() {//upd
-			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x2e5650)(this);
+			reinterpret_cast<void(__thiscall*)(PlayLayer*)>(base + 0x12E110)(this);
 		}
 		//2.200
 		void onExit() {//upd
