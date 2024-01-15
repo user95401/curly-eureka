@@ -95,9 +95,14 @@ namespace gd {
 		void reportPercentageForLevel(int a1, int a2, bool a3) {
 			reinterpret_cast<void(__thiscall*)(GameManager*, int, int, bool)>(base + 0x120f30)(this, a1, a2, a3);
 		}
-		//2.203 READY
+		//2.203+ READY
 		void fadeInMusic(std::string sName) {
-			reinterpret_cast<void(__thiscall*)(GameManager*, std::string)>(base + 0x121A50)(this, sName);
+			auto addr = patterns::find_pattern
+				//558BEC6AFF
+			("CCCCCC^?????6828193D0164A100000000");
+			if (!addr) return;
+			reinterpret_cast<void(__thiscall*)(GameManager*, std::string)>
+				(addr)(this, sName);
 		}
 		//2.203 READY, menuLoop
 		void fadeInMusic() {

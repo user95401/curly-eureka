@@ -102,7 +102,7 @@ public:
             //actually this is my function but i dont wanna make a new macro for it
             inline CCPoint getMousePosition() { return { m_fMouseX, m_fMouseY }; }
 
-        void toggleFullScreen(bool fullscreen);
+        void toggleFullScreen(bool fullscreen, bool borderlessidk);
 
         GLFWwindow* getWindow(void) const;
     )

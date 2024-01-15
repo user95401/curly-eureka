@@ -125,10 +125,13 @@ namespace ModUtils {
     cocos2d::CCNode* markChildrensWithIndex(cocos2d::CCNode* node);
 
     //return Resources/MOD_NAME
-    std::string GetModResourcesPath();
+    std::filesystem::path GetModResourcesPath();
 
-    // adds Resources/MOD_NAME at begin of search pathes vector
+    //adds Resources/MOD_NAME at begin of search pathes vector
     std::string AddSearchPathForMod();
+
+    //uses search paths
+    bool FindOutIfFileExists(std::string sFileName);
 
     //URLDownloadToFile, retuns S_OK if ok
     STDAPI DownloadFile(std::string sUrl, std::string sFileName);

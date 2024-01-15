@@ -150,6 +150,9 @@ cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
     ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });
 */
 bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
+    log((
+        std::stringstream() << __FUNCTION__" at " << std::hex << address
+        ).str());
     return WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
 }
 
@@ -473,19 +476,24 @@ cocos2d::CCNode* ModUtils::markChildrensWithIndex(cocos2d::CCNode* node) {
     return node;
 }
 
-std::string ModUtils::GetModResourcesPath() {
+std::filesystem::path ModUtils::GetModResourcesPath() {
     //modResourcesPath
-    return std::format("Resources/{}", GetModName());
+    return std::filesystem::path(std::filesystem::current_path() / "Resources" / ModUtils::GetModName());
 }
 
 std::string ModUtils::AddSearchPathForMod() {
     //modResourcesPath
-    std::filesystem::path modResourcesPath = std::filesystem::path(GetModResourcesPath());
+    std::filesystem::path modResourcesPath = ModUtils::GetModResourcesPath();
     //create dir
     std::filesystem::create_directories(modResourcesPath);
     //add search path
     cocos2d::CCFileUtils::sharedFileUtils()->addSearchPath(modResourcesPath.string().c_str());
     return modResourcesPath.string();
+}
+
+bool ModUtils::FindOutIfFileExists(std::string sFileName) {
+    auto pCCFileUtils = cocos2d::CCFileUtils::sharedFileUtils();
+    return pCCFileUtils->isFileExist(pCCFileUtils->fullPathForFilename(sFileName.c_str(), 0).c_str());
 }
 
 #pragma comment (lib, "urlmon.lib") //has a URLDownloadToFile, retuns S_OK if ok

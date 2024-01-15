@@ -1,9 +1,8 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-#include <random>
-#include <cstdint>
 #include <MinHook.h>
+#include <patterns.hpp>
 
 struct HooksUtils {
     static inline bool DontSendLogs;
@@ -61,16 +60,14 @@ template<typename T, typename U> constexpr size_t OFFSETBYMEMBER(U T::* member)
 #include <cstdint>
 #include <unordered_map>
 #include <type_traits> 
-#include "ModUtils.hpp"
 namespace MappedHooks {
     inline auto btw = "MappedHooks created by Cvolton";
     using std::uintptr_t;
     inline std::unordered_map<void*, void*> hooks;
     inline auto registerHook(uintptr_t address, void* hook) {
         void* trampoline;
-        auto status = HooksUtils::CreateHook(reinterpret_cast<void**>(address), hook, &trampoline);
+        auto status = HooksUtils::CreateHook((void*)address, hook, &trampoline);
         if (status == MH_OK) MappedHooks::hooks[hook] = trampoline;
-        else ModUtils::log(__FUNCTION__" was failed!");
         return status;
     }
     template <typename F>
