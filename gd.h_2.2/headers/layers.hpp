@@ -21,7 +21,8 @@ namespace gd {
 				)(this);
 
 		}
-		/*2.200, TextArea supports colors of text for the caption. wrap desired text in "<cx></c>"
+		/*
+			* 2.204*, TextArea supports colors of text for the caption. wrap desired text in "<cx></c>"
 			* where x is the color desired. colors are:
 			* r - red
 			* l - lime
@@ -30,33 +31,28 @@ namespace gd {
 			* o - orange
 			* and more that i'm too lazy to find.
 			* MAKE SURE YOU FOLLOW THIS FORMAT. ROB'S PARSING CAN AND WILL MESS UP OTHERWISE.
-			*/
+		*/
 		static FLAlertLayer* create(
-			FLAlertLayerProtocol* pFLAlertLayerProtocol, 
-			const char* Title, std::string TextAreaContent,
-			const char* Btn1Text, 
-			const char* Btn2Text
-		) {
+			FLAlertLayerProtocol* pFLAlertLayerProtocol,
+			const char* Title,
+			const char* Btn1Text,
+			const char* Btn2Text,
+			float Width,
+			std::string TextAreaContent) {
+
 			CALLLOG;
-			//55 8b ec 6a ff 68 38 2c d7 0 64 a1 0 0 0 0 50 83 ec 8 53 56 57 a1 0 20 - 2200
-			//55 8b ec 6a ff 68 58 95 e5 0 64 a1 0 0 0 0 50 83 ec 8 53 56 57 a1 0 a0 - 2204
-			//5e 5b 8b e5 5d c3 cc cc cc cc cc cc cc cc cc cc cc cc 55 8b ec 6a ff 68 58 95 e5 0 64 a1 0 0 0 0 50 83 - 2204 (rva - 18)
-			//?  ?  ?  ?  ?  68 ?  ?  ?  0 64 a1 0 0 0 0 50 83 ec 8 53 56 57 a1 0    - to use
 			uintptr_t addr = patterns::find_pattern("cc cc cc ^ ?  ?  ?  ?  ?  68 ?  ?  ?  0 64 a1 0 0 0 0 50 83 ec 8 53 56 57 a1 0");
 			//addr = gd::base + 0x30cf0; //2.200
-			addr = gd::base + 0x30c40; //2.204
+			addr = gd::base + 0x30cf0; //2.204
 			ModUtils::log((ModUtils::ReadProcMemAsStr(addr, 16)).c_str());
 
-			FLAlertLayer* pRet = reinterpret_cast
-				<
-				FLAlertLayer* (__thiscall*)
-				(FLAlertLayerProtocol*, char const*, std::string, char const*, char const*)
-				>
-				(addr)(pFLAlertLayerProtocol, Title, TextAreaContent, Btn1Text, Btn2Text);
+			//static_assert(sizeof(std::string) == 24, "std::string in debug mode does not work correctly with FLAlertLayer!");
+			auto pRet = reinterpret_cast<FLAlertLayer * (__fastcall*)(FLAlertLayerProtocol*, const char*,
+				const char*, const char*, float, std::string)>(
+					addr
+					)(pFLAlertLayerProtocol, Title, Btn1Text, Btn2Text, Width, TextAreaContent);
 
-			ModUtils::log("return");
-			//clean stack.
-			//__asm add esp, 0x24
+			__asm add esp, 0x24
 			return pRet;
 		}
 	};
