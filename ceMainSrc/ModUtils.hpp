@@ -1,12 +1,9 @@
-﻿#include <cocos2d.h>//cocos2d-x headers
-#include <gd.h>//geometry dash headers
+﻿#include "ModUtilsExt.hpp"
+#include <cocos2d.h>//cocos2d-x headers
+#include <gd.h>//cocos2d-x headers
 #include <iostream>
 #include <string>
 #include <filesystem>
-
-namespace gd {
-    class ButtonSprite;
-}
 
 namespace ModUtils {
 
@@ -35,9 +32,6 @@ namespace ModUtils {
     //creating rgb animation that u can apply to node
     cocos2d::CCAction* CreateRGB(float speed, bool is_reverse);
 
-    //creating menu item with ButtonSprite
-    gd::CCMenuItemSpriteExtra* createTextButton(cocos2d::CCLayer* parent, const char* text, cocos2d::SEL_MenuHandler handler, int width, float height, float scale);
-
     /*
         Write current process memory with bytes vector
         example:
@@ -46,7 +40,11 @@ namespace ModUtils {
         //Verify Hack
         ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });
     */
-    bool write_bytes(const std::uintptr_t, std::vector<uint8_t> const&);
+    bool WriteProcMem(const std::uintptr_t, std::vector<uint8_t> const&);
+
+    std::vector<uint8_t> ReadProcMem(DWORD address, int length);
+
+    std::string ReadProcMemAsStr(DWORD address, int length);
 
     //return string as relative path of random file in target directory
     std::string getRandomFileNameFromDir(std::string path, std::string or_else);
@@ -99,12 +97,6 @@ namespace ModUtils {
 
     //its copy text to clipboard...
     void copyToClipboard(const char* text);
-
-    /*
-        calls copyToClipboard(text) and popups on parent the text on black bg that says "Copied to clipboard"
-        for me dont working btw
-    */
-    void copyToClipboard(const char* text, cocos2d::CCLayer* parent);
 
     //set every char of string to lower
     void strToLower(std::string& str);

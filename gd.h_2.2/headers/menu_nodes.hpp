@@ -76,6 +76,7 @@ namespace gd {
 		//2.200
 		static CCMenuItemSpriteExtra* create(cocos2d::CCNode* sprite,
 			cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback) {
+			CALLLOG;
 			auto pRet = reinterpret_cast<CCMenuItemSpriteExtra* (__thiscall*)(cocos2d::CCNode*,
 				cocos2d::CCObject*, cocos2d::SEL_MenuHandler)>(
 					base + 0x25830
@@ -91,16 +92,20 @@ namespace gd {
 				)(this);
 		}*/
 		void useAnimationType(MenuAnimationType type) {
+			CALLLOG;
 			this->m_obStartPosition = this->getNormalImage()->getPosition();
 			this->m_nAnimationType = type;
 		}
 		void setDestination(cocos2d::CCPoint const& pos) {
+			CALLLOG;
 			this->m_obDestPosition = pos;
 		}
 		void setOffset(cocos2d::CCPoint const& pos) {
+			CALLLOG;
 			this->m_obOffset = pos;
 		}
 		void setScale(float scale) override {
+			CALLLOG;
 			this->m_fBaseScale = scale;
 			this->CCMenuItemSprite::setScale(scale);
 		}

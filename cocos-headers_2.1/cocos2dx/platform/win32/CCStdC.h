@@ -36,7 +36,7 @@ THE SOFTWARE.
 #endif
 
 #if !defined(isnan)
-    #define isnan   _isnan
+    //#define isnan   _isnan
 #endif
 
 #ifndef snprintf

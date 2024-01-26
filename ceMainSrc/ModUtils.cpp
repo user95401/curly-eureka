@@ -28,6 +28,7 @@ std::map<uint32_t, std::string> s_buildMap =
     { 1704582672, "2.201" },
     { 1704601266, "2.202" },
     { 1704948277, "2.203" },
+    { 1705041028, "2.204" },
 };
 
 /*
@@ -149,11 +150,33 @@ cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
     //Verify Hack
     ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });
 */
-bool ModUtils::write_bytes(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
-    log((
-        std::stringstream() << __FUNCTION__" at " << std::hex << address
-        ).str());
-    return WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
+bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
+    if (ReadProcMem(address, bytes.size()) == bytes) return false;
+    std::stringstream log;
+    log << __FUNCTION__" at " << std::hex << address;
+    log << " with \"";
+    for (uint8_t value : bytes) {
+        log << ((value != bytes[0]) ? ", " : "") << std::hex << (int)value;
+    }
+    log << "\"";
+    bool rtn = WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
+    if(rtn) ModUtils::log(log.str());
+    log.clear();
+    return rtn;
+}
+
+std::vector<uint8_t> ModUtils::ReadProcMem(DWORD address, int length) {
+    std::vector<uint8_t> buffer(length);
+    ReadProcessMemory(GetCurrentProcess(), (void*)address, buffer.data(), length, NULL);
+    return buffer;
+}
+
+std::string ModUtils::ReadProcMemAsStr(DWORD address, int length) {
+    std::stringstream asd;
+    for (uint8_t value : ReadProcMem(address, length)) {
+        asd << std::hex << (int)value << " ";
+    }
+    return asd.str();
 }
 
 //return string as relative path of random file in target directory

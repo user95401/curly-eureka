@@ -160,12 +160,14 @@ namespace gd {
 		PAD(0x78);
 		//2.200, this function is inlined on pc builds
 		static GJGameLevel* create() {
+			CALLLOG;
 			return reinterpret_cast<GJGameLevel * (__stdcall*)()>(
 				base + 0x112540
 				)();
 		}
 		//2.200
 		static GJGameLevel* createWithCoder(DS_Dictionary* dict, bool a1) {
+			CALLLOG;
 			//inlined on windows
 			auto level = GJGameLevel::create();
 			level->dataLoaded(dict);
@@ -173,12 +175,59 @@ namespace gd {
 		}
 		//2.200
 		void dataLoaded(DS_Dictionary* dict) {
+			CALLLOG;
 			return reinterpret_cast<void(__thiscall*)(
 				GJGameLevel*, DS_Dictionary*
 				)>(base + 0x113B90)(this, dict);
 		}
 		inline bool isPlatformer() {
+			CALLLOG;
 			return m_levelLength == 5;
+		}
+	};
+	class AchievementBar : public cocos2d::CCNodeRGBA {
+	protected:
+		PAD(0x24);//what ever, dont fucking care asdsadv fduasid
+
+	public:
+		static AchievementBar* create(const char* title,
+			const char* desc, const char* icon, bool quest) {
+			auto pRet = reinterpret_cast<AchievementBar * (__fastcall*)(const char*,
+				const char*, const char*, bool)>(
+					base + 0x3B120
+					)(title, desc, icon, quest);
+			__asm add esp, 0x8
+			return pRet;
+		}
+	};
+	class AchievementNotifier : public cocos2d::CCNode {
+	protected:
+		cocos2d::CCScene* m_pCurrentScene;
+		cocos2d::CCArray* m_pQueue;
+		AchievementBar* m_pCurrentAchievement;
+
+	public:
+		static AchievementNotifier* sharedState() {
+			//55 8B EC 6A FF 68 1C 49 88 00 64 A1 00 00 00 00 50 51 56 A1 - 21
+			uintptr_t addr = patterns::find_pattern("^ ?????? 1C 49 88 00 64 A1");
+			//addr = gd::base + 0xFC90; //2.1 GeometryDash.exe+FC90
+			ModUtils::OpenConsole();
+			ModUtils::log((ModUtils::ReadProcMemAsStr(addr, 26)).c_str());
+			return reinterpret_cast<AchievementNotifier * (__stdcall*)()>(
+				addr
+				)();
+		}
+		void showNextAchievement() {
+			return reinterpret_cast<void(__thiscall*)(AchievementNotifier*)>(
+				base + 0xFD60
+				)(this);
+		}
+		//this is inlined on win32 so let's reconstruct it
+		void notifyAchievement(const char* title, const char* desc, const char* icon, bool quest) {
+			m_pQueue->addObject(AchievementBar::create(title, desc, icon, quest));
+			if (!m_pCurrentAchievement) {
+				this->showNextAchievement();
+			}
 		}
 	};
 }
