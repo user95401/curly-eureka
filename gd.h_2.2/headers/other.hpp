@@ -2,54 +2,51 @@
 #define __OTHER_H__
 #include <gd.h>
 namespace gd {
-	enum GJLevelType {
-		kGJLevelTypeLocal = 1,
-		kGJLevelTypeEditor = 2,
-		kGJLevelTypeSaved = 3
-	};
-	enum GJDifficulty {
-		kGJDifficultyAuto = 0,
-		kGJDifficultyEasy = 1,
-		kGJDifficultyNormal = 2,
-		kGJDifficultyHard = 3,
-		kGJDifficultyHarder = 4,
-		kGJDifficultyInsane = 5,
-		kGJDifficultyDemon = 6,
-		kGJDifficultyDemonEasy = 7,
-		kGJDifficultyDemonMedium = 8,
-		kGJDifficultyDemonInsane = 9,
-		kGJDifficultyDemonExtreme = 10
-	};
-	class GDH_DLL GJGameLevel /* 0x3bc */ : public cocos2d::CCNode {
-	public:
-		cocos2d::CCDictionary* m_lastBuildSave;
-		int m_nLevelID_rand; // 0xf0
-		int m_nLevelID_seed; // 0xf4 
-		int m_nLevelID;      // 0xf8
-		std::string m_levelName;
-		std::string m_levelDesc;
-		std::string m_levelString;
-		std::string m_creatorName;
-		std::string m_recordString;
-		std::string m_uploadDate;
-		std::string m_updateDate;
+    enum GJLevelType {
+        kGJLevelTypeLocal = 1,
+        kGJLevelTypeEditor = 2,
+        kGJLevelTypeSaved = 3
+    };
+
+    enum GJDifficulty {
+        kGJDifficultyAuto = 0,
+        kGJDifficultyEasy = 1,
+        kGJDifficultyNormal = 2,
+        kGJDifficultyHard = 3,
+        kGJDifficultyHarder = 4,
+        kGJDifficultyInsane = 5,
+        kGJDifficultyDemon = 6,
+        kGJDifficultyDemonEasy = 7,
+        kGJDifficultyDemonMedium = 8,
+        kGJDifficultyDemonInsane = 9,
+        kGJDifficultyDemonExtreme = 10
+    };
+    class GDH_DLL GJGameLevel /* 0x3bc */ : public cocos2d::CCNode {
+    public:
+
+        cocos2d::CCDictionary* m_pLastBuildSave;   // 0xec
+		SeedValueRSV m_nLevelID;      // 0xf8
+        std::string m_sLevelName;       // 0xfc
+        std::string m_sLevelDesc;       // 0x114
+        std::string m_sLevelString;     // 0x12c
+        std::string m_sCreatorName;     // 0x144
+        std::string m_sRecordString;    // 0x15c
+        std::string m_sUploadDate; // 0x174
+        std::string m_sUpdateDate; // 0x18c
+
 		std::string m_unkString1;
 		std::string m_unkString2;
+
 		cocos2d::CCPoint m_unkPoint;
-		int m_nUserID_rand;     // 0x1a4
-		int m_nUserID_seed;     // 0x1a8
-		int m_nUserID;          // 0x1ac
-		int m_nAccountID_rand;  // 0x1b0
-		int m_nAccountID_seed;  // 0x1b4
-		int m_nAccountID;       // 0x1b8
+		gd::SeedValueRSV m_userID;
+		gd::SeedValueRSV m_accountID;
 		GJDifficulty m_difficulty;
 		int m_audioTrack;
 		int m_songID;
 		int m_levelRev;
 		bool m_unlisted;
-		int m_nObjectCount_rand;// 0x1d0
-		int m_nObjectCount_seed;// 0x1d4
-		int m_nObjectCount;     // 0x1d8
+		bool m_friendsOnly;
+		gd::SeedValueRSV m_objectCount;
 		int m_levelIndex;
 		int m_ratings;
 		int m_ratingsSum;
@@ -61,38 +58,26 @@ namespace gd {
 		int m_workingTime2;
 		bool m_lowDetailMode;
 		bool m_lowDetailModeToggled;
-		int m_nIsVerified_rand; // 0x1fc
-		int m_nIsVerified_seed; // 0x200
-		bool m_bIsVerified;     // 0x204
+		bool m_selected;
+		bool m_localOrSaved;
+		bool m_disableShake;
+		gd::SeedValueRS m_isVerified;
 		bool m_isVerifiedRaw;
 		bool m_isUploaded;
 		bool m_hasBeenModified;
 		int m_levelVersion;
 		int m_gameVersion;
-		int m_nAttempts_rand;   // 0x210
-		int m_nAttempts_seed;   // 0x214
-		int m_nAttempts;        // 0x218
-		int m_nJumps_rand;      // 0x21c
-		int m_nJumps_seed;      // 0x220
-		int m_nJumps;           // 0x224
-		int m_nClicks_rand;     // 0x228
-		int m_nClicks_seed;     // 0x22c
-		int m_nClicks;          // 0x230
-		int m_nAttemptTime_rand;// 0x234
-		int m_nAttemptTime_seed;// 0x238
-		int m_nAttemptTime;     // 0x23c
+
+		gd::SeedValueRSV m_attempts;
+		gd::SeedValueRSV m_jumps;
+		gd::SeedValueRSV m_clicks;
+		gd::SeedValueRSV m_attemptTime;
 		int m_chk;
 		bool m_isChkValid;
 		bool m_isCompletionLegitimate;
-		int m_nNormalPercent;   // 0x248, yes, it is out of order
-		int m_nNormalPercent_seed;  // 0x24c
-		int m_nNormalPercent_rand;  // 0x250
-		int m_nOrbCompletion_rand;  // 0x254
-		int m_nOrbCompletion_seed;  // 0x258
-		int m_nOrbCompletion;       // 0x25c
-		int m_nNewNormalPercent2_rand;  // 0x260
-		int m_nNewNormalPercent2_seed;  // 0x264
-		int m_nNewNormalPercent2;       // 0x268
+		gd::SeedValueVSR m_normalPercent;
+		gd::SeedValueRSV m_orbCompletion;
+		gd::SeedValueRSV m_newNormalPercent2;
 		int m_practicePercent;
 		int m_likes;
 		int m_dislikes;
@@ -101,37 +86,20 @@ namespace gd {
 		int m_isEpic;
 		bool m_levelFavorited;
 		int m_levelFolder;
-		int m_nDailyID_rand;    // 0x288
-		int m_nDailyID_seed;    // 0x28c
-		int m_nDailyID;         // 0x290
-		int m_nDemon_rand;      // 0x294
-		int m_nDemon_seed;      // 0x298
-		int m_nDemon;           // 0x29c
+		gd::SeedValueRSV m_dailyID;
+		gd::SeedValueRSV m_demon;
 		int m_demonDifficulty;
-		int m_nStars_rand;      // 0x2a4
-		int m_nStars_seed;      // 0x2a8
-		int m_nStars;           // 0x2ac
+		gd::SeedValueRSV m_stars;
 		bool m_autoLevel;
 		int m_coins;
-		int m_nCoinsVerified_rand;  // 0x2b8
-		int m_nCoinsVerified_seed;  // 0x2bc
-		int m_nCoinsVerified;       // 0x2c0
-		int m_nPassword_rand;       // 0x2c4
-		int m_nPassword_seed;       // 0x2c8
-		int m_nOriginalLevel_rand;  // 0x2cc
-		int m_nOriginalLevel_seed;  // 0x2d0
-		int m_nOriginalLevel;       // 0x2d4
+		gd::SeedValueRSV m_coinsVerified;
+		gd::SeedValueRS m_password;
+		gd::SeedValueRSV m_originalLevel;
 		bool m_twoPlayerMode;
 		int m_failedPasswordAttempts;
-		int m_nFirstCoinVerified_rand;  // 0x2e0
-		int m_nFirstCoinVerified_seed;  // 0x2e4
-		int m_nFirstCoinVerified;       // 0x2e8
-		int m_nSecondCoinVerified_rand; // 0x2ec
-		int m_nSecondCoinVerified_seed; // 0x2f0
-		int m_nSecondCoinVerified;      // 0x2f4
-		int m_nThirdCoinVerified_rand;  // 0x2f8
-		int m_nThirdCoinVerified_seed;  // 0x2fc
-		int m_nThirdCoinVerified;   // 0x300
+		gd::SeedValueRSV m_firstCoinVerified;
+		gd::SeedValueRSV m_secondCoinVerified;
+		gd::SeedValueRSV m_thirdCoinVerified;
 		int m_starsRequested;
 		bool m_showedSongWarning;
 		int m_starRatings;
@@ -156,35 +124,19 @@ namespace gd {
 		std::string m_tempName;
 		std::string m_capacityString;
 		bool m_highObjectsEnabled;
+		bool m_unlimitedObjectsEnabled;
 		std::string m_personalBests;
-		PAD(0x78);
-		//2.200, this function is inlined on pc builds
-		static GJGameLevel* create() {
-			CALLLOG;
-			return reinterpret_cast<GJGameLevel * (__stdcall*)()>(
-				base + 0x112540
-				)();
-		}
-		//2.200
-		static GJGameLevel* createWithCoder(DS_Dictionary* dict, bool a1) {
-			CALLLOG;
-			//inlined on windows
-			auto level = GJGameLevel::create();
-			level->dataLoaded(dict);
-			return level;
-		}
-		//2.200
-		void dataLoaded(DS_Dictionary* dict) {
-			CALLLOG;
-			return reinterpret_cast<void(__thiscall*)(
-				GJGameLevel*, DS_Dictionary*
-				)>(base + 0x113B90)(this, dict);
-		}
-		inline bool isPlatformer() {
-			CALLLOG;
-			return m_levelLength == 5;
-		}
-	};
+		int m_timestamp;
+		int m_unkInt;
+		std::string m_songIDs;
+		std::string m_sfxIDs;
+		int m_54;
+		int m_bestTime;
+		int m_bestPoints;
+		int m_k111;
+		std::string m_unkString3;
+		std::string m_unkString4;
+    };
 	class AchievementBar : public cocos2d::CCNodeRGBA {
 	protected:
 		PAD(0x24);//what ever, dont fucking care asdsadv fduasid
