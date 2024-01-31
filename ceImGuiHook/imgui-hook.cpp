@@ -1,225 +1,169 @@
-#define WIN32_LEAN_AND_MEAN
-#define DEFAULT_KEY VK_RSHIFT
-
-#include <windows.h>
-#include <cocos2d.h>
-#include <format>
 #include "imgui-hook.hpp"
-#include "ModUtils.hpp"
 
-using namespace cocos2d;
+bool inited = false;
 
-int toggleKey = DEFAULT_KEY;
+std::function<void()> DrawFunc = []() {};
+std::function<void()> InitFunc = []() {};
+std::function<void(int)> KeyPressHandler = [](int _) {};
+#define _VOID_1(v)	std::function<void(v)>
+#define _VOID_2(v)	_VOID_1(_VOID_1(v))
 
-void _stub() {}
-std::function<void()> g_drawFunc = _stub;
-std::function<void()> g_toggleCallback = _stub;
-std::function<void()> g_initFunc = _stub;
+HGLRC g_WglContext = 0;
+HWND hWnd;
 
-void ImGuiHook::setRenderFunction(std::function<void()> func) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCSIG__"({})", func.target_type().name()));
-    g_drawFunc = func;
-}
+WNDPROC o_WndProc;
+LRESULT CALLBACK h_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-void ImGuiHook::setToggleCallback(std::function<void()> func) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCSIG__"({})", func.target_type().name()));
-    g_toggleCallback = func;
-}
+// Initialisation for ImGui
+void InitOpenGL2(
+    IN  HDC	  hDc,
+    OUT bool* init,
+    OUT bool* status)
+{
+    if (WindowFromDC(hDc) == hWnd && *init) return;
+    auto tStatus = true;
 
-void ImGuiHook::setInitFunction(std::function<void()> func) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCSIG__"({})", func.target_type().name()));
-    g_initFunc = func;
-}
+    hWnd = WindowFromDC(hDc);
+    auto wndProc = (WNDPROC)GetWindowLongPtr(hWnd, GWLP_WNDPROC);
+    auto wLPTR = SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)h_WndProc);
 
-void ImGuiHook::setToggleKey(int key) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCSIG__"({})", key));
-    toggleKey = key;
-}
-
-
-bool g_inited = false;
-
-void(__thiscall* CCEGLView_swapBuffers)(CCEGLView*);
-void __fastcall CCEGLView_swapBuffers_H(CCEGLView* self) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCSIG__"((bool){})", (bool)self));
-    auto window = self->getWindow();
-
-    if (!g_inited) {
-        if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" reached !g_inited block"));
-        g_inited = true;
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGui::GetIO();
-        auto hwnd = WindowFromDC(*reinterpret_cast<HDC*>(reinterpret_cast<uintptr_t>(window) + 0x244));
-        ImGui_ImplWin32_Init(hwnd);
-        ImGui_ImplWin32_InitForOpenGL(hwnd);
-        ImGui_ImplOpenGL3_Init();
-        if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" !g_inited block: call g_initFunc"));
-        g_initFunc();
-    }
-
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" OpenGL3_NewFrame"));
-    ImGui_ImplOpenGL3_NewFrame();
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" Win32_NewFrame"));
-    ImGui_ImplWin32_NewFrame();
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" ImGui::NewFrame"));
-    ImGui::NewFrame();
-
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" g_drawFunc"));
-    g_drawFunc();
-
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" EndFrame"));
-    ImGui::EndFrame();
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" Render"));
-    ImGui::Render();
-
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" glFlush"));
-    glFlush();
-
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" call org((bool){}).", (bool)CCEGLView_swapBuffers));
-    CCEGLView_swapBuffers(self);
-}
-
-// why is this an extern
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-void(__thiscall* CCEGLView_pollEvents)(void*);
-void __fastcall CCEGLView_pollEvents_H(void* self) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCSIG__"((bool){})", (bool)self));
-
-    if (!g_inited)
+    if (*init)
     {
-        if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" reached !g_inited block"));
-        // Call original function
-        if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" ret org((bool){}).", (bool)CCEGLView_pollEvents));
-        CCEGLView_pollEvents(self);
+        ImGui_ImplWin32_Init(hWnd);
+        ImGui_ImplOpenGL2_Init();
         return;
     }
 
-    auto& io = ImGui::GetIO();
-    bool block_input = false;
-    MSG msg;
-    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+    if (!wLPTR) return;
+
+    o_WndProc = wndProc;
+    g_WglContext = wglCreateContext(hDc);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+
+    tStatus &= ImGui_ImplWin32_Init(hWnd);
+    tStatus &= ImGui_ImplOpenGL2_Init();
+
+    *init = true;
+    return;
+}
+// Generic ImGui renderer for Win32 backend
+void RenderWin32(
+    IN  std::function<void()> render)
+{
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+
+    render();
+
+    ImGui::EndFrame();
+    ImGui::Render();
+}
+// Generic ImGui renderer for OpenGL2 backend
+void RenderOpenGL2(
+    IN  HGLRC 	  WglContext,
+    IN  HDC		  hDc,
+    IN  _VOID_2() render,
+    IN  _VOID_1() render_inner,
+    OUT bool* status)
+{
+    auto tStatus = true;
+
+    auto o_WglContext = wglGetCurrentContext();
+    tStatus &= wglMakeCurrent(hDc, WglContext);
+
+    ImGui_ImplOpenGL2_NewFrame();
+    render(render_inner);
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+    tStatus &= wglMakeCurrent(hDc, o_WglContext);
+
+    return;
+}
+
+BOOL(__stdcall* wglSwapBuffers)(HDC);
+BOOL  __stdcall wglSwapBuffers_H(HDC hDc) {
+    InitOpenGL2(hDc, &inited, nullptr);
+    RenderOpenGL2(g_WglContext, hDc, RenderWin32, DrawFunc, nullptr);
+    return wglSwapBuffers(hDc);
+    /*
+    //init
+    if (!inited) {
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        InitFunc();
+        HWND hWnd = WindowFromDC(hdc);
+        oriWndProñ = (WNDPROC)GetWindowLongPtr(hWnd, GWLP_WNDPROC);
+        SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)wndProc_H);
+        ImGui_ImplWin32_Init(hWnd);
+        ImGui_ImplOpenGL2_Init();
+        inited = true;
+    }
+    //NewFrame
+    ImGui_ImplOpenGL2_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+    //Draw
+    DrawFunc();
+    ImGui::EndFrame();
+    ImGui::Render();
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+    //wha
+    glFlush();
+    return wglSwapBuffers(hdc);
+    */
+}
+
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK h_WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam)) return true;
+
+    if (uMsg == WM_KEYDOWN && !ImGui::GetIO().WantCaptureKeyboard)
     {
-        TranslateMessage(&msg);
-
-        // Block input if ImGui wants to capture it
-        if (io.WantCaptureMouse)
-        {
-            switch (msg.message)
-            {
-            case WM_LBUTTONDBLCLK:
-            case WM_LBUTTONDOWN:
-            case WM_LBUTTONUP:
-            case WM_MBUTTONDBLCLK:
-            case WM_MBUTTONDOWN:
-            case WM_MBUTTONUP:
-            case WM_MOUSEACTIVATE:
-            case WM_MOUSEHOVER:
-            case WM_MOUSEHWHEEL:
-            case WM_MOUSELEAVE:
-            case WM_MOUSEMOVE:
-            case WM_MOUSEWHEEL:
-            case WM_NCLBUTTONDBLCLK:
-            case WM_NCLBUTTONDOWN:
-            case WM_NCLBUTTONUP:
-            case WM_NCMBUTTONDBLCLK:
-            case WM_NCMBUTTONDOWN:
-            case WM_NCMBUTTONUP:
-            case WM_NCMOUSEHOVER:
-            case WM_NCMOUSELEAVE:
-            case WM_NCMOUSEMOVE:
-            case WM_NCRBUTTONDBLCLK:
-            case WM_NCRBUTTONDOWN:
-            case WM_NCRBUTTONUP:
-            case WM_NCXBUTTONDBLCLK:
-            case WM_NCXBUTTONDOWN:
-            case WM_NCXBUTTONUP:
-            case WM_RBUTTONDBLCLK:
-            case WM_RBUTTONDOWN:
-            case WM_RBUTTONUP:
-            case WM_XBUTTONDBLCLK:
-            case WM_XBUTTONDOWN:
-            case WM_XBUTTONUP:
-                block_input = true;
-            }
-        }
-
-        if (io.WantCaptureKeyboard)
-        {
-            switch (msg.message)
-            {
-            case WM_HOTKEY:
-            case WM_KEYDOWN:
-            case WM_KEYUP:
-            case WM_KILLFOCUS:
-            case WM_SETFOCUS:
-            case WM_SYSKEYDOWN:
-            case WM_SYSKEYUP:
-                block_input = true;
-            }
-        }
-        else if (msg.message == WM_KEYDOWN && msg.wParam == toggleKey)
-        {
-            g_toggleCallback();
-        }
-
-        if (!block_input)
-            DispatchMessage(&msg);
-
-        ImGui_ImplWin32_WndProcHandler(msg.hwnd, msg.message, msg.wParam, msg.lParam);
+        KeyPressHandler(wParam);
     }
 
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" call org((bool){}).", (bool)CCEGLView_pollEvents));
-    // Call original function
-    CCEGLView_pollEvents(self);
+    return CallWindowProc(o_WndProc, hWnd, uMsg, wParam, lParam);
 }
 
 void(__thiscall* setupWindow)(void* self, float a2, float a3, float a4, float a5);
-void __fastcall setupWindow_H(void* self, float a2, float a3, float a4, float a5) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCSIG__"((bool){}, {}, {}, {}, {})", (bool)self, a2, a3, a4, a5));
-
-    // Call original function
-    if (ImGuiHook::consoleLogs) 
-        ModUtils::log(std::format("call org of __FUNCTION__"
-                "((bool){}, {}, {}, {}, {})", 
-          (bool)self, a2, a3, a4, a5));
+void __fastcall setupWindow_H(void* self, float a2, float a3, float a4, float a5) 
+{
     setupWindow(self, a2, a3, a4, a5);
-
-    if (!g_inited) if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__" reached !g_inited block, retutn before DestroyContext() etc"));
-    if (!g_inited) return;
-
-    //ImGui_ImplOpenGL3_Shutdown();
+    /*if (!inited) return;
+    ImGui_ImplOpenGL2_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
-    
-    g_inited = false;
+    inited = false;*/
 }
 
-void ImGuiHook::setupHooks(std::function<void(void*, void*, void**)> hookFunc) {
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__));
-    LPVOID targ;
-    targ = GetProcAddress(GetModuleHandleA("libcocos2d.dll"), "?swapBuffers@CCEGLView@cocos2d@@UAEXXZ");
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__": swapBuffers hook at {}", (DWORD)targ));
+void ImGuiHook::SetupHooks(std::function<void(void*, void*, void**)> hookFunc)
+{
     hookFunc(
-        targ,
-        CCEGLView_swapBuffers_H,
-        reinterpret_cast<void**>(&CCEGLView_swapBuffers)
+        GetProcAddress(GetModuleHandleA("opengl32.dll"), "wglSwapBuffers"),
+        wglSwapBuffers_H,
+        (void**)&wglSwapBuffers
     );
-    targ = GetProcAddress(GetModuleHandleA("libcocos2d.dll"), "?pollEvents@CCEGLView@cocos2d@@QAEXXZ");
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__": pollEvents hook at {}", (DWORD)targ));
     hookFunc(
-        targ,
-        CCEGLView_pollEvents_H,
-        reinterpret_cast<void**>(&CCEGLView_pollEvents)
-    );
-    targ = GetProcAddress(GetModuleHandleA("libcocos2d.dll"), "?setupWindow@CCEGLView@cocos2d@@IAEXVCCRect@2@@Z");
-    if (ImGuiHook::consoleLogs) ModUtils::log(std::format(__FUNCTION__": setupWindow hook at {}", (DWORD)targ));
-    hookFunc(
-        targ,
+        GetProcAddress(GetModuleHandleA("libcocos2d.dll"), "?setupWindow@CCEGLView@cocos2d@@IAEXVCCRect@2@@Z"),
         setupWindow_H,
         reinterpret_cast<void**>(&setupWindow)
     );
+}
+
+void ImGuiHook::SetRenderFunction(std::function<void()> func)
+{
+    DrawFunc = func;
+}
+
+void ImGuiHook::SetKeyPressHandler(std::function<void(int)> func)
+{
+    KeyPressHandler = func;
+}
+
+void ImGuiHook::SetInitFunction(std::function<void()> func) {
+    InitFunc = func;
 }

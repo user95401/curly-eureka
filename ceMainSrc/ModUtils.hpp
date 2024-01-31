@@ -46,6 +46,12 @@ namespace ModUtils {
 
     std::string ReadProcMemAsStr(DWORD address, int length);
 
+    //std::vector<uint8_t> { intToBytes(777)[0], intToBytes(777)[1], intToBytes(777)[2],intToBytes(777)[3] }
+    std::vector<unsigned char> intToBytes(int value);
+
+    typedef size_t size_tType;
+    std::string toHex(const size_tType& number);
+
     //return string as relative path of random file in target directory
     std::string getRandomFileNameFromDir(std::string path, std::string or_else);
 
@@ -132,6 +138,9 @@ namespace ModUtils {
     std::string GetStringFromConsole();
 
     void OpenConsole();
+
+    //MessageBox in new thread and sleep for 100ms
+    void ShowSafeMessageBox(std::string caption, std::string msg, UINT uType);
 }
 
 /*

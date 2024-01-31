@@ -151,14 +151,25 @@ cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
     ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });
 */
 bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
+    //nothing to rewrite
     if (ReadProcMem(address, bytes.size()) == bytes) return false;
+    //stringstream
     std::stringstream log;
-    log << __FUNCTION__" at " << std::hex << address;
+    //some values
+    std::string sbaserva = ModUtils::toHex((int)address - (int)GetModuleHandleA(0));
+    if (address < (int)GetModuleHandleA(0)) sbaserva = "NA - CANT BE IN MODULE";
+    std::string starg = ModUtils::toHex((int)address);
+    //log func and addr
+    log << __func__ << " at " << starg;
+    //rva also
+    log << " (base rva: " << sbaserva << ")";
+    //with what
     log << " with \"";
     for (uint8_t value : bytes) {
         log << ((value != bytes[0]) ? ", " : "") << std::hex << (int)value;
     }
     log << "\"";
+    //a
     bool rtn = WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
     if(rtn) ModUtils::log(log.str());
     log.clear();
@@ -177,6 +188,22 @@ std::string ModUtils::ReadProcMemAsStr(DWORD address, int length) {
         asd << std::hex << (int)value << " ";
     }
     return asd.str();
+}
+
+//std::vector<uint8_t> { intToBytes(777)[0], intToBytes(777)[1], intToBytes(777)[2],intToBytes(777)[3] }
+std::vector<unsigned char> ModUtils::intToBytes(int value) {
+    std::vector<unsigned char> result;
+    result.push_back(value & 0x000000ff);
+    result.push_back((value & 0x0000ff00) >> 8);
+    result.push_back((value & 0x00ff0000) >> 16);
+    result.push_back((value & 0xff000000) >> 24);
+    return result;
+}
+
+std::string ModUtils::toHex(const size_tType& number) {
+    std::stringstream stream;
+    stream << std::hex << number;
+    return stream.str();
 }
 
 //return string as relative path of random file in target directory
@@ -567,4 +594,21 @@ void ModUtils::OpenConsole() {
         consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
         SetConsoleMode(handleStdout, consoleMode);
     }
+}
+
+static std::string NextCaption;
+static std::string NextMsg;
+static UINT NextType;
+DWORD WINAPI MsgThread(void* hModule) {
+    Sleep(100);
+    MessageBoxA(nullptr, NextMsg.c_str(), NextCaption.c_str(), NextType);
+    ExitThread(0);
+    return 0;
+}
+void ModUtils::ShowSafeMessageBox(std::string Caption, std::string Msg, UINT uType) {
+    NextCaption = Caption;
+    NextMsg = Msg;
+    if (!uType) NextType = (MB_ICONINFORMATION | MB_OK | MB_TASKMODAL | MB_SETFOREGROUND);
+    else NextType = uType;
+    CreateThread(0, 0, MsgThread, nullptr, 0, 0);
 }

@@ -1,14 +1,16 @@
 #pragma once
-#include <imgui.h>
-#include <backends/imgui_impl_win32.h>
-#include <backends/imgui_impl_opengl3.h>
+#include <windows.h>
+#include <gl/GL.h>
 #include <functional>
+#include "imgui.h"
+#include "backends/imgui_impl_opengl2.h"
+#include "backends/imgui_impl_win32.h"
+
+typedef BOOL(WINAPI* swapBuffersType)(HDC hdc);
 
 namespace ImGuiHook {
-    static bool consoleLogs = false;
-    void setupHooks(std::function<void(void*, void*, void**)> hookFunc);
-    void setRenderFunction(std::function<void()> func);
-    void setToggleCallback(std::function<void()> func);
-    void setInitFunction(std::function<void()> func);
-    void setToggleKey(int key);
+    void SetupHooks(std::function<void(void*, void*, void**)> hookFunc);
+    void SetInitFunction(std::function<void()> func);
+    void SetRenderFunction(std::function<void()> func);
+    void SetKeyPressHandler(std::function<void(int)> func);
 }
