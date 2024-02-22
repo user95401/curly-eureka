@@ -27,20 +27,12 @@ namespace gd {
 
     class GDH_DLL LevelSettingsObject : public cocos2d::CCNode {
         public:
-            GJEffectManager* m_pEffectManager;  // 0xec
-            Gamemode m_gamemode; // 0xf0
-            Speed m_startSpeed;
-            bool m_startMini;
-            bool m_startDual;
+            GJEffectManager* m_effectManager;
+            PAD(9);
             bool m_twoPlayerMode;
-            float m_songOffset;
-            bool m_fadeIn;
-            bool m_fadeOut;
-            PAD(19);
-            bool m_bFlipped; // 0x111
-            PAD(2);
-            GJGameLevel* m_pLevel;  // 0x114
-            std::string m_sUnknownStr1; // 0x118
+            PAD(26);
+            GJGameLevel* m_level;
+            std::string m_guidelineString;
 
             std::string getSaveString() {
                 std::string res;

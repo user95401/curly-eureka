@@ -1,6 +1,6 @@
 ﻿#include "ModUtilsExt.hpp"
 #include <cocos2d.h>//cocos2d-x headers
-#include <gd.h>//cocos2d-x headers
+#include <gd.h>//gd headers
 #include <iostream>
 #include <string>
 #include <filesystem>
@@ -41,6 +41,7 @@ namespace ModUtils {
         ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });
     */
     bool WriteProcMem(const std::uintptr_t, std::vector<uint8_t> const&);
+    bool WriteProcMem(const std::uintptr_t, std::vector<uint8_t> const&, std::string desc);
 
     std::vector<uint8_t> ReadProcMem(DWORD address, int length);
 
@@ -133,9 +134,6 @@ namespace ModUtils {
 
     //URLDownloadToFile, retuns S_OK if ok
     STDAPI DownloadFile(std::string sUrl, std::string sFileName);
-
-    //for self->getChildren()->objectAtIndex(std::stoi(ModUtils::GetStringFromConsole())) or smth
-    std::string GetStringFromConsole();
 
     void OpenConsole();
 

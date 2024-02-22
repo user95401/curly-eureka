@@ -3,10 +3,12 @@
 #include <array>
 #include <filesystem>
 
+using namespace cocos2d;
+using namespace cocos2d::extension;
+
 int MOD_SEED;
 
 extern std::map<uint32_t, std::string> s_buildMap;
-
 std::map<uint32_t, std::string> s_buildMap =
 {
     { 1419173053, "1.900" },
@@ -150,7 +152,7 @@ cocos2d::CCAction* ModUtils::CreateRGB(float speed, bool is_reverse) {
     //Verify Hack
     ModUtils::write_bytes(gd::base + 0x71D48, { 0xEB });
 */
-bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
+bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes, std::string title) {
     //nothing to rewrite
     if (ReadProcMem(address, bytes.size()) == bytes) return false;
     //stringstream
@@ -160,20 +162,26 @@ bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> c
     if (address < (int)GetModuleHandleA(0)) sbaserva = "NA - CANT BE IN MODULE";
     std::string starg = ModUtils::toHex((int)address);
     //log func and addr
-    log << __func__ << " at " << starg;
+    log << __func__ << (title != "" ? std::format(" \"{}\"", title) : "") << " at " << starg;
     //rva also
     log << " (base rva: " << sbaserva << ")";
     //with what
     log << " with \"";
     for (uint8_t value : bytes) {
-        log << ((value != bytes[0]) ? ", " : "") << std::hex << (int)value;
+        log << ((value != bytes[0]) ? " " : "") << std::hex << (int)value;
     }
     log << "\"";
+    //was what
+    log << ", org was \"" << ReadProcMemAsStr(address, bytes.size() < 16 ? 16 : bytes.size()) << "\"";
     //a
     bool rtn = WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
-    if(rtn) ModUtils::log(log.str());
+    if (rtn) ModUtils::log(log.str());
+    else ModUtils::log(std::format("WriteProcMem{} failed (at {}, base rva: {})", (title != "" ? std::format(" \"{}\"", title) : ""), starg, sbaserva));
     log.clear();
     return rtn;
+}
+bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
+    WriteProcMem(address, bytes, "");
 }
 
 std::vector<uint8_t> ModUtils::ReadProcMem(DWORD address, int length) {
@@ -184,8 +192,11 @@ std::vector<uint8_t> ModUtils::ReadProcMem(DWORD address, int length) {
 
 std::string ModUtils::ReadProcMemAsStr(DWORD address, int length) {
     std::stringstream asd;
-    for (uint8_t value : ReadProcMem(address, length)) {
-        asd << std::hex << (int)value << " ";
+    std::vector<uint8_t> asdser = ReadProcMem(address, length);
+    bool FirstWasAdded = false;//brainfuckway
+    for (uint8_t value : asdser) {
+        asd << (FirstWasAdded ? " " : "") << std::hex << (int)value;
+        FirstWasAdded = true;
     }
     return asd.str();
 }
@@ -557,27 +568,6 @@ STDAPI ModUtils::DownloadFile(std::string sUrl, std::string sFileName) {
         //output
         std::format("{}/{}", modResourcesPath, sFileName).c_str(),
         0, NULL);
-}
-
-std::string ModUtils::GetStringFromConsole() {
-    //return var
-    std::string ret;
-    //AllocConsole and freopen_s
-    AllocConsole();
-    FILE* fDummy;
-    freopen_s(&fDummy, "CONOUT$", "w", stdout);
-    freopen_s(&fDummy, "CONOUT$", "w", stderr);
-    freopen_s(&fDummy, "CONIN$", "r", stdin);
-    //cin into ret
-    //std::cout << ();///////
-    //cin into ret
-    std::cin >> ret;///////
-    //close console
-    HWND HWNDCONSLOE = GetConsoleWindow();
-    FreeConsole();
-    CloseWindow(HWNDCONSLOE);
-    //return
-    return ret;
 }
 
 void ModUtils::OpenConsole() {
