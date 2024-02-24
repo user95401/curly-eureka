@@ -181,7 +181,7 @@ bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> c
     return rtn;
 }
 bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
-    WriteProcMem(address, bytes, "");
+    return WriteProcMem(address, bytes, "");
 }
 
 std::vector<uint8_t> ModUtils::ReadProcMem(DWORD address, int length) {

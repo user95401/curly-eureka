@@ -1,6 +1,5 @@
 ﻿#include "ModUtilsExt.hpp"
 #include <cocos2d.h>//cocos2d-x headers
-#include <gd.h>//gd headers
 #include <iostream>
 #include <string>
 #include <filesystem>
