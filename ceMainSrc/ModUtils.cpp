@@ -159,7 +159,7 @@ bool ModUtils::WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> c
     std::stringstream log;
     //some values
     std::string sbaserva = ModUtils::toHex((int)address - (int)GetModuleHandleA(0));
-    if (address < (int)GetModuleHandleA(0)) sbaserva = "NA - CANT BE IN MODULE";
+    if ((int)address < (int)GetModuleHandleA(0)) sbaserva = "NA - CANT BE IN MODULE";
     std::string starg = ModUtils::toHex((int)address);
     //log func and addr
     log << __func__ << (title != "" ? std::format(" \"{}\"", title) : "") << " at " << starg;
@@ -323,6 +323,7 @@ std::string ModUtils::GetGameVersion() {
     return std::string();
 }
 
+#define _CRT_SECURE_NO_WARNINGS 1;
 //simple printf with time and mod name
 void ModUtils::log(std::string msg, std::string prefix, bool milliseconds) {
     std::ostringstream logentry;
@@ -602,3 +603,59 @@ void ModUtils::ShowSafeMessageBox(std::string Caption, std::string Msg, UINT uTy
     else NextType = uType;
     CreateThread(0, 0, MsgThread, nullptr, 0, 0);
 }
+
+std::string ModUtils::truncate(std::string str, size_t width, bool show_ellipsis) {
+    if (str.length() > width)
+        if (show_ellipsis) return str.substr(0, width) + "...";
+        else return str.substr(0, width);
+    return str;
+}
+
+int ModUtils::stoi(const std::string& str, int* p_value, std::size_t* pos, int base) {
+    // wrapping std::stoi because it may throw an exception
+    try {
+        *p_value = std::stoi(str, pos, base);
+        return 0;
+    }
+    catch (const std::invalid_argument& ia) {
+        //std::cerr << "Invalid argument: " << ia.what() << std::endl;
+        return -1;
+    }
+    catch (const std::out_of_range& oor) {
+        //std::cerr << "Out of Range error: " << oor.what() << std::endl;
+        return -2;
+    }
+    catch (const std::exception& e)
+    {
+        //std::cerr << "Undefined error: " << e.what() << std::endl;
+        return -3;
+    }
+}
+
+std::string ModUtils::framePath(CCNode* node) {
+    if (auto sprite_node = dynamic_cast<CCSprite*>(node); sprite_node) {
+        auto* texture = sprite_node->getTexture();
+
+        auto* texture_cache = CCTextureCache::sharedTextureCache();
+        auto* cached_textures = public_cast(texture_cache, m_pTextures);
+        CCDictElement* el;
+        CCDICT_FOREACH(cached_textures, el) {
+            if (el->getObject() == texture) {
+                return (el->getStrKey());
+                break;
+            }
+        }
+
+        auto* frame_cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        auto* cached_frames = public_cast(frame_cache, m_pSpriteFrames);
+        const auto rect = sprite_node->getTextureRect();
+        CCDICT_FOREACH(cached_frames, el) {
+            auto* frame = static_cast<CCSpriteFrame*>(el->getObject());
+            if (frame->getTexture() == texture && frame->getRect().equals(rect)) {
+                return (el->getStrKey());
+            }
+        }
+    }
+    return "nah";
+}
+

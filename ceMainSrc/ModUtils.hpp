@@ -1,5 +1,7 @@
-﻿#include "ModUtilsExt.hpp"
+﻿#pragma once
+#include "ModUtilsExt.hpp"
 #include <cocos2d.h>//cocos2d-x headers
+#include <cocos-ext.h>//cocos2d-x headers
 #include <iostream>
 #include <string>
 #include <filesystem>
@@ -138,7 +140,18 @@ namespace ModUtils {
 
     //MessageBox in new thread and sleep for 100ms
     void ShowSafeMessageBox(std::string caption, std::string msg, UINT uType);
+
+    std::string truncate(std::string str, size_t width, bool show_ellipsis = true);
+
+    // wrapping std::stoi because it may throw an exception
+    int stoi(const std::string& str, int* p_value, std::size_t* pos = 0, int base = 10);
+
+    std::string framePath(cocos2d::CCNode* node);
 }
+
+#define GameWindowHandle WindowFromDC(*reinterpret_cast<HDC*>(reinterpret_cast<uintptr_t>(cocos2d::CCEGLView::sharedOpenGLView()->getWindow()) + 0x244))
+
+#define SetGameWindowTitle(lpString) SetWindowText(GameWindowHandle, lpString)
 
 /*
 stop the code via return true; if layer init hook called 2 times
@@ -157,3 +170,34 @@ useful for traditional mod on Geode
 
 /*will return new node if given node is wrong*/
 #define TheObjOrSomeObj(class, obj) reinterpret_cast<class>(ModUtils::TheNodeOrSomeNode(reinterpret_cast<CCNode*>(obj)))
+
+// Allows you to access protected members from any class
+// by generating a class that inherits the target class
+// to then access the member.
+// Takes in a pointer btw
+// Example:
+//   CCNode* foo;
+//   public_cast(foo, m_fRotation) = 10.f;
+#define public_cast(value, member) [](auto* v) { \
+	class FriendClass__; \
+	using T = std::remove_pointer<decltype(v)>::type; \
+	class FriendeeClass__: public T { \
+	protected: \
+		friend FriendClass__; \
+	}; \
+	class FriendClass__ { \
+	public: \
+		auto& get(FriendeeClass__* v) { return v->member; } \
+	} c; \
+	return c.get(reinterpret_cast<FriendeeClass__*>(v)); \
+}(value)
+
+template <typename T, typename U>
+T union_cast(U value) {
+    union {
+        T a;
+        U b;
+    } u;
+    u.b = value;
+    return u.a;
+}

@@ -15,6 +15,7 @@ include("${CURLY_EUREKA_DIR}/ceImGuiHook/_incl.cmake")
 file(GLOB_RECURSE CURLY_EUREKA_SRC 
 "${CURLY_EUREKA_DIR}/ceMainSrc/*.cpp"
 "${CURLY_EUREKA_DIR}/ceGameVersionDependentSrc_${GAME_VERSION}/*.cpp"
+"${CURLY_EUREKA_DIR}/patterns/*.cpp"
 "${CURLY_EUREKA_DIR}/SimpleIni/*.c"
 "${CURLY_EUREKA_DIR}/jute/*.cpp"
 "${CURLY_EUREKA_DIR}/kuba--zip/*.c"
@@ -26,6 +27,7 @@ set(CURLY_EUREKA_INCL
 "${CURLY_EUREKA_DIR}"
 "${CURLY_EUREKA_DIR}/ceMainSrc"
 "${CURLY_EUREKA_DIR}/ceGameVersionDependentSrc_${GAME_VERSION}"
+"${CURLY_EUREKA_DIR}/patterns"
 "${CURLY_EUREKA_DIR}/minhook-multihook/include"
 "${CURLY_EUREKA_DIR}/SimpleIni"
 "${CURLY_EUREKA_DIR}/DiscordRPCSDK/Includes"
@@ -56,5 +58,6 @@ else()
     add_subdirectory("${CURLY_EUREKA_DIR}/uibuilder" uibuilder-build)
     add_subdirectory("${CURLY_EUREKA_DIR}/cocos-headers_${GAME_VERSION}" cocos-headers-build)
     link_libraries(cocos2d)
-    link_libraries(opengl32)
 endif()
+
+link_libraries(opengl32)
