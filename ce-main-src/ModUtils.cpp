@@ -229,7 +229,11 @@ std::string ModUtils::getRandomFileNameFromDir(std::string path, std::string or_
     }
     else {
         //                          :skull:
-        MessageBox(nullptr, std::string("The directory '" + path + "' isn't founded").c_str(), std::string("ModUtils::getRandomFileNameFromDir("+ path +", " + or_else + ")").c_str(), MB_ICONERROR | MB_OK);
+        MessageBox(nullptr, 
+            std::format("The directory \"{}\"' isn't founded", path).c_str(),
+            std::format("{}({},{})", __FUNCTION__, path, or_else).c_str(),
+            MB_ICONERROR | MB_OK
+        );
     }
     return or_else;
 }
@@ -632,10 +636,9 @@ int ModUtils::stoi(const std::string& str, int* p_value, std::size_t* pos, int b
     }
 }
 
-std::string ModUtils::framePath(CCNode* node) {
+std::string ModUtils::getTexturePath(CCNode* node) {
     if (auto sprite_node = dynamic_cast<CCSprite*>(node); sprite_node) {
         auto* texture = sprite_node->getTexture();
-
         auto* texture_cache = CCTextureCache::sharedTextureCache();
         auto* cached_textures = public_cast(texture_cache, m_pTextures);
         CCDictElement* el;
@@ -645,10 +648,17 @@ std::string ModUtils::framePath(CCNode* node) {
                 break;
             }
         }
+    }
+    return "nah";
+}
 
+std::string ModUtils::getFrameName(CCNode* node) {
+    if (auto sprite_node = dynamic_cast<CCSprite*>(node); sprite_node) {
+        auto* texture = sprite_node->getTexture();
         auto* frame_cache = CCSpriteFrameCache::sharedSpriteFrameCache();
         auto* cached_frames = public_cast(frame_cache, m_pSpriteFrames);
         const auto rect = sprite_node->getTextureRect();
+        CCDictElement* el;
         CCDICT_FOREACH(cached_frames, el) {
             auto* frame = static_cast<CCSpriteFrame*>(el->getObject());
             if (frame->getTexture() == texture && frame->getRect().equals(rect)) {

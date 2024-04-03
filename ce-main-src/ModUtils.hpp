@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "ModUtilsExt.hpp"
 #include <cocos2d.h>//cocos2d-x headers
 #include <cocos-ext.h>//cocos2d-x headers
 #include <iostream>
@@ -146,7 +145,9 @@ namespace ModUtils {
     // wrapping std::stoi because it may throw an exception
     int stoi(const std::string& str, int* p_value, std::size_t* pos = 0, int base = 10);
 
-    std::string framePath(cocos2d::CCNode* node);
+    std::string getTexturePath(cocos2d::CCNode* node);
+
+    std::string getFrameName(cocos2d::CCNode* node);
 }
 
 #define GameWindowHandle WindowFromDC(*reinterpret_cast<HDC*>(reinterpret_cast<uintptr_t>(cocos2d::CCEGLView::sharedOpenGLView()->getWindow()) + 0x244))

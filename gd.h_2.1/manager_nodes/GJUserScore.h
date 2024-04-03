@@ -5,7 +5,7 @@
 
 namespace gd {
     class GDH_DLL GJUserScore : public cocos2d::CCNode {
-        protected:
+    public:
             std::string userName_;
             std::string userUDID_;
             int scoreType_; // legacy field, used in 1.9 to determine shown info

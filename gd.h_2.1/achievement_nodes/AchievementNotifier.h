@@ -8,12 +8,10 @@ namespace gd {
 	class AchievementBar;
 
 	class GDH_DLL AchievementNotifier : public cocos2d::CCNode {
-	protected:
+	public:
 		cocos2d::CCScene* m_pCurrentScene;
 		cocos2d::CCArray* m_pQueue;
 		AchievementBar* m_pCurrentAchievement;
-
-	public:
 		static AchievementNotifier* sharedState() {
 			return reinterpret_cast<AchievementNotifier* (__stdcall*)()>(
 				base + 0xFC90

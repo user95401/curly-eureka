@@ -28,11 +28,25 @@ namespace gd {
     class GDH_DLL LevelSettingsObject : public cocos2d::CCNode {
         public:
             GJEffectManager* m_effectManager;
-            PAD(9);
+            // TODO: make enums for these
+            int m_startMode;
+            Speed m_startSpeed;
+            bool m_startMini;
+            bool m_startDual;
             bool m_twoPlayerMode;
-            PAD(26);
+            float m_songOffset;
+            bool m_fadeIn;
+            bool m_fadeOut;
+            int m_backgroundIndex;
+            int m_groundIndex;
+            int m_fontIndex;
+            bool m_startsWithStartPos;
+            bool m_isFlipped;
             GJGameLevel* m_level;
             std::string m_guidelineString;
+            int m_defaultSongID;
+            int m_colorPage;
+            int m_groundLineIndex;
 
             std::string getSaveString() {
                 std::string res;
