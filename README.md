@@ -21,3 +21,5 @@ It contains functions related to hooks and interference with the memory of the g
   - MappedHooks
 
 # MinHook is safe
+Yea, the problem u cant hook already hooked function got absolutely soloved with big thanks to m417z's (Michael Maltsev) [fork of minhook](https://github.com/m417z/minhook).
+Soo that is, u can hook stuff and dont give a shit about other mods because they will be fine with the with ur mod.
