@@ -13,7 +13,8 @@ inline auto libcocos2d = reinterpret_cast<uintptr_t>(GetModuleHandleA("libcocos2
 #define cast(type, call, value_types, values, addr) reinterpret_cast<type(call)value_types>(addr)values;
 #define addrViaPattern(tar) \
 auto addr = patterns::find_pattern(tar, ""); \
-if (!addr) cocos2d::CCMessageBox("find_pattern failed", __FUNCTION__); \
+if (!addr) cocos2d::CCMessageBox("find_pattern failed", __FUNCTION__);
+#define MBO(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset) 
 
 //predcl
 #if 1
