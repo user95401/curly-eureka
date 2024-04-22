@@ -75,3 +75,85 @@ namespace MappedHooks {
         return reinterpret_cast<F>(MappedHooks::hooks[self]);
     }
 }
+
+#include <cocos2d.h>
+#include <ModUtils.hpp>
+namespace NodeSetupHelper {
+    inline bool bInitialized = false;
+    class Entry {
+    public:
+        int mID = 0;
+        bool mOnce = false;
+        std::function<void(cocos2d::CCNode*)> mFunc;
+    };
+    inline std::vector<Entry*> vEntries;
+    inline void __fastcall NodeSetupHelperCCNodeVisitHook(cocos2d::CCNode* self) {
+        MappedHooks::getOriginal(NodeSetupHelperCCNodeVisitHook)(self);
+        for (auto aEntry : vEntries) {
+            if (aEntry->mOnce) {
+                auto NodeSetupHelperCompName = std::format("NodeSetupHelper-{}", aEntry->mID);
+                auto NodeSetupHelperComp = self->getComponent(NodeSetupHelperCompName.data());
+                if (!NodeSetupHelperComp) {
+                    auto asd = cocos2d::CCComponent::create();// ::setTag();
+                    asd->setName(NodeSetupHelperCompName.data());
+                    self->addComponent(asd);
+                    aEntry->mFunc(self);
+                }
+            }
+            else aEntry->mFunc(self);
+        }
+    }
+    inline void Initialize() {
+        if (bInitialized) return;
+        else bInitialized = true;
+        MH_Initialize();
+        MappedHooks::registerHook(
+            (int)GetProcAddress(GetModuleHandleA("libcocos2d.dll"), "?visit@CCNode@cocos2d@@UAEXXZ"),
+            NodeSetupHelperCCNodeVisitHook
+        );
+    }
+    inline Entry* RegisterUpdate(std::function<void(cocos2d::CCNode*)> functionToCall) {
+        Initialize();
+        auto aEntry = new Entry;
+        //functionToCall
+        aEntry->mFunc = functionToCall;
+        //id
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 9999); // distribution in range [1, 6]
+        aEntry->mID = dist6(rng);
+        //pb
+        vEntries.push_back(aEntry);
+        return aEntry;
+    }
+    inline Entry* RegisterInit(std::function<void(cocos2d::CCNode*)> functionToCall) {
+        Initialize();
+        auto aEntry = new Entry;
+        //functionToCall
+        aEntry->mFunc = functionToCall;
+        //id
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 9999); // distribution in range [1, 6]
+        aEntry->mID = dist6(rng);
+        //once
+        aEntry->mOnce = true;
+        //pb
+        vEntries.push_back(aEntry);
+        return aEntry;
+    }
+};
+
+#define REGISTER_INIT_HOOK_START(TarType)                   \
+NodeSetupHelper::RegisterInit(                              \
+    [](CCNode* node) {                                      \
+        auto self = dynamic_cast<TarType*>(node); if (!self) return;
+
+#define REGISTER_UPDATE_HOOK_START(TarType)                 \
+NodeSetupHelper::RegisterUpdate(                            \
+    [](CCNode* node) {                                      \
+        auto self = dynamic_cast<TarType*>(node); if (!self) return;
+
+#define REGISTER_HOOK_END                                   \
+    }                                                       \
+);

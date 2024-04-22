@@ -603,7 +603,7 @@ DWORD WINAPI MsgThread(void* hModule) {
 void ModUtils::ShowSafeMessageBox(std::string Caption, std::string Msg, UINT uType) {
     NextCaption = Caption;
     NextMsg = Msg;
-    if (!uType) NextType = (MB_ICONINFORMATION | MB_OK | MB_TASKMODAL | MB_SETFOREGROUND);
+    if (uType == 0) NextType = (MB_ICONINFORMATION | MB_OK | MB_TASKMODAL | MB_SETFOREGROUND);
     else NextType = uType;
     CreateThread(0, 0, MsgThread, nullptr, 0, 0);
 }
